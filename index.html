@@ -1,0 +1,2149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haruku Yoga</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="icon" type="image/svg+xml" href="icon.svg?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Haruku Yoga">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FFF8F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1A1416" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&family=Eczar:wght@500..800&display=swap">
+<style>
+:root{
+  --r-sm:12px; --r-md:18px; --r-lg:24px;
+  --primary:#A8456A; --on-primary:#FFFFFF; --primary-container:#FCE1E6; --on-primary-container:#5A1530;
+  --secondary:#8A5A4A; --secondary-container:#F7E3D7; --on-secondary-container:#3B1F14;
+  --tertiary:#C2603D; --on-tertiary:#FFFFFF; --tertiary-container:#FFDBCC; --on-tertiary-container:#3D1306;
+  --surface:#FFF8F5; --on-surface:#2A1D1F; --on-surface-variant:#5E4B4E; --outline:#8C7A7C; --outline-variant:#E2CFCF;
+  --sc-lowest:#FFFFFF; --sc-low:#FCF1EE; --sc:#F8EAE6; --sc-high:#F3E3DF; --sc-highest:#EDDCD8;
+  --inverse-surface:#3A2D2F; --inverse-on-surface:#FBEDEA; --scrim:rgb(0 0 0 / .32);
+  --stand:#B4572E; --stand-c:#FBE0D3; --balance:#8E4A7A; --balance-c:#F4DFEE; --floor:#4F7A5C; --floor-c:#DDEBDF; --calm:#5C6BA0; --calm-c:#E4E6F6;
+  --work:#A8456A; --rest:#5C6BA0; --prep:#7A6A6C; --setrest:#4A2240; --alert:#C2603D;
+  --fig:#2A1D1F; --fig-far:#A8969A;
+  --title:"Eczar","Plus Jakarta Sans",system-ui,sans-serif; --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --e1:0 1px 2px rgb(0 0 0 / .3),0 1px 3px 1px rgb(0 0 0 / .15);
+  --e3:0 1px 3px rgb(0 0 0 / .3),0 4px 8px 3px rgb(0 0 0 / .15);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --primary:#F4AFC2; --on-primary:#4F1028; --primary-container:#5C2A3A; --on-primary-container:#FCD9E2;
+  --secondary:#E7BCA9; --secondary-container:#43302A; --on-secondary-container:#F7E3D7;
+  --tertiary:#F5B092; --on-tertiary:#4A1A08; --tertiary-container:#5A2E1F; --on-tertiary-container:#FFDBCC;
+  --surface:#1A1416; --on-surface:#F0E4E4; --on-surface-variant:#C4B2B3; --outline:#8E7D7F; --outline-variant:#3B3033;
+  --sc-lowest:#151012; --sc-low:#1F181A; --sc:#241C1F; --sc-high:#2C2326; --sc-highest:#362C2F;
+  --inverse-surface:#F0E4E4; --inverse-on-surface:#2A1F21;
+  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B;
+  --work:#F4AFC2; --rest:#B9C0EE; --prep:#C4B2B3; --setrest:#B9C0EE; --alert:#F5A08A;
+  --fig:#F0E4E4; --fig-far:#7A6A6C;
+  --qbg:linear-gradient(160deg,#4A2434,#2E1B24); --qgo:#F4AFC2; --qgo-on:#4F1028; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --primary:#F4AFC2; --on-primary:#4F1028; --primary-container:#5C2A3A; --on-primary-container:#FCD9E2;
+  --secondary:#E7BCA9; --secondary-container:#43302A; --on-secondary-container:#F7E3D7;
+  --tertiary:#F5B092; --on-tertiary:#4A1A08; --tertiary-container:#5A2E1F; --on-tertiary-container:#FFDBCC;
+  --surface:#1A1416; --on-surface:#F0E4E4; --on-surface-variant:#C4B2B3; --outline:#8E7D7F; --outline-variant:#3B3033;
+  --sc-lowest:#151012; --sc-low:#1F181A; --sc:#241C1F; --sc-high:#2C2326; --sc-highest:#362C2F;
+  --inverse-surface:#F0E4E4; --inverse-on-surface:#2A1F21;
+  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B;
+  --work:#F4AFC2; --rest:#B9C0EE; --prep:#C4B2B3; --setrest:#B9C0EE; --alert:#F5A08A;
+  --fig:#F0E4E4; --fig-far:#7A6A6C;
+  --qbg:linear-gradient(160deg,#4A2434,#2E1B24); --qgo:#F4AFC2; --qgo-on:#4F1028; color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--surface)}
+body{color:var(--on-surface);font-family:var(--font);font-size:14px;line-height:20px;letter-spacing:.25px;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;letter-spacing:inherit}
+:focus-visible{outline:3px solid var(--secondary);outline-offset:2px}
+h1,h2,h3{margin:0;font-family:var(--title);font-weight:600;letter-spacing:0;text-wrap:balance}
+.ms{display:inline-grid;place-items:center;width:1em;height:1em;font-size:24px;line-height:1;flex:none;color:inherit}
+.ms:not([data-i]){visibility:hidden}
+.ms svg{width:1em;height:1em;display:block;stroke-width:1.9}
+.ms[data-i="play_arrow"] svg,.ms[data-i="pause"] svg,.ms[data-i="skip_next"] svg,.star[aria-pressed="true"] svg,.fav .unpin svg{fill:currentColor}
+
+.sl{position:relative;overflow:hidden}
+.sl::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .15s;pointer-events:none;border-radius:inherit}
+.sl:hover::after{opacity:.08}.sl:active::after{opacity:.12}
+
+/* Top app bar */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);transition:background .2s}
+.appbar.scrolled{background:var(--sc)}
+.appbar-in{height:64px;display:flex;align-items:center;gap:12px;max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.appbar .logo{width:40px;height:40px;border-radius:var(--r-sm);background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
+.appbar h1{font-size:20px;line-height:28px;font-weight:700;letter-spacing:0}
+
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+main .wrap{padding-block:8px 32px}
+
+/* Navigation bar / rail */
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--sc);display:flex;justify-content:center;gap:8px;padding:12px max(8px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.nav-item{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:min(120px,24%);padding:0;color:var(--on-surface-variant);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.nav-item .pill{width:64px;height:32px;border-radius:999px;display:grid;place-items:center;transition:background .2s}
+.nav-item[aria-selected="true"]{color:var(--on-surface)}
+.nav-item[aria-selected="true"] .pill{background:var(--secondary-container);color:var(--on-secondary-container)}
+.nav-item[aria-selected="true"] .ms{}
+.nav-item .pill.sl::after{border-radius:var(--r-md)}
+@media (min-width:840px){
+  .navbar{top:0;right:auto;width:88px;flex-direction:column;justify-content:flex-start;padding:calc(88px + env(safe-area-inset-top,0px)) 0 0 env(safe-area-inset-left,0px);background:var(--surface);gap:12px}
+  .nav-item{width:88px}
+  .appbar-in,.wrap{padding-left:max(104px,calc(env(safe-area-inset-left,0px) + 104px))}
+  main{padding-bottom:40px}
+}
+
+/* Headline + chips */
+.intro{padding:8px 0 16px}
+.intro h2{font-size:clamp(30px,6vw,40px);line-height:1.15;font-weight:700;letter-spacing:-.01em}
+.intro p{margin:8px 0 0;color:var(--on-surface-variant);max-width:56ch;font-size:16px;line-height:24px;letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{height:32px;border:1px solid var(--outline-variant);background:transparent;border-radius:var(--r-sm);padding:0 16px;font-weight:500;font-size:14px;letter-spacing:.1px;display:inline-flex;align-items:center;gap:8px;color:var(--on-surface-variant)}
+.chip .ms{font-size:18px}
+.chip .dot{width:10px;height:10px;border-radius:50%;background:var(--c,var(--outline))}
+.chip[aria-pressed="true"]{background:var(--secondary-container);border-color:transparent;color:var(--on-secondary-container);padding-left:8px}
+
+/* Library */
+.cat-block{margin-bottom:32px}
+.cat-head{display:flex;align-items:center;gap:4px 12px;margin-bottom:12px;flex-wrap:wrap}
+.cat-head h3{font-size:22px;line-height:28px;font-weight:500;display:flex;align-items:center;gap:10px}
+.cat-head h3 .ms{width:40px;height:40px;border-radius:var(--r-sm);display:grid;place-items:center;background:var(--cc);color:var(--c);font-size:22px}
+.cat-head span.sub{color:var(--on-surface-variant);flex-basis:100%;padding-left:50px;margin-top:-6px}
+.cat-head .fill{margin-left:auto}
+.text-btn{height:40px;border:0;background:none;border-radius:999px;padding:0 12px;color:var(--primary);font-weight:500;font-size:14px;letter-spacing:.1px;display:inline-flex;align-items:center;gap:8px}
+.text-btn .ms{font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{position:relative;background:var(--sc-low);border-radius:var(--r-sm);box-shadow:var(--e1);overflow:hidden;display:flex;flex-direction:column}
+.card .pic{background:var(--cc);aspect-ratio:1/1;max-width:100%;display:block;margin:8px 8px 0;border-radius:var(--r-sm)}
+.card .pic svg{width:100%;height:100%;display:block}
+.card .meta{padding:12px 16px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.card .name{font-weight:500;font-size:16px;line-height:24px;letter-spacing:.15px}
+.card .sub{font-size:12px;line-height:16px;color:var(--on-surface-variant);letter-spacing:.4px}
+.open{position:absolute;inset:0;border:0;background:none;padding:0;border-radius:var(--r-sm)}
+.add{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:999px;border:0;background:var(--sc-lowest);color:var(--on-surface-variant);display:grid;place-items:center;z-index:1}
+.add[aria-pressed="true"]{background:var(--c);color:var(--sc-lowest)}
+.add[aria-pressed="true"] .ms{}
+
+/* Extended FAB */
+.fab-wrap{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:7}
+.efab{height:56px;border:0;border-radius:var(--r-md);padding:0 20px 0 16px;background:var(--primary-container);color:var(--on-primary-container);box-shadow:var(--e3);display:flex;align-items:center;gap:12px;font-weight:500;font-size:14px;letter-spacing:.1px}
+.efab .badge{min-width:24px;height:24px;border-radius:999px;background:#4A2240;color:#FFFFFF;font-weight:600;font-size:12px;display:grid;place-items:center;padding:0 6px}
+@media (min-width:840px){.fab-wrap{bottom:24px;right:max(24px,env(safe-area-inset-right,0px))}}
+
+/* Bottom sheet / dialog */
+.sheet{position:fixed;inset:0;z-index:20;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center}
+.sheet-in{background:var(--sc-low);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:var(--r-lg) 28px 0 0;padding:0 0 calc(24px + env(safe-area-inset-bottom,0px));box-shadow:var(--e1)}
+.handle{width:32px;height:4px;border-radius:999px;background:var(--on-surface-variant);opacity:.4;margin:16px auto 8px}
+@media (min-width:720px){.sheet{align-items:center}.sheet-in{border-radius:var(--r-lg);background:var(--sc-high)}.handle{visibility:hidden;margin-top:8px}}
+.sheet .pic{position:relative;display:flex;justify-content:center;background:var(--cc);margin:0 16px;border-radius:var(--r-md)}
+.sheet .pic svg{width:min(300px,78%);height:auto;aspect-ratio:1/1;display:block}
+.icon-btn{width:40px;height:40px;border-radius:999px;border:0;background:none;display:grid;place-items:center;color:var(--on-surface-variant)}
+.sheet .close{position:absolute;top:8px;right:8px;background:var(--sc-lowest)}
+.sheet .body{padding:20px 24px 0;display:flex;flex-direction:column;gap:16px}
+.overline{font-size:12px;font-weight:500;letter-spacing:.5px;color:var(--c);display:flex;align-items:center;gap:6px}
+.overline .ms{font-size:18px}
+.sheet h2{font-size:28px;line-height:36px;margin-top:-10px}
+.sheet ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:16px;line-height:24px;letter-spacing:.5px}
+.cue{background:var(--secondary-container);color:var(--on-secondary-container);border-radius:var(--r-sm);padding:12px 16px;display:flex;gap:12px;align-items:flex-start}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{height:32px;display:inline-flex;align-items:center;border:1px solid var(--outline-variant);border-radius:var(--r-sm);padding:0 12px;font-size:14px;font-weight:500;color:var(--on-surface-variant)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.btn{height:40px;border:0;border-radius:999px;padding:0 24px;font-weight:500;font-size:14px;letter-spacing:.1px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn .ms{font-size:18px}
+.btn.with-icon{padding-left:16px}
+.btn-filled{background:var(--primary);color:var(--on-primary)}
+.btn-tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+
+/* Timer */
+.timer-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:1000px){.timer-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start}.timer-grid:has(> #setup[hidden]){grid-template-columns:minmax(0,640px);justify-content:center}}
+.stage{--pc:var(--on-surface-variant);--pcc:var(--sc-highest);background:var(--sc);border-radius:var(--r-lg);padding:16px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .3s}
+.stage[data-phase="work"]{--pc:var(--work);--pcc:var(--stand-c)} .stage[data-phase="rest"]{--pc:var(--rest);--pcc:var(--floor-c)}
+.stage[data-phase="prep"]{--pc:var(--prep);--pcc:var(--floor-c)} .stage[data-phase="setrest"]{--pc:var(--setrest);--pcc:var(--balance-c)} .stage[data-phase="done"]{--pc:var(--rest);--pcc:var(--floor-c)}
+.stage-top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.phase{height:32px;border-radius:var(--r-sm);padding:0 12px 0 8px;background:var(--pcc);color:var(--pc);display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;letter-spacing:.1px;transition:background .3s}
+.phase .ms{font-size:18px}
+.counts{display:flex;gap:8px}
+.count{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--on-surface-variant)}
+.ring-wrap{position:relative;width:min(300px,76vw);aspect-ratio:1/1;max-width:100%;margin-top:8px}
+.ring-wrap>svg{position:absolute;inset:0;width:100%;height:100%}
+.ring-bg{stroke:var(--pcc);transition:stroke .3s} .ring-fg{stroke:var(--pc);transition:stroke .3s}
+.ring-fig{position:absolute;inset:15%;border-radius:50%}
+.ring-fig svg{width:100%;height:100%;display:block}
+.digits{font-weight:600;font-size:clamp(80px,22vw,128px);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-variation-settings:"opsz" 144;margin-top:8px}
+.digits.blink{color:var(--alert);font-weight:600}
+.exname{font-weight:500;font-size:22px;line-height:28px;text-align:center}
+.next{color:var(--on-surface-variant);font-size:14px;text-align:center;min-height:20px;max-width:40ch}
+.dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:12px 0 4px;width:min(280px,100%)}
+.dots i{flex:1;max-width:28px;height:4px;border-radius:999px;background:var(--pcc)}
+.dots i.on{background:var(--pc);opacity:.5} .dots i.cur{background:var(--pc)}
+.controls{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:12px}
+.tonal-icon{width:56px;height:56px;border-radius:999px;border:0;background:var(--secondary-container);color:var(--on-secondary-container);display:grid;place-items:center}
+.lfab{width:96px;height:96px;border-radius:var(--r-lg);border:0;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center;box-shadow:var(--e3)}
+.lfab .ms{font-size:36px}
+.switches{display:flex;gap:24px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.sw-row{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;color:var(--on-surface);border:0;background:none;padding:0}
+.switch{width:52px;height:32px;border-radius:999px;border:2px solid var(--outline);background:var(--sc-highest);position:relative;transition:background .2s,border-color .2s;flex:none}
+.switch::after{content:"";position:absolute;top:50%;left:6px;width:16px;height:16px;border-radius:50%;background:var(--outline);transform:translateY(-50%);transition:all .2s}
+.sw-row[aria-checked="true"] .switch{background:var(--primary);border-color:var(--primary)}
+.sw-row[aria-checked="true"] .switch::after{left:22px;width:24px;height:24px;background:var(--on-primary)}
+
+.panel{background:var(--sc-low);border-radius:var(--r-lg);padding:24px 20px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.panel h3{font-size:22px;line-height:28px;font-weight:500}
+.panel .supporting{color:var(--on-surface-variant);margin:4px 0 0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg .chip small{font-weight:400;opacity:.8;font-variant-numeric:tabular-nums}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}
+@media (min-width:520px){.fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.field{position:relative;border:1px solid var(--outline);border-radius:4px;padding:10px 4px 4px;min-width:0}
+.field:focus-within{border:2px solid var(--primary);padding:9px 3px 3px}
+.field label{position:absolute;top:-9px;left:10px;padding:0 4px;background:var(--sc-low);font-size:12px;line-height:16px;color:var(--on-surface-variant);letter-spacing:.4px}
+.field:focus-within label{color:var(--primary)}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:2px}
+.stepper button{width:36px;height:36px;border-radius:999px;border:0;background:none;color:var(--on-surface-variant);display:grid;place-items:center;flex:none}
+.stepper button .ms{font-size:20px}
+.stepper input{width:100%;min-width:0;border:0;background:none;text-align:center;font-family:var(--font);font-size:22px;color:var(--on-surface);font-variant-numeric:tabular-nums;-moz-appearance:textfield;padding:0;outline:none}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.unit{font-size:12px;line-height:16px;color:var(--on-surface-variant);text-align:center;padding-bottom:4px;letter-spacing:.4px}
+.total{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--sc-highest);border-radius:var(--r-md);padding:12px 16px}
+.total b{font-size:28px;line-height:36px;font-weight:400;font-variant-numeric:tabular-nums}
+.total span{color:var(--on-surface-variant);display:flex;align-items:center;gap:8px}
+.divider{height:1px;background:var(--outline-variant);margin:0 -20px}
+.plist{display:flex;flex-direction:column;margin:0 -8px;padding:0;list-style:none}
+.plist li{display:flex;align-items:center;gap:16px;padding:8px 8px;min-height:72px}
+.plist .mini{width:56px;height:56px;border-radius:var(--r-sm);background:var(--cc);flex:none}
+.plist .mini svg{width:100%;height:100%;display:block}
+.plist .nm{flex:1;min-width:0;font-size:16px;line-height:24px;letter-spacing:.5px}
+.plist .nm small{display:block;color:var(--on-surface-variant);font-size:14px;line-height:20px;letter-spacing:.25px}
+.plist .icon-btn:disabled{opacity:.38;cursor:default}
+.plist li.empty{color:var(--on-surface-variant);min-height:0}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.perset{display:flex;flex-direction:column;gap:12px}
+.sw-row{text-align:left}
+.upd-btn{position:relative;color:var(--on-surface-variant)}
+#btn-shareapp{margin-left:auto;color:var(--on-surface-variant)}
+.upd-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--tertiary)}
+.snackbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--inverse-surface);color:var(--inverse-on-surface);border-radius:4px;min-height:48px;padding:4px 8px 4px 16px;display:flex;align-items:center;gap:8px;box-shadow:var(--e3);max-width:min(560px,calc(100% - 32px));font-size:14px}
+.snackbar .text-btn{color:var(--primary-container)}
+@media (min-width:840px){.snackbar{bottom:24px}}
+.wo-block{margin-bottom:28px}
+.wo-block .cat-head h3 .ms{background:var(--primary-container);color:var(--on-primary-container)}
+.wo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.wo{background:var(--cc);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.wo-head{display:flex;gap:12px;align-items:center}
+.wo-head>.ms{width:44px;height:44px;border-radius:var(--r-sm);display:grid;place-items:center;background:var(--sc-lowest);color:var(--c)}
+.wo-head h4{margin:0;font-size:20px;line-height:26px;font-weight:500}
+.wo-head p{margin:0;color:var(--on-surface-variant);font-size:13px;line-height:18px}
+.wo-figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;background:var(--sc-lowest);border-radius:var(--r-sm);padding:4px}
+.wo-fig svg{width:100%;height:auto;aspect-ratio:1/1;display:block}
+.wo-names{margin:0;font-size:13px;line-height:18px;color:var(--on-surface-variant)}
+.wo-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.wo-foot span{font-size:13px;font-weight:500;font-variant-numeric:tabular-nums}
+.lib-tools{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 24px;margin-bottom:24px}
+.lib-tools .chips{margin-bottom:0}
+.segmented{display:inline-flex;border:1px solid var(--outline);border-radius:999px;overflow:hidden;height:40px}
+.segmented button{border:0;background:none;padding:0 16px;display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;letter-spacing:.1px;color:var(--on-surface)}
+.segmented button+button{border-left:1px solid var(--outline)}
+.segmented button .ms{font-size:18px;display:none}
+.segmented button[aria-pressed="true"]{background:var(--secondary-container);color:var(--on-secondary-container)}
+.segmented button[aria-pressed="true"] .ms{display:inline-block}
+.mode-seg{align-self:stretch;display:flex}
+.mode-seg button{flex:1;justify-content:center}
+.wo-section{display:flex;flex-direction:column;gap:20px}
+.ring-ico{position:absolute;inset:0;display:grid;place-items:center;color:var(--pc)}
+.ring-ico .ms{font-size:min(120px,30vw);width:auto;opacity:.9}
+.voicebox{display:flex;flex-direction:column;gap:12px}
+.voice-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.musicbox{display:flex;flex-direction:column;gap:12px}
+.musicbox .field.sel{flex:none}
+.mhint{background:var(--tertiary-container);color:var(--on-tertiary-container);border-radius:var(--r-sm);padding:12px 14px;font-size:14px;line-height:20px}
+.mhint ol{margin:6px 0 0;padding-left:20px}
+.mhint a{color:inherit;font-weight:600}
+.mlink{height:52px;border:1px solid var(--outline);border-radius:4px;padding:0 12px;font:16px var(--font);background:transparent;color:var(--on-surface);width:100%;box-sizing:border-box}
+.mlink:focus{outline:2px solid var(--primary);border-color:transparent}
+.music-btn{height:36px;border-radius:999px;border:1px solid var(--outline-variant);background:none;color:var(--on-surface);display:inline-flex;align-items:center;gap:6px;padding:0 14px 0 10px;font:500 14px var(--font)}
+.field.sel{flex:1 1 200px;padding:0}
+.field.sel select{width:100%;height:52px;border:0;background:transparent;color:var(--on-surface);font:inherit;font-size:16px;padding:0 12px;outline:none;border-radius:4px}
+.field.sel select option{background:var(--sc-high);color:var(--on-surface)}
+.field.sel:focus-within{padding:0}
+.plan{display:flex;flex-direction:column;gap:12px}
+.setrow{border:1px solid var(--outline-variant);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:14px}
+.setrow-head{display:flex;justify-content:space-between;align-items:baseline;font-size:16px}
+.setrow-head b{font-weight:500}
+.setrow-head span{color:var(--on-surface-variant);font-variant-numeric:tabular-nums}
+.setrow-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.setrow-fields .stepper button{width:28px;height:28px}
+.setrow-fields .stepper input{font-size:18px}
+.setrow .chip{height:28px;padding:0 10px;font-size:13px}
+.setrow .chip[aria-pressed="true"]{padding-left:6px}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.home-grid{display:grid;gap:12px;grid-template-columns:1fr;margin-bottom:28px}
+@media (min-width:720px){.home-grid{grid-template-columns:1.2fr 1fr}}
+.qcard{background:var(--qbg,linear-gradient(135deg,#D9748C,#A8456A));color:#fff;border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:14px}
+.qcard h3,.ccard h3{margin:0;font-size:22px;line-height:28px;font-weight:500;display:flex;align-items:center;gap:10px}
+.qcard p{margin:0;opacity:.8;font-size:14px;line-height:20px}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qf{background:rgb(255 255 255 / .14);border-radius:var(--r-sm);padding:6px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:0;min-width:0}
+.qf label{font-size:11px;font-weight:600;letter-spacing:.4px;opacity:.85;text-transform:uppercase}
+.qf .row{display:flex;align-items:center;justify-content:space-between;width:100%}
+.qf button{width:30px;height:30px;border-radius:999px;border:0;background:none;color:#fff;display:grid;place-items:center;flex:none}
+.qf button .ms{font-size:18px}
+.qf input{width:100%;min-width:0;border:0;background:none;color:#fff;text-align:center;font:600 22px var(--font);font-variant-numeric:tabular-nums;padding:0;-moz-appearance:textfield;outline:none}
+.qf input::-webkit-inner-spin-button,.qf input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.qf small{font-size:11px;opacity:.75}
+.qf.off{opacity:.45}
+.qtotal{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;opacity:.9}
+.qtotal b{font-size:20px;font-variant-numeric:tabular-nums}
+.qchips{display:flex;gap:8px;flex-wrap:wrap}
+.qchips button{height:36px;border-radius:var(--r-sm);padding:0 14px;border:1px solid rgb(255 255 255 / .4);background:none;color:inherit;font:500 14px var(--font)}
+.qchips button[aria-pressed="true"]{background:#fff;border-color:#fff;color:#A8456A}
+.qgo{height:56px;border:0;border-radius:var(--r-md);background:var(--qgo,#FFE6DA);color:var(--qgo-on,#6B2412);font:600 18px var(--font);display:flex;align-items:center;justify-content:center;gap:10px}
+.qgo .ms{font-size:28px}
+.ccard{background:var(--sc-low);border-radius:var(--r-lg);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ccard .mv{margin:0;color:var(--on-surface-variant);font-size:14px;line-height:20px;overflow-wrap:anywhere}
+.ccard .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.mw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:28px}
+.mw{background:var(--sc-lowest);border:1px solid var(--outline-variant);border-radius:var(--r-md);padding:14px 14px 10px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.mw-top{display:flex;align-items:center;gap:4px}
+.mw h4{margin:0;flex:1;min-width:0;font-size:18px;line-height:24px;font-weight:500;overflow-wrap:anywhere}
+.mw p{margin:0;font-size:13px;line-height:18px;color:var(--on-surface-variant);overflow-wrap:anywhere}
+.mw .row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:4px}
+.mw .row .btn{margin-right:auto}
+.star[aria-pressed="true"] .ms{color:#E0A800;}
+.fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:28px}
+.fav{position:relative;cursor:pointer;border:0;text-align:left;background:var(--stand-c);color:var(--on-surface);border-radius:var(--r-md);padding:14px;display:flex;flex-direction:column;gap:6px;min-height:112px;font:inherit}
+.fav b{font-size:17px;line-height:22px;font-weight:600;overflow-wrap:anywhere}
+.fav span{font-size:12px;line-height:16px;color:var(--on-surface-variant)}
+.fav .unpin{position:absolute;top:6px;right:6px;width:36px;height:36px;border-radius:999px;border:0;background:none;display:grid;place-items:center;color:#B88600}
+.fav .unpin .ms{margin:0;width:auto;height:auto;background:none;color:inherit;font-size:22px;}
+.fav b{padding-right:28px}
+.wo-hidden{margin:8px 0 0}
+.fav .ms{margin-top:auto;align-self:flex-end;width:40px;height:40px;border-radius:999px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);font-size:24px}
+.imp{display:flex;align-items:center;gap:8px;margin:-14px 0 28px;padding:6px 6px 6px 14px;border:1px solid var(--outline-variant);border-radius:999px;background:var(--sc-lowest)}
+.imp>.ms{color:var(--on-surface-variant)}
+.imp input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:14px;color:var(--on-surface);outline:none;padding:8px 0}
+.empty-dash{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.empty-dash b{color:var(--on-surface);font-size:15px}
+.empty-dash .btn{margin-top:10px}
+#lib-workouts .wo-foot>span{flex-basis:100%}
+#lib-workouts .wo-foot .btn{padding:0 16px;gap:6px}
+#lib-workouts .wo-foot{gap:4px}
+#lib-workouts .wo-foot>.btn-filled{margin-left:auto}
+.wo-foot .on-home[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
+.install{display:flex;gap:12px;align-items:flex-start;background:var(--primary-container);color:var(--on-primary-container);border-radius:var(--r-md);padding:14px 8px 14px 16px;margin:0 0 20px}
+.install>.ms{font-size:28px;margin-top:2px}
+.install div{flex:1;min-width:0}
+.install div>b{display:block;font-size:15px;margin-bottom:4px}
+.install p{margin:0;font-size:14px;line-height:20px}
+.install .icon-btn{color:inherit}
+.backup{margin-top:32px;padding-top:24px;border-top:1px solid var(--outline-variant);display:flex;flex-direction:column;gap:12px}
+.backup .supporting{margin:0;color:var(--on-surface-variant)}
+.backup .row{display:flex;gap:8px;flex-wrap:wrap}
+.backup .imp{margin:0}
+.bk-pick{align-self:flex-start;display:inline-flex;align-items:center}
+.mylink{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 12px 12px 16px;border-radius:var(--r-md);background:var(--secondary-container);color:var(--on-secondary-container)}
+.mylink span{flex:1;min-width:140px}
+.lib-intro{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.lib-seg{height:40px}
+.search{display:flex;align-items:center;gap:8px;margin:0 0 16px;padding:0 14px;height:48px;border:1px solid var(--outline-variant);border-radius:999px;background:var(--sc-lowest);color:var(--on-surface-variant)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--on-surface);outline:none}
+.pal-search{height:40px;margin:0}
+.lib-none{color:var(--on-surface-variant);padding:24px 4px}
+.rt-label b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:11px;margin-right:6px}
+.rt-help{margin:-6px 0 0;font-size:13px;color:var(--on-surface-variant)}
+.rt-times .field.off{opacity:.45}
+.hint{color:var(--on-surface-variant);font-size:14px;line-height:20px;margin:0 0 28px;padding:16px;border:1px dashed var(--outline-variant);border-radius:var(--r-md)}
+.rt-in{padding:8px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.rt-in>*{flex-shrink:0}
+.rt-head{display:flex;align-items:center;gap:8px;padding-top:8px}
+.rt-head h2{flex:1;font-size:24px;line-height:32px}
+.rt-label{font-size:12px;font-weight:600;letter-spacing:.4px;color:var(--on-surface-variant);margin-bottom:-8px}
+.rt-name{height:52px;border:1px solid var(--outline);border-radius:var(--r-sm);padding:0 14px;font:500 17px var(--font);background:var(--sc-lowest);color:var(--on-surface);width:100%;box-sizing:border-box}
+.rt-name:focus{outline:2px solid var(--primary);border-color:transparent}
+.rt-times{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rt-sum{font-size:14px;color:var(--on-surface-variant)}
+.rt-list{list-style:none;margin:0!important;padding:0!important;display:flex;flex-direction:column;gap:6px}
+.rt-list li{display:flex;align-items:center;gap:2px;background:var(--sc-lowest);border:1px solid var(--outline-variant);border-radius:var(--r-sm);padding:4px 4px 4px 12px}
+.rt-list .num{width:22px;flex:none;font-size:13px;color:var(--on-surface-variant);font-variant-numeric:tabular-nums}
+.rt-list .nm{flex:1;min-width:0;font-size:15px;font-weight:500;overflow-wrap:anywhere}
+.rt-list .icon-btn{width:36px;height:36px}
+.rt-list .icon-btn .ms{font-size:20px}
+.rt-list .icon-btn:disabled{opacity:.3}
+.plist li.drop{box-shadow:0 -3px 0 var(--primary)}
+.plist li.drop-end{box-shadow:0 3px 0 var(--primary)}
+.plist li.dragging{opacity:.35}
+.plist .grip{flex:none;width:28px;margin-right:-10px;height:40px;display:grid;place-items:center;color:var(--on-surface-variant);touch-action:none;cursor:grab}
+.rt-list li.drop{border-color:var(--primary);box-shadow:0 -3px 0 var(--primary)}
+.rt-list li.drop-end{box-shadow:0 3px 0 var(--primary)}
+.rt-list li.dragging{opacity:.35}
+.rt-list .grip{flex:none;width:32px;height:40px;display:grid;place-items:center;color:var(--on-surface-variant);touch-action:none;cursor:grab;margin-left:-8px}
+.rt-empty{border:2px dashed var(--outline-variant);border-radius:var(--r-sm);padding:18px;text-align:center;color:var(--on-surface-variant);font-size:14px}
+.rt-empty.drop{border-color:var(--primary);color:var(--primary)}
+.pal-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px}
+.pal-chips .chip{flex:none;height:30px;padding:0 12px;font-size:13px}
+.pal{display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:2px 20px 6px;scrollbar-width:thin}
+.tile{flex:none;width:84px;border:1px solid var(--outline-variant);background:var(--sc-lowest);border-radius:var(--r-sm);padding:4px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.tile .tf{width:64px;height:64px;border-radius:var(--r-sm);background:var(--cc)}
+.tile .tf svg{width:100%;height:100%;display:block}
+.tile span{font-size:11px;line-height:14px;text-align:center;font-weight:500;color:var(--on-surface);overflow-wrap:anywhere}
+.ghost{position:fixed;z-index:50;pointer-events:none;background:var(--sc-lowest);border:1px solid var(--primary);border-radius:var(--r-sm);padding:10px 14px;font:600 14px var(--font);color:var(--on-surface);box-shadow:var(--e3);transform:translate(-50%,-120%);white-space:nowrap}
+.rt-add{display:flex;gap:8px}
+.rt-add select{flex:1;min-width:0;height:44px;border:1px solid var(--outline);border-radius:var(--r-sm);padding:0 10px;font:15px var(--font);background:var(--sc-lowest);color:var(--on-surface)}
+.rt-fav{display:flex;align-items:center;gap:10px;font-size:15px}
+.rt-fav input{width:20px;height:20px;accent-color:var(--primary)}
+.rt-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;bottom:calc(-24px - env(safe-area-inset-bottom,0px));z-index:3;margin:0 -20px calc(-24px - env(safe-area-inset-bottom,0px));padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:inherit;border-top:1px solid var(--outline-variant)}
+.rt-actions .sp{flex:1}
+.log-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px}
+.stat{background:var(--sc-low);border-radius:var(--r-md);padding:14px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-size:28px;line-height:34px;font-weight:600;color:var(--primary)}
+.stat span{font-size:12px;line-height:16px;color:var(--on-surface-variant);letter-spacing:.4px}
+.log-day{margin:20px 0 8px;font-size:14px;font-weight:500;color:var(--on-surface-variant);letter-spacing:.1px}
+.log-item{display:flex;gap:12px;align-items:flex-start;background:var(--sc-lowest);border:1px solid var(--outline-variant);border-radius:var(--r-md);padding:12px 8px 12px 12px;margin-bottom:8px}
+.log-item>.ms{flex:none;width:40px;height:40px;border-radius:var(--r-sm);display:grid;place-items:center;background:var(--stand-c);color:var(--stand)}
+.log-item.partial>.ms{background:var(--sc-high);color:var(--on-surface-variant)}
+.log-main{flex:1;min-width:0}
+.log-main h4{margin:0;font-size:16px;line-height:22px;font-weight:500;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.log-main p{margin:2px 0 0;font-size:13px;line-height:18px;color:var(--on-surface-variant);overflow-wrap:anywhere}
+.tag{font-size:11px;line-height:16px;font-weight:500;padding:0 8px;border-radius:var(--r-sm);background:var(--sc-high);color:var(--on-surface-variant)}
+.log-empty{text-align:center;color:var(--on-surface-variant);padding:40px 16px}
+.log-empty .ms{font-size:48px;display:block;margin:0 auto 8px;color:var(--outline)}
+</style>
+</head>
+<body>
+
+<header class="appbar" id="appbar">
+  <div class="appbar-in">
+    <div class="logo"><span class="ms">logo</span></div>
+    <h1>Haruku Yoga</h1>
+    <button class="icon-btn sl" id="btn-shareapp" aria-label="Share the app" title="Share the app"><span class="ms">ios_share</span></button>
+    <button class="icon-btn sl upd-btn" id="btn-update" aria-label="Check for updates" title="Check for updates"><span class="ms">sync</span><span class="upd-dot" id="upd-dot" hidden></span></button>
+  </div>
+</header>
+<div class="snackbar" id="snack" hidden><span id="snack-txt"></span><button class="text-btn" id="snack-act" hidden>Update</button></div>
+
+<nav class="navbar" role="tablist" aria-label="Sections">
+  <button class="nav-item" role="tab" id="tab-home" aria-selected="true" data-view="home"><span class="pill sl"><span class="ms">home</span></span>Home</button>
+  <button class="nav-item" role="tab" id="tab-lib" aria-selected="false" data-view="lib"><span class="pill sl"><span class="ms">self_improvement</span></span>Catalog</button>
+  <button class="nav-item" role="tab" id="tab-timer" aria-selected="false" data-view="timer"><span class="pill sl"><span class="ms">timer</span></span>Timer</button>
+  <button class="nav-item" role="tab" id="tab-log" aria-selected="false" data-view="log"><span class="pill sl"><span class="ms">history</span></span>History</button>
+</nav>
+
+<main>
+  <section id="view-home" class="wrap">
+    <div class="intro"><h2 id="hello">Hi Kim</h2><p id="today"></p></div>
+    <div class="install" id="install" hidden>
+      <span class="ms fill">install_mobile</span>
+      <div><b>Install Haruku Yoga</b><p id="install-how"></p></div>
+      <button class="icon-btn sl" id="install-x" aria-label="Dismiss"><span class="ms">close</span></button>
+    </div>
+    <div class="home-grid">
+      <div class="qcard">
+        <h3><span class="ms">timer</span>Quick timer</h3>
+        <div class="qchips" id="qchips"></div>
+        <div class="qgrid" id="qgrid"></div>
+        <div class="qtotal"><span id="q-shape"></span><b id="q-total"></b></div>
+        <button class="qgo sl" id="q-go"><span class="ms fill">play_arrow</span>Start timer</button>
+      </div>
+      <div class="ccard">
+        <h3><span class="ms fill" style="color:var(--stand)">playlist_play</span>Your practice</h3>
+        <p class="mv" id="h-moves"></p>
+        <div class="row"><button class="btn btn-filled with-icon sl" id="h-go"><span class="ms fill">play_arrow</span>Start</button><button class="text-btn sl" id="h-edit"><span class="ms">tune</span>Edit</button><button class="text-btn sl" id="h-cat"><span class="ms">add</span>Add poses</button></div>
+      </div>
+    </div>
+    <div class="cat-head" id="fav-head"><h3><span class="ms fill" style="--c:#B88600;--cc:#FFF1C2">star</span>Favorites</h3></div>
+    <div class="fav-grid" id="favs"></div>
+    <div class="hint empty-dash" id="fav-hint" hidden><b>Nothing pinned yet</b><span>Add routines from the Catalog.</span><button class="btn btn-tonal with-icon sl" id="fav-cat"><span class="ms">menu_book</span>Browse catalog</button></div>
+    <section class="wo-block" id="wo-block">
+      <div class="cat-head"><h3><span class="ms fill" style="--c:var(--primary);--cc:var(--primary-container)">event_note</span>Routines</h3></div>
+      <div class="wo-grid" id="workouts"></div>
+    </section>
+  </section>
+
+  <section id="view-lib" class="wrap" hidden>
+    <div class="intro lib-intro">
+      <h2>Catalog</h2>
+      <div class="segmented lib-seg" role="tablist" aria-label="Catalog">
+        <button class="sl" data-sub="routines"><span class="ms">check</span>Routines</button>
+        <button class="sl" data-sub="moves"><span class="ms">check</span>Poses</button>
+      </div>
+    </div>
+    <div id="lib-routines">
+    <div class="cat-head"><h3><span class="ms fill" style="--c:var(--stand);--cc:var(--stand-c)">bookmarks</span>My routines</h3><button class="btn btn-tonal with-icon sl" id="mw-save" style="margin-left:auto"><span class="ms">add</span>New routine</button></div>
+    <div class="mw-grid" id="mw-list"></div>
+    <form class="imp" id="imp"><span class="ms">link</span><input id="imp-in" placeholder="Paste a routine link or code" autocomplete="off" aria-label="Shared routine link or code"><button class="btn btn-tonal sl" type="submit">Add</button></form>
+    <section class="wo-block">
+      <div class="cat-head"><h3><span class="ms fill" style="--c:var(--primary);--cc:var(--primary-container)">event_note</span>Routines</h3></div>
+      <div class="wo-grid" id="lib-workouts"></div>
+    </section>
+    </div>
+    <div id="lib-moves" hidden>
+    <div class="search"><span class="ms">search</span><input id="ex-search" type="search" placeholder="Search poses" autocomplete="off" aria-label="Search poses"></div>
+    <div class="lib-tools">
+      <div class="chips" id="filters"></div>
+      <div class="segmented" role="group" aria-label="Figure style">
+        <button class="sl" data-style="toon"><span class="ms">check</span>Cartoon</button>
+        <button class="sl" data-style="char"><span class="ms">check</span>Realistic</button>
+        <button class="sl" data-style="stick"><span class="ms">check</span>Stick</button>
+      </div>
+    </div>
+    <div id="library"></div>
+    </div>
+  </section>
+
+  <section id="view-log" class="wrap" hidden>
+    <div class="intro"><h2>History</h2></div>
+    <div class="log-stats">
+      <div class="stat"><b id="st-week">0</b><span>Sessions this week</span></div>
+      <div class="stat"><b id="st-min">0</b><span>Minutes this week</span></div>
+      <div class="stat"><b id="st-streak">0</b><span>Day streak</span></div>
+    </div>
+    <div id="log-list"></div>
+    <div class="backup">
+      <h3>Backup</h3>
+      <p class="supporting">Saves your history, routines and settings as a code. Restore it after reinstalling or on another device.</p>
+      <div class="row"><button class="btn btn-tonal with-icon sl" id="bk-copy"><span class="ms">content_copy</span>Copy backup</button><button class="btn btn-tonal with-icon sl" id="bk-file"><span class="ms">arrow_upward</span>Save as file</button></div>
+      <form class="imp" id="bk-form"><span class="ms">replay</span><input id="bk-in" placeholder="Paste backup code" autocomplete="off" aria-label="Backup code"><button class="btn btn-tonal sl" type="submit">Restore</button></form>
+      <label class="text-btn sl bk-pick"><input type="file" id="bk-pick" accept=".txt,text/plain" hidden>Restore from file</label>
+    </div>
+  </section>
+
+  <section id="view-timer" class="wrap" hidden>
+    <div class="timer-grid">
+      <div class="stage" id="stage" data-phase="idle">
+        <div class="stage-top">
+          <div class="phase"><span class="ms" id="phase-ico">timer</span><span id="phase">Ready</span></div>
+          <div class="counts"><span class="count" id="c-round">Round 0/8</span><span class="count" id="c-set">Set 1/1</span></div>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="ring-bg" cx="50" cy="50" r="46" fill="none" stroke-width="4"/>
+            <circle class="ring-fg" id="ring" cx="50" cy="50" r="46" fill="none" stroke-width="4" stroke-linecap="round" transform="rotate(-90 50 50)" stroke-dasharray="289.03" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-fig" id="stage-fig"></div>
+          <div class="ring-ico" id="ring-ico" hidden><span class="ms fill" id="ring-ico-s">timer</span></div>
+        </div>
+        <div class="digits" id="digits" aria-live="off">0:00</div>
+        <div class="exname" id="exname">&nbsp;</div>
+        <div class="next" id="next">&nbsp;</div>
+        <div class="dots" id="dots"></div>
+        <div class="controls">
+          <button class="tonal-icon sl" id="btn-reset" aria-label="Reset timer"><span class="ms">replay</span></button>
+          <button class="lfab sl" id="btn-play" aria-label="Start"><span class="ms fill" id="ico-play">play_arrow</span><span class="ms fill" id="ico-pause" hidden>pause</span></button>
+          <button class="tonal-icon sl" id="btn-skip" aria-label="Skip to next interval"><span class="ms fill">skip_next</span></button>
+        </div>
+        <div class="switches">
+          <button class="sw-row" role="switch" id="t-sound" aria-checked="true"><span class="switch"></span>Beeps</button>
+          <button class="sw-row" role="switch" id="t-voice" aria-checked="true"><span class="switch"></span>Voice</button>
+          <button class="music-btn sl" id="btn-music" hidden><span class="ms">music_note</span><span id="btn-music-t">Music</span></button>
+        </div>
+      </div>
+
+      <div class="panel" id="setup">
+        <div class="segmented mode-seg" role="group" aria-label="Timer mode">
+          <button class="sl" data-mode="free"><span class="ms">check</span>Timer only</button>
+          <button class="sl" data-mode="ex"><span class="ms">check</span>With poses</button>
+        </div>
+        <div>
+          <h3>Timing</h3>
+        </div>
+        <div class="seg" id="presets"></div>
+        <button class="sw-row" role="switch" id="t-lock" aria-checked="true"><span class="switch"></span>Fixed round length</button>
+        <div class="fields" id="fields"></div>
+        <div id="perset" class="perset" hidden>
+          <button class="sw-row" role="switch" id="t-perset" aria-checked="false"><span class="switch"></span>Separate timing per set</button>
+          <div id="plan" class="plan"></div>
+        </div>
+        <div class="total"><span><span class="ms">schedule</span>Total</span><b id="total">0:00</b></div>
+        <div class="voicebox">
+          <h3>Voice coach</h3>
+          <div class="voice-row">
+            <div class="field sel"><label for="voice-sel">Voice</label><select id="voice-sel"></select></div>
+            <button class="btn btn-tonal with-icon sl" id="voice-test"><span class="ms">volume_up</span>Test</button>
+          </div>
+        </div>
+        <div class="musicbox">
+          <h3>Music</h3>
+                    <div class="field sel"><label for="m-svc">Music app</label><select id="m-svc">
+            <option value="none">None</option><option value="deezer">Deezer</option><option value="spotify">Spotify</option><option value="apple">Apple Music</option><option value="ytm">YouTube Music</option><option value="link">Other (any link)</option></select></div>
+          <input class="mlink" id="m-link" type="url" inputmode="url" autocomplete="off" placeholder="Playlist link (e.g. deezer.com/playlist/…)">
+          <div class="mhint" id="m-hint" hidden>Short links can't open the app. <a id="m-hint-open" href="#" target="_blank" rel="noopener">Open it</a>, then paste the full deezer.com/playlist/… address or the playlist number.</div>
+          <button class="sw-row" role="switch" id="t-music" aria-checked="true"><span class="switch"></span>Open on start</button>
+          <p class="supporting" id="m-note">Come back to Haruku Yoga once the music plays. Your practice starts then. Keep Silent mode off to hear the voice and beeps.</p>
+          <div><button class="btn btn-tonal with-icon sl" id="m-test"><span class="ms">open_in_new</span>Open</button></div>
+        </div>
+        <div id="wo-section" class="wo-section">
+        <div class="divider"></div>
+        <div>
+          <h3>Your practice</h3>
+          <p class="supporting">Rounds cycle through this list.</p>
+        </div>
+        <div class="mylink" id="my-link" hidden><span id="my-link-t"></span><button class="btn btn-filled with-icon sl" id="my-link-save"><span class="ms">check</span>Save to routine</button></div>
+        <ul class="plist" id="plist"></ul>
+        <div class="quick" id="quick"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="fab-wrap" id="tray" hidden>
+  <button class="efab sl" id="tray-go"><span class="ms fill">play_arrow</span><span id="tray-txt">Start practice</span><span class="badge" id="tray-n">6</span></button>
+</div>
+
+<div class="sheet" id="rt" hidden>
+  <div class="sheet-in rt-in" role="dialog" aria-modal="true" aria-labelledby="rt-title">
+    <div class="rt-head"><h2 id="rt-title">New routine</h2><button class="icon-btn sl" id="rt-close" aria-label="Close"><span class="ms">close</span></button></div>
+    <div class="rt-label"><b>1</b>Name</div>
+    <input class="rt-name" id="rt-name" maxlength="40" placeholder="e.g. Morning Routine" autocomplete="off">
+    <div class="rt-label"><b>2</b>Moves in one set</div>
+    <p class="rt-help">Tap a move below to add it, or hold it and drag it into place. Drag the handles to reorder.</p>
+    <ol class="rt-list" id="rt-list"></ol>
+    <div class="search pal-search"><span class="ms">search</span><input id="pal-q" type="search" placeholder="Find a move" autocomplete="off" aria-label="Find a move"></div>
+    <div class="pal-chips" id="pal-chips"></div>
+    <div class="pal" id="pal"></div>
+    <div class="rt-label"><b>3</b>Timing and sets</div>
+    <div class="rt-times" id="rt-times"></div>
+    <div class="rt-sum" id="rt-sum"></div>
+    <label class="rt-fav"><input type="checkbox" id="rt-fav">Pin to Home</label>
+    <div class="rt-actions"><button class="text-btn sl" id="rt-del" style="color:var(--alert)"><span class="ms">delete</span>Delete</button><span class="sp"></span>
+      <button class="text-btn sl" id="rt-cancel">Cancel</button><button class="btn btn-filled with-icon sl" id="rt-save"><span class="ms">check</span>Save</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="sh-name">
+    <div class="handle"></div>
+    <div class="pic" id="sh-pic"><button class="icon-btn close sl" id="sh-close" aria-label="Close"><span class="ms">close</span></button></div>
+    <div class="body">
+      <div class="overline" id="sh-cat"></div>
+      <h2 id="sh-name"></h2>
+      <div class="tags" id="sh-tags"></div>
+      <ol id="sh-steps"></ol>
+      <div class="cue" id="sh-cue"></div>
+      <div class="actions">
+        <button class="btn btn-tonal with-icon sl" id="sh-add"><span class="ms">add</span><span>Add to practice</span></button>
+        <button class="btn btn-filled with-icon sl" id="sh-now"><span class="ms fill">play_arrow</span>Do this now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- Poses ----------
+   Points in a 100x100 box, ground at y≈96. Keys: h head, n neck/shoulders, p hips, c torso bend,
+   le/lh near elbow/hand, re/rh far elbow/hand, lk/lf near knee/foot, rk/rf far knee/foot. */
+const F = {h:[50,16],n:[50,26],p:[50,54],le:[42,39],lh:[39,52],re:[58,39],rh:[61,52],lk:[46,74],lf:[45,94],rk:[54,74],rf:[55,94]};
+const S = {h:[51,16],n:[50,26],p:[49,54],le:[51,40],lh:[53,53],re:[49,40],rh:[48,53],lk:[51,74],lf:[51,94],rk:[48,74],rf:[48,94]};
+const P = (b,o)=>Object.assign({},b,o||{});
+const mirror = p=>{const o={};for(const k in p)o[k]=[100-p[k][0],p[k][1]];return o};
+const shift = (p,dx,dy)=>{const o={};for(const k in p)o[k]=[p[k][0]+dx,p[k][1]+(dy||0)];return o};
+
+const PLANK = {h:[79,61],n:[70,66],p:[42,79],le:[70,80],lh:[70,93],re:[69,80],rh:[69,93],lk:[29,86],lf:[16,92],rk:[29,86],rf:[16,92]};
+const YPLANK = {h:[81,62],n:[72,67],p:[44,79],le:[73,80],lh:[74,93],re:[72,80],rh:[73,93],lk:[30,86],lf:[16,92],rk:[30,86],rf:[16,92]};
+const BSQ = {h:[66,66],n:[60,70],p:[40,72],le:[64,82],lh:[68,93],re:[63,82],rh:[67,93],lk:[56,78],lf:[44,94],rk:[55,79],rf:[43,94]};
+const GUARD = P(S,{le:[57,36],lh:[60,26],re:[55,38],rh:[58,27],lk:[54,74],lf:[57,94],rk:[45,74],rf:[41,94]});
+const SKATE = shift({h:[44,22],n:[46,31],p:[50,58],le:[40,37],lh:[32,31],re:[46,45],rh:[38,53],lk:[45,76],lf:[46,94],rk:[52,78],rf:[38,91]},-12);
+const ALL4 = {h:[78,66],n:[70,70],p:[40,70],c:[55,70],le:[70,82],lh:[70,93],re:[69,82],rh:[69,93],lk:[40,92],lf:[22,93],rk:[39,92],rf:[21,93]};
+const SIDEL = P(F,{n:[46,27],h:[41,19],c:[49,40],le:[39,17],lh:[30,10],re:[47,13],rh:[38,5]});
+const ARMX = P(F,{re:[42,35],rh:[30,33],le:[40,42],lh:[43,35]});
+const W1 = {h:[53,22],n:[50,31],p:[50,60],le:[36,31],lh:[22,31],re:[64,31],rh:[78,31],lk:[38,77],lf:[26,94],rk:[65,72],rf:[68,94]};
+const TREE1 = P(F,{lk:[49,74],lf:[49,94],rk:[65,63],rf:[52,70],le:[41,40],lh:[49,37],re:[59,40],rh:[51,37]});
+const SIT = {h:[50,51],n:[50,60],p:[50,88],le:[42,73],lh:[47,88],re:[58,73],rh:[53,88],lk:[32,82],lf:[47,92],rk:[68,82],rf:[53,92]};
+
+const CATS = [
+  {id:"stand",icon:"accessibility_new",name:"Standing",blurb:"Grounding poses and warm flows",preset:"yoga"},
+  {id:"balance",icon:"self_improvement",name:"Balance & core",blurb:"Steady focus and inner strength",preset:"tabata"},
+  {id:"floor",icon:"spa",name:"Floor & stretch",blurb:"Open hips, spine and hamstrings",preset:"p4515"},
+  {id:"calm",icon:"bedtime",name:"Restore",blurb:"Slow down, breathe and let go",preset:"double"}
+];
+const UP = P(S,{h:[50,16],le:[52,14],lh:[54,3],re:[51,14],rh:[52,3]});
+const DD = {h:[61,85],n:[56,77],p:[36,58],le:[65,85],lh:[74,93],re:[64,85],rh:[73,93],lk:[26,76],lf:[16,93],rk:[25,76],rf:[15,93]};
+const FOLD = {h:[61,86],n:[60,77],p:[44,54],c:[56,62],le:[57,85],lh:[54,93],re:[56,85],rh:[53,93],lk:[47,74],lf:[50,94],rk:[46,74],rf:[49,94]};
+const LUNGEH = {h:[72,68],n:[64,72],p:[44,72],c:[54,70],le:[66,82],lh:[68,93],re:[65,82],rh:[67,93],lk:[62,78],lf:[61,94],rk:[30,84],rf:[16,92]};
+const COBRA = {h:[71,66],n:[64,72],p:[44,90],c:[56,86],le:[66,82],lh:[70,92],re:[65,82],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]};
+const W1Y = {h:[52,22],n:[51,32],p:[50,60],le:[52,19],lh:[53,6],re:[51,19],rh:[52,6],lk:[66,74],lf:[67,94],rk:[38,76],rf:[26,93]};
+const TRI = {h:[21,32],n:[29,38],p:[50,56],le:[27,52],lh:[26,65],re:[30,24],rh:[31,11],lk:[38,75],lf:[30,94],rk:[62,75],rf:[71,94]};
+const GOD = {h:[50,24],n:[50,34],p:[50,62],le:[37,34],lh:[37,22],re:[63,34],rh:[63,22],lk:[32,72],lf:[34,94],rk:[68,72],rf:[66,94]};
+const DANCER = {h:[61,21],n:[57,30],p:[48,54],le:[69,24],lh:[80,17],re:[46,40],rh:[38,48],lk:[49,74],lf:[49,94],rk:[34,68],rf:[38,48]};
+const W3 = {h:[81,50],n:[71,52],p:[44,55],c:[57,54],le:[84,52],lh:[96,51],re:[83,53],rh:[95,52],lk:[45,75],lf:[45,94],rk:[24,55],rf:[6,56]};
+const BOAT = {h:[29,57],n:[33,66],p:[45,90],c:[38,79],le:[46,68],lh:[59,69],re:[45,69],rh:[58,70],lk:[62,72],lf:[78,56],rk:[61,73],rf:[77,57]};
+const PIGEON = {h:[51,50],n:[49,60],p:[46,86],le:[53,74],lh:[56,88],re:[52,74],rh:[55,88],lk:[64,91],lf:[50,93],rk:[27,90],rf:[8,92]};
+const SFOLD = {h:[66,80],n:[58,76],p:[36,90],c:[44,80],le:[66,84],lh:[76,88],re:[65,85],rh:[75,89],lk:[56,91],lf:[76,92],rk:[55,91],rf:[75,92]};
+const CHILD = {h:[71,88],n:[62,84],p:[38,82],c:[50,75],le:[74,90],lh:[88,92],re:[73,90],rh:[87,92],lk:[56,92],lf:[38,93],rk:[55,92],rf:[37,93]};
+const BABY = {h:[18,88],n:[27,89],p:[52,89],le:[34,78],lh:[41,66],re:[35,79],rh:[42,67],lk:[40,74],lf:[44,56],rk:[41,75],rf:[45,57]};
+const WALL = {h:[30,88],n:[40,89],p:[66,90],le:[49,91],lh:[58,92],re:[50,91],rh:[59,92],lk:[67,70],lf:[67,50],rk:[68,70],rf:[68,50]};
+const SAVA = {h:[14,88],n:[23,89],p:[50,90],le:[32,92],lh:[41,93],re:[33,92],rh:[42,93],lk:[70,91],lf:[88,92],rk:[70,92],rf:[88,93]};
+const EASY = {h:[50,51],n:[50,60],p:[50,86],le:[38,72],lh:[34,84],re:[62,72],rh:[66,84],lk:[32,86],lf:[56,92],rk:[68,86],rf:[44,92]};
+const breathe = (q,d)=>P(q,{h:[q.h[0],q.h[1]-(d||1)],n:[q.n[0],q.n[1]-(d||1)]});
+
+const EX = [
+ // Standing
+ {id:"mountain",cat:"stand",name:"Mountain to Upward Salute",dur:8,level:"Easy",focus:"Posture, shoulders, breath",
+  frames:[S,S,UP,UP],
+  steps:["Stand tall with feet hip-width and arms by your sides.","Breathe in and sweep your arms up overhead.","Breathe out and lower your arms. Repeat with your breath."],cue:"Root down through your feet as you reach up."},
+ {id:"sunsal",cat:"stand",name:"Sun Salutation",dur:20,level:"Medium",focus:"Full body, spine, breath",
+  frames:[S,UP,FOLD,LUNGEH,YPLANK,COBRA,DD,DD,LUNGEH,FOLD,UP,S],
+  steps:["Reach up, then fold forward.","Step back to a low lunge, then plank. Lower and lift into cobra.","Push back to down dog, step forward, fold, and rise back up."],cue:"Let one breath lead each movement."},
+{id:"chair",cat:"stand",name:"Chair Pose",dur:5,level:"Medium",focus:"Thighs, glutes, shoulders",
+  frames:[P(S,{le:[52,13],lh:[54,1],re:[51,13],rh:[52,1]}),{h:[57,34],n:[53,42],p:[37,66],le:[60,29],lh:[66,16],re:[59,30],rh:[65,17],lk:[55,74],lf:[51,94],rk:[54,75],rf:[50,94]},{h:[57,35],n:[53,43],p:[37,67],le:[60,30],lh:[66,17],re:[59,31],rh:[65,18],lk:[55,75],lf:[51,94],rk:[54,76],rf:[50,94]}],
+  steps:["Stand with feet together and arms overhead.","Bend your knees and sit back as if into a chair.","Hold and breathe, then rise up."],cue:"Weight in your heels. You should see your toes."},
+ {id:"warrior1",cat:"stand",name:"Warrior I",dur:6,level:"Medium",focus:"Legs, hips, shoulders",
+  frames:[W1Y,P(W1Y,{p:[50,62],n:[51,34],h:[52,24],le:[52,21],lh:[53,8],re:[51,21],rh:[52,8],lk:[66,75],rk:[38,77]})],
+  steps:["Step one foot back and turn it out slightly.","Bend your front knee over the ankle and square your hips forward.","Reach both arms up and lift your chest."],cue:"Press the outer edge of your back foot into the floor."},
+{id:"warrior2",cat:"stand",name:"Warrior II",dur:5,level:"Easy",focus:"Legs, hips, shoulders",
+  frames:[W1,P(W1,{p:[50,62],n:[50,33],h:[53,24],le:[36,33],lh:[22,33],re:[64,33],rh:[78,33],rk:[65,74],lk:[38,78]})],
+  steps:["Step your feet wide apart.","Turn your front foot out and bend that knee over the ankle.","Reach your arms out long and look past your front hand."],cue:"Sink your hips while your arms stay strong."},
+ {id:"triangle",cat:"stand",name:"Triangle",dur:6,level:"Medium",focus:"Hamstrings, side body, hips",
+  frames:[TRI,P(TRI,{re:[30,23],rh:[31,10]})],
+  steps:["Stand with feet wide, front toes turned out.","Reach forward over the front leg, then tip your hand down to your shin.","Lift the other arm straight up and open your chest."],cue:"Lengthen both sides of your waist."},
+ {id:"goddess",cat:"stand",name:"Goddess",dur:5,level:"Medium",focus:"Inner thighs, glutes, shoulders",
+  frames:[GOD,shift(P(GOD,{lk:[32,74],rk:[68,74]}),0,2)],
+  steps:["Step wide and turn your toes out.","Bend your knees deeply over your toes.","Bend your elbows to 90 degrees, palms forward, and hold."],cue:"Keep your tailbone heavy and your chest proud."},
+ {id:"fold",cat:"stand",name:"Standing Forward Fold",dur:6,level:"Easy",focus:"Hamstrings, lower back",
+  frames:[S,FOLD,P(FOLD,{h:[61,87],n:[60,78],le:[57,86],re:[56,86]})],
+  steps:["Stand tall, feet hip-width.","Hinge at the hips and fold forward.","Let your head and arms hang. Bend your knees if you need to."],cue:"Breathe out as you sink a little deeper."},
+{id:"lowlunge",cat:"stand",name:"Low Lunge",dur:6,level:"Easy",focus:"Hip flexors, quads",
+  frames:[{h:[48,36],n:[47,45],p:[45,71],le:[53,57],lh:[61,66],re:[52,58],rh:[60,67],lk:[64,72],lf:[65,94],rk:[33,92],rf:[17,94]},
+          {h:[52,33],n:[51,42],p:[50,73],le:[53,30],lh:[54,19],re:[52,30],rh:[53,19],lk:[66,72],lf:[65,94],rk:[34,92],rf:[18,94]}],
+  steps:["Step into a lunge and lower your back knee with the other foot flat in front of you.","Tuck your pelvis and gently push your hips forward.","Reach your arms up for a crescent shape. Switch sides each round."],cue:"Keep your front knee over your ankle, not past your toes."},
+{id:"crescent",cat:"stand",name:"Standing Crescent Moon",dur:7,level:"Easy",focus:"Obliques, lats",
+  frames:[SIDEL,SIDEL,mirror(SIDEL),mirror(SIDEL)],
+  steps:["Stand with feet hip-width apart.","Reach both arms overhead.","Lean to one side, hold, then lean to the other."],cue:"Reach long rather than collapsing sideways."},
+ // Balance & core
+{id:"tree",cat:"balance",name:"Tree Pose",dur:7,level:"Medium",focus:"Balance, ankles, core",
+  frames:[TREE1,TREE1,P(TREE1,{le:[43,13],lh:[49,2],re:[57,13],rh:[51,2]}),P(TREE1,{le:[43,13],lh:[49,2],re:[57,13],rh:[51,2]})],
+  steps:["Stand on one leg.","Place the other foot on your inner calf or thigh, never the knee.","Bring your hands to your chest, then grow them overhead."],cue:"Fix your eyes on one still point."},
+ {id:"dancer",cat:"balance",name:"Dancer",dur:6,level:"Hard",focus:"Balance, quads, chest",
+  frames:[DANCER,P(DANCER,{h:[63,23],n:[58,31],le:[70,25],lh:[81,19]})],
+  steps:["Stand on one leg and hold the other foot behind you.","Reach your free arm forward.","Kick the foot into your hand as you tip your chest forward."],cue:"Fix your gaze on one point and move slowly."},
+ {id:"warrior3",cat:"balance",name:"Warrior III",dur:5,level:"Hard",focus:"Balance, glutes, hamstrings",
+  frames:[W3,P(W3,{rk:[24,53],rf:[6,53]})],
+  steps:["Stand on one leg with arms reaching forward.","Tip your body forward as the back leg lifts.","Make one long line from fingers to heel."],cue:"Keep both hips level, toes pointing down."},
+ {id:"boat",cat:"balance",name:"Boat Pose",dur:4,level:"Medium",focus:"Abs, hip flexors, balance",
+  frames:[P(BOAT,{lk:[58,72],lf:[76,72],rk:[57,73],rf:[75,73]}),BOAT,BOAT],
+  steps:["Sit with knees bent and lean back slightly.","Lift your feet and reach your arms forward.","Straighten your legs if it feels good."],cue:"Lift your chest instead of rounding your back."},
+ {id:"plank",cat:"balance",name:"High Plank",dur:4,level:"Medium",focus:"Core, shoulders, arms",
+  frames:[YPLANK,P(YPLANK,{p:[44,78]})],
+  steps:["Place your hands under your shoulders.","Step your feet back into one long line.","Hold and breathe steadily."],cue:"Push the floor away and draw your belly in."},
+ // Floor
+ {id:"downdog",cat:"floor",name:"Downward Dog",dur:6,level:"Easy",focus:"Shoulders, hamstrings, calves",
+  frames:[DD,P(DD,{p:[36,56],lk:[27,75],rk:[26,75]})],
+  steps:["Start on hands and knees.","Tuck your toes and lift your hips up and back.","Press your heels toward the floor and let your head relax."],cue:"Bend your knees a little if your back rounds."},
+{id:"catcow",cat:"floor",name:"Cat-Cow",dur:5,level:"Easy",focus:"Spine, back, neck",
+  frames:[P(ALL4,{c:[55,55],h:[74,80],n:[69,72]}),P(ALL4,{c:[55,82],h:[80,60],n:[70,68]})],
+  steps:["Come to hands and knees.","Breathe in: drop your belly and lift your head (cow).","Breathe out: round your back and tuck your chin (cat)."],cue:"Move slowly, one breath per movement."},
+{id:"cobra",cat:"floor",name:"Cobra",dur:6,level:"Easy",focus:"Lower back, chest",
+  frames:[{h:[78,88],n:[68,90],p:[44,90],c:[56,91],le:[62,83],lh:[70,92],re:[61,83],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]},
+          {h:[71,66],n:[64,72],p:[44,90],c:[56,86],le:[66,82],lh:[70,92],re:[65,82],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]},
+          {h:[71,65],n:[64,71],p:[44,90],c:[56,86],le:[66,81],lh:[70,92],re:[65,81],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]}],
+  steps:["Lie on your stomach, hands under your shoulders.","Press gently to lift your chest, hips stay down.","Hold a few breaths, then lower."],cue:"Keep elbows slightly bent and shoulders away from ears."},
+{id:"bridge",cat:"floor",name:"Bridge Pose",dur:2.4,level:"Easy",focus:"Glutes, hamstrings, lower back",
+  frames:[{h:[15,87],n:[24,89],p:[50,89],le:[34,92],lh:[44,93],re:[33,92],rh:[43,93],lk:[64,74],lf:[70,93],rk:[63,74],rf:[69,93]},
+          {h:[15,87],n:[24,89],p:[50,73],le:[34,92],lh:[44,93],re:[33,92],rh:[43,93],lk:[66,70],lf:[70,93],rk:[65,70],rf:[69,93]}],
+  steps:["Lie on your back with knees bent and feet flat.","Squeeze your glutes and lift your hips.","Pause at the top, then lower slowly."],cue:"Make a straight line from knees to shoulders."},
+{id:"locust",cat:"floor",name:"Locust",dur:2.6,level:"Easy",focus:"Lower back, glutes",
+  frames:[{h:[80,89],n:[70,90],p:[44,90],le:[82,91],lh:[94,91],re:[81,91],rh:[93,91],lk:[30,91],lf:[16,92],rk:[30,91],rf:[16,92]},
+          {h:[81,82],n:[70,86],p:[44,90],c:[57,91],le:[82,82],lh:[93,77],re:[81,82],rh:[92,77],lk:[30,87],lf:[16,82],rk:[30,87],rf:[16,82]}],
+  steps:["Lie face down with your arms stretched forward.","Lift your arms, chest and legs off the floor together.","Hold a moment, then lower."],cue:"Look at the floor to keep your neck long."},
+ {id:"pigeon",cat:"floor",name:"Pigeon",dur:8,level:"Medium",focus:"Hips, glutes, hip flexors",
+  frames:[PIGEON,{h:[81,82],n:[71,80],p:[46,86],c:[58,80],le:[82,90],lh:[94,92],re:[81,90],rh:[93,92],lk:[64,91],lf:[50,93],rk:[27,90],rf:[8,92]},{h:[81,83],n:[71,81],p:[46,86],c:[58,81],le:[82,90],lh:[94,92],re:[81,90],rh:[93,92],lk:[64,91],lf:[50,93],rk:[27,90],rf:[8,92]},PIGEON],
+  steps:["From down dog, bring one knee forward behind your wrist.","Slide the back leg long behind you.","Sit tall, then walk your hands forward and rest. Switch sides each round."],cue:"Place a cushion under your hip if it lifts."},
+ {id:"seatedfold",cat:"floor",name:"Seated Forward Fold",dur:7,level:"Easy",focus:"Hamstrings, back, calm",
+  frames:[{h:[38,53],n:[37,63],p:[36,90],le:[39,49],lh:[40,37],re:[38,49],rh:[39,37],lk:[56,91],lf:[76,92],rk:[55,91],rf:[75,92]},SFOLD,P(SFOLD,{h:[67,82],n:[59,78]})],
+  steps:["Sit with your legs long in front of you.","Breathe in and reach your arms up.","Breathe out and fold over your legs, holding your shins or feet."],cue:"Lead with your chest, not your head."},
+{id:"butterfly",cat:"floor",name:"Bound Angle",dur:1.8,level:"Easy",focus:"Inner thighs, hips",
+  frames:[SIT,P(SIT,{lk:[31,88],rk:[69,88]})],
+  steps:["Sit with the soles of your feet together.","Hold your feet and sit up tall.","Gently flutter your knees, or hold them low."],cue:"Lengthen your spine before you lean forward."},
+{id:"twist",cat:"floor",name:"Seated Twist",dur:6,level:"Easy",focus:"Spine, lower back, glutes",
+  frames:[{h:[43,55],n:[42,64],p:[40,90],le:[50,74],lh:[57,77],re:[49,75],rh:[56,79],lk:[55,73],lf:[57,92],rk:[58,91],rf:[77,92]},
+          {h:[40,55],n:[41,64],p:[40,90],le:[52,71],lh:[60,67],re:[33,76],rh:[25,90],lk:[55,73],lf:[57,92],rk:[58,91],rf:[77,92]}],
+  steps:["Sit tall with one leg straight and the other knee bent, foot outside the straight leg.","Hug the bent knee with the opposite arm and place your other hand behind you.","Twist toward the bent knee as you breathe out. Switch sides each round."],cue:"Grow tall on every breath in, twist a little more on every breath out."},
+{id:"frog",cat:"floor",name:"Frog Pose",dur:6,level:"Medium",focus:"Inner thighs, hips, groin",
+  frames:[{h:[75,80],n:[67,80],p:[45,74],c:[56,76],le:[65,92],lh:[78,93],re:[64,92],rh:[77,93],lk:[44,93],lf:[38,94],rk:[45,93],rf:[39,94]},
+          {h:[71,83],n:[63,82],p:[37,77],c:[50,79],le:[63,92],lh:[76,93],re:[62,92],rh:[75,93],lk:[44,93],lf:[38,94],rk:[45,93],rf:[39,94]}],
+  steps:["Start on your forearms and knees.","Slide your knees wide apart, ankles in line with your knees.","Slowly rock your hips back and hold where you feel the stretch."],cue:"Go easy. Pad your knees with a towel."},
+ // Restore
+ {id:"child",cat:"calm",name:"Child's Pose",dur:8,level:"Easy",focus:"Back, hips, calm",
+  frames:[CHILD,P(CHILD,{c:[50,73]})],
+  steps:["Kneel and sit back on your heels.","Fold forward and rest your forehead on the mat.","Stretch your arms forward or rest them by your feet."],cue:"Breathe into your back body."},
+ {id:"happybaby",cat:"calm",name:"Happy Baby",dur:4,level:"Easy",focus:"Hips, lower back",
+  frames:[BABY,shift(BABY,1,0),BABY,shift(BABY,-1,0)],
+  steps:["Lie on your back and hug your knees in.","Open your knees wide and hold your feet or shins.","Gently rock from side to side."],cue:"Keep your lower back heavy on the mat."},
+ {id:"legswall",cat:"calm",name:"Legs Up the Wall",dur:9,level:"Easy",focus:"Legs, lower back, calm",
+  props:[["line",{x1:71,y1:28,x2:71,y2:96,"stroke-width":3}]],
+  frames:[WALL,breathe(WALL,.6)],
+  steps:["Sit sideways next to a wall.","Swing your legs up the wall as you lie back.","Rest your arms by your sides and close your eyes."],cue:"Slide a pillow under your hips for more comfort."},
+ {id:"savasana",cat:"calm",name:"Savasana",dur:10,level:"Easy",focus:"Whole body, mind",
+  frames:[SAVA,P(SAVA,{c:[36,88]})],
+  steps:["Lie flat on your back.","Let your feet fall open and your palms face up.","Close your eyes and let your breath be natural."],cue:"Let the floor hold all of your weight."},
+ {id:"easy",cat:"calm",name:"Easy Seat Breathing",dur:8,level:"Easy",focus:"Breath, posture, calm",
+  frames:[EASY,breathe(EASY,1.2)],
+  steps:["Sit cross-legged on a cushion.","Rest your hands on your knees and sit tall.","Breathe in for four counts and out for six."],cue:"Soften your face and jaw."},
+{id:"neck",cat:"calm",name:"Neck Release",dur:6,level:"Easy",focus:"Neck, upper traps",
+  frames:[P(F,{h:[43,19]}),P(F,{h:[43,19]}),P(F,{h:[57,19]}),P(F,{h:[57,19]})],
+  steps:["Stand or sit tall with shoulders relaxed.","Tilt your ear toward one shoulder and hold.","Slowly switch to the other side."],cue:"Let your shoulders drop away from your ears."},
+];
+const byId = Object.fromEntries(EX.map(e=>[e.id,e]));
+const catOf = id => CATS.find(c=>c.id===id);
+const catColor = id => `var(--${id})`;
+const setC = (el,id)=>{el.style.setProperty("--c",`var(--${id})`);el.style.setProperty("--cc",`var(--${id}-c)`)};
+
+/* ---------- Figure renderer ---------- */
+const NS = "http://www.w3.org/2000/svg";
+const KEYS = ["h","n","p","le","lh","re","rh","lk","lf","rk","rf"];
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const figures = new Set();
+
+function mk(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["char","toon","stick"].includes(v)?v:"toon"; }catch(e){ return "toon"; } })();
+/* Exercises drawn facing the viewer; all others are side views facing right. */
+const FRONT = new Set(["neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
+const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
+const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+class Figure{
+  constructor(ex,opts={}){
+    this.svg = mk("svg",{viewBox:"0 0 100 100","aria-hidden":"true"});
+    mk("line",{x1:6,y1:96.5,x2:94,y2:96.5,stroke:"var(--fig-far)","stroke-width":1,"stroke-linecap":"round",opacity:.6},this.svg);
+    this.props = mk("g",{fill:"none",stroke:"var(--fig-far)","stroke-linecap":"round","stroke-linejoin":"round"},this.svg);
+    this.shadow = mk("ellipse",{cx:50,cy:96.5,rx:14,ry:2,fill:"var(--fig)",opacity:.12},this.svg);
+    this.stick = mk("g",{},this.svg);
+    const g = mk("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},this.stick);
+    const far = {stroke:"var(--fig-far)","stroke-width":5}, near={stroke:"var(--fig)","stroke-width":5};
+    this.farArm = mk("path",far,g); this.farLeg = mk("path",far,g);
+    this.torso = mk("path",{stroke:"var(--fig)","stroke-width":7},g);
+    this.nearLeg = mk("path",near,g); this.nearArm = mk("path",near,g);
+    this.head = mk("circle",{r:6.6,fill:"var(--fig)"},this.stick);
+    this.sbun = mk("circle",{r:3,fill:"var(--fig)"},this.stick);
+    this.buildChar(); this.buildToon();
+    this.animate = opts.animate!==false; this.visible = true; this.speed = 1; this.t0 = performance.now();
+    this.setEx(ex);
+    figures.add(this);
+  }
+  setEx(ex){ if(this.ex===ex) return; this.ex=ex;
+    this.props.innerHTML=""; if(ex&&ex.props) ex.props.forEach(([tag,a])=>mk(tag,a,this.props)); this.t0=performance.now(); this.draw(ex? this.restT():0); }
+  restT(){ return this.ex.dur/this.ex.frames.length; }
+  buildChar(){
+    const g=this.ch=mk("g",{"stroke-linecap":"round","stroke-linejoin":"round"},this.svg);
+    const P=(a)=>mk("path",Object.assign({fill:"none"},a),g), F=(a)=>mk("path",a,g), C=(a)=>mk("circle",a,g), E=(a)=>mk("ellipse",a,g);
+    // A limb is two tapered segments drawn as strokes, with a thin darker edge for definition.
+    const limb=(far,leg)=>{
+      // legs wear full-length leggings, arms are bare (tank top), feet are bare for the mat
+      const sk=far?CH.skinFar:CH.skin, lg=far?CH.shortsFar:CH.shorts, o={leg};
+      if(leg){ o.footOut=P({stroke:CH.skinLine,"stroke-width":3.6}); o.foot=P({stroke:sk,"stroke-width":2.5}); }
+      o.low=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
+      o.up=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
+      o.hi=P({stroke:leg?"#8A5C90":CH.skinHi,"stroke-width":.9,opacity:far?0:(leg?.5:.8)});
+      o.cloth=F({fill:leg?lg:"none",stroke:"none"});
+      if(!leg) o.hand=E({rx:2.1,ry:2.4,fill:sk,stroke:CH.skinLine,"stroke-width":.8});
+      return o;
+    };
+    this.c={farArm:limb(true,false),farLeg:limb(true,true)};
+    this.c.neck=P({stroke:CH.skin,"stroke-width":4.4});
+    this.c.torso=F({fill:CH.shirt,stroke:CH.shirtLine,"stroke-width":.9});
+    this.c.shorts=F({fill:CH.shorts,stroke:CH.shortsLine,"stroke-width":.9});
+    this.c.nearLeg=limb(false,true); this.c.nearArm=limb(false,false);
+    this.c.bun=C({r:3.2,fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
+    this.c.hair=E({fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
+    this.c.face=E({fill:CH.skin,stroke:CH.skinLine,"stroke-width":.8});
+    this.c.ear=E({rx:1.3,ry:1.9,fill:CH.skinFar,stroke:CH.skinLine,"stroke-width":.6});
+    this.c.nose=P({stroke:CH.skinLine,"stroke-width":.9});
+    this.c.brow1=P({stroke:CH.hairLine,"stroke-width":.8}); this.c.brow2=P({stroke:CH.hairLine,"stroke-width":.8});
+    this.c.eye1=C({r:.75,fill:CH.feat}); this.c.eye2=C({r:.75,fill:CH.feat});
+    this.c.mouth=P({stroke:CH.lip,"stroke-width":1});
+  }
+  /* Cartoon style: flat colors, thick rounded limbs, big friendly head. */
+  buildToon(){
+    const g=this.toon=mk("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},this.svg);
+    g.style.display="none";
+    const L=TO.line, two=(w,col,wO)=>{ const o=mk("path",{stroke:L,"stroke-width":w+(wO||1.8)},g), i=mk("path",{stroke:col,"stroke-width":w},g); return [o,i]; };
+    const circ=(a)=>mk("circle",a,g);
+    const limb=(far,leg)=>{
+      const sk=far?TO.skinFar:TO.skin, lg=far?TO.shortsFar:TO.shorts, o={leg};
+      if(leg) o.shoe=two(3.2,sk);
+      o.limb=two(leg?5.4:3.6,leg?lg:sk);
+      if(leg) o.cloth=two(6.8,lg); else o.hand=circ({r:2.3,fill:sk,stroke:L,"stroke-width":.9});
+      return o;
+    };
+    const T=this.t={farArm:limb(true,false),farLeg:limb(true,true)};
+    T.body=two(12,TO.shirt); T.shorts=two(12.6,TO.shorts);
+    T.nearLeg=limb(false,true); T.nearArm=limb(false,false);
+    T.neck=two(3.6,TO.skin,1.4);
+    T.bun=circ({r:3.6,fill:TO.hair,stroke:L,"stroke-width":1});
+    T.hair=circ({fill:TO.hair,stroke:L,"stroke-width":1});
+    T.ear=circ({r:1.8,fill:TO.skin,stroke:L,"stroke-width":.9});
+    T.face=circ({fill:TO.skin,stroke:L,"stroke-width":1});
+    T.fringe=mk("path",{fill:TO.hair},g);
+    T.cheek1=circ({r:1.5,fill:TO.cheek,opacity:.55}); T.cheek2=circ({r:1.5,fill:TO.cheek,opacity:.55});
+    T.ew1=circ({r:1.75,fill:"#fff",stroke:L,"stroke-width":.5}); T.ew2=circ({r:1.75,fill:"#fff",stroke:L,"stroke-width":.5});
+    T.p1=circ({r:1.05,fill:TO.eye}); T.p2=circ({r:1.05,fill:TO.eye});
+    T.brows=mk("path",{stroke:TO.hair,"stroke-width":.9},g);
+    T.lash=mk("path",{stroke:TO.line,"stroke-width":.8},g);
+    T.nose=mk("path",{stroke:TO.line,"stroke-width":.8},g);
+    T.mouth=mk("path",{stroke:TO.mouth,"stroke-width":.95},g);
+  }
+  drawToon(q,c){
+    const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set2=(pr,d)=>{pr[0].setAttribute("d",d);pr[1].setAttribute("d",d)}, T=this.t;
+    const front=FRONT.has(this.ex.id);
+    const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+    const unit=v=>{const Lh=Math.hypot(v[0],v[1])||1;return [v[0]/Lh,v[1]/Lh]}, perp=v=>[-v[1],v[0]];
+    const at=(el,p,r)=>{el.setAttribute("cx",p[0].toFixed(1));el.setAttribute("cy",p[1].toFixed(1)); if(r!=null) el.setAttribute("r",r);};
+    const qb=(t)=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    const limb=(o,a,b,e)=>{
+      set2(o.limb,`M${f(lerp(a,b,o.leg?.16:.08))}L${f(b)}L${f(e)}`);
+      if(o.leg) set2(o.cloth,`M${f(lerp(a,b,.12))}L${f(lerp(a,b,.3))}`);
+      if(o.leg){
+        const d=unit(sub(e,b)); let toe=front?[0,0]:[d[1],-d[0]]; if(!front&&toe[0]<0) toe=[-toe[0],-toe[1]];
+        const h=front?add(e,[-.6,.9]):add(e,toe,-.4), t=front?add(e,[.6,.9]):add(e,toe,3.4);
+        set2(o.shoe,`M${f(h)}L${f(t)}`);
+      } else at(o.hand,e);
+    };
+    limb(T.farArm,q.n,q.re,q.rh); limb(T.farLeg,q.p,q.rk,q.rf);
+    const top=lerp(q.n,c,.12);
+    T.body[0].setAttribute("stroke-width",front?15.6:11.2); T.body[1].setAttribute("stroke-width",front?13.8:9.4);
+    T.shorts[0].setAttribute("stroke-width",front?17.4:12.4); T.shorts[1].setAttribute("stroke-width",front?15.6:10.6);
+    set2(T.body,`M${f(q.p)}Q${f(c)} ${f(top)}`);
+    set2(T.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.6))}L${f(qb(.3))}`);
+    limb(T.nearLeg,q.p,q.lk,q.lf); limb(T.nearArm,q.n,q.le,q.lh);
+    // head sits a little further out than the realistic head, and is bigger
+    const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,8.6), R=7.4;
+    set2(T.neck,`M${f(q.n)}L${f(add(q.n,ax,2.6))}`);
+    at(T.bun,front?add(H,ax,R+2.6):add(add(H,ax,R*.8),fd,-R*.7),3.6);
+    if(front){
+      at(T.hair,add(H,ax,1.1),R+.4); at(T.face,add(H,ax,-.3),R-.3); T.ear.setAttribute("r",0);
+      const fr=add(H,ax,R*.62);
+      T.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.78))}Q${f(add(add(H,ax,R*.15),fd,-R*.2))} ${f(add(add(fr,ax,-.6),fd,.4))}Q${f(add(add(H,ax,R*.25),fd,R*.45))} ${f(add(fr,fd,R*.78))}Q${f(add(fr,ax,R*.5))} ${f(add(fr,fd,-R*.78))}Z`);
+      const e1=add(add(H,fd,-2.7),ax,.4), e2=add(add(H,fd,2.7),ax,.4);
+      at(T.ew1,e1,1.75); at(T.ew2,e2,1.75); at(T.p1,add(e1,ax,-.2),1.05); at(T.p2,add(e2,ax,-.2),1.05);
+      T.lash.setAttribute("d",`M${f(add(add(e1,ax,1.2),fd,-1.4))}l${f(sub(add(fd,ax,.5),[0,0]).map(v=>-v*1.1))}M${f(add(add(e2,ax,1.2),fd,1.4))}l${f(add(fd,ax,.5).map((v,i)=>i?-v*1.1:v*1.1))}`);
+      T.brows.setAttribute("d",`M${f(add(add(e1,ax,2.4),fd,-1.4))}Q${f(add(e1,ax,3))} ${f(add(add(e1,ax,2.5),fd,1.3))}M${f(add(add(e2,ax,2.5),fd,-1.3))}Q${f(add(e2,ax,3))} ${f(add(add(e2,ax,2.4),fd,1.4))}`);
+      T.nose.setAttribute("d",`M${f(add(H,ax,-1.2))}q.5 .6 0 1`);
+      const m=add(H,ax,-3.4); T.mouth.setAttribute("d",`M${f(add(add(m,fd,-1.9),ax,.4))}Q${f(add(m,ax,-1.3))} ${f(add(add(m,fd,1.9),ax,.4))}`);
+      at(T.cheek1,add(add(H,fd,-4.4),ax,-2),1.5); at(T.cheek2,add(add(H,fd,4.4),ax,-2),1.5);
+    } else {
+      at(T.hair,add(add(H,ax,.9),fd,-1.2),R+.3); at(T.face,add(add(H,ax,-.3),fd,.5),R-.4);
+      at(T.ear,add(add(H,fd,-1.8),ax,-.5),1.8);
+      const fr=add(add(H,ax,R*.55),fd,R*.15);
+      T.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.9))}Q${f(add(fr,ax,R*.55))} ${f(add(fr,fd,R*.75))}Q${f(add(add(H,ax,R*.3),fd,R*.25))} ${f(add(fr,fd,-R*.9))}Z`);
+      const e=add(add(H,fd,4),ax,.6);
+      at(T.ew1,e,1.6); at(T.p1,add(e,fd,.55),1); at(T.ew2,e,0); at(T.p2,e,0);
+      T.lash.setAttribute("d",`M${f(add(add(e,ax,1.1),fd,1.3))}l${f(add(fd,ax,.6).map(v=>v*1.1))}`);
+      T.brows.setAttribute("d",`M${f(add(add(e,ax,2.3),fd,-1.2))}Q${f(add(e,ax,2.9))} ${f(add(add(e,ax,2.4),fd,1.2))}`);
+      const nb=add(add(H,fd,R-.6),ax,-.6); T.nose.setAttribute("d",`M${f(nb)}q1.3 .3 .4 1.4`);
+      const m=add(add(H,fd,4.4),ax,-3.2); T.mouth.setAttribute("d",`M${f(add(m,fd,-1.2))}Q${f(add(m,ax,-.9))} ${f(add(add(m,fd,1.6),ax,.5))}`);
+      at(T.cheek1,add(add(H,fd,2.6),ax,-2.2),1.5); at(T.cheek2,H,0);
+    }
+  }
+  drawChar(q,c){
+    const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set=(el,d)=>el.setAttribute("d",d), C=this.c;
+    const front=FRONT.has(this.ex.id);
+    const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+    const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
+    const qb=(t)=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    // tapered segment with a muscle bulge: half-widths at start, bulge (at tm) and end, rounded ends
+    const seg=(A,B,wa,wm,wb,tm,side)=>{
+      const d=unit(sub(B,A)), n=perp(d), M=lerp(A,B,tm), s2=side||1;
+      return `M${f(add(A,n,wa))}Q${f(add(M,n,wm*s2>0?wm*1.15:wm))} ${f(add(B,n,wb))}Q${f(add(B,d,wb*1.3))} ${f(add(B,n,-wb))}Q${f(add(M,n,-wm*1.15))} ${f(add(A,n,-wa))}Q${f(add(A,d,-wa*1.3))} ${f(add(A,n,wa))}Z`;
+    };
+    // flat-ended cloth tube (sleeve / shorts leg)
+    const tube=(A,B,wa,wb)=>{const n=perp(unit(sub(B,A)));return `M${f(add(A,n,wa))}L${f(add(B,n,wb))}L${f(add(B,n,-wb))}L${f(add(A,n,-wa))}Z`;};
+    const limb=(o,a,b,e)=>{
+      if(o.leg){
+        set(o.up,seg(a,b,4.3,4.4,2.7,.35)); set(o.low,seg(b,e,2.6,2.9,1.6,.3));
+        set(o.cloth,tube(lerp(a,b,-.14),lerp(a,b,.3),5,4.6));
+        const dn=perp(unit(sub(e,b))); set(o.hi,`M${f(add(lerp(b,e,.12),dn,1.6))}L${f(add(lerp(b,e,.45),dn,1.9))}`);
+      } else {
+        set(o.up,seg(a,b,2.4,2.6,1.9,.4)); set(o.low,seg(b,e,1.9,2.1,1.3,.3));
+        const dn=perp(unit(sub(b,a))); set(o.hi,`M${f(add(lerp(a,b,.3),dn,1.4))}L${f(add(lerp(a,b,.75),dn,1.3))}`);
+      }
+      if(o.leg){
+        const d=unit(sub(e,b)); let toe=front?[0,0]:[d[1],-d[0]];
+        if(!front && toe[0]<0) toe=[-toe[0],-toe[1]];
+        const h=front?add(e,[-.8,.8]):add(e,toe,-1), t=front?add(e,[.8,.8]):add(e,toe,4.2);
+        const sd=`M${f(h)}L${f(t)}`; set(o.footOut,sd); set(o.foot,sd);
+      } else { o.hand.setAttribute("cx",e[0].toFixed(1)); o.hand.setAttribute("cy",e[1].toFixed(1)); }
+    };
+    limb(C.farArm,q.n,q.re,q.rh); limb(C.farLeg,q.p,q.rk,q.rf);
+    // torso: tapered shape along the spine, broader at the chest than the waist
+    const ws=front?7.4:5.2, wm=front?5.4:4.4, wh=front?7.6:5.8;
+    const tn=unit(sub(q.n,c)), tp=unit(sub(c,q.p)), tc=unit(sub(q.n,q.p));
+    const Nn=perp(tn), Np=perp(tp), Nc=perp(tc);
+    const chestN=lerp(q.n,c,.18);
+    set(C.torso,`M${f(add(chestN,Nn,ws))}Q${f(add(c,Nc,wm))} ${f(add(q.p,Np,wh))}L${f(add(q.p,Np,-wh))}Q${f(add(c,Nc,-wm))} ${f(add(chestN,Nn,-ws))}Q${f(add(q.n,tn,1.5))} ${f(add(chestN,Nn,ws))}Z`);
+    const w0=qb(.36), n0=perp(unit(sub(qb(.4),qb(.32))));
+    set(C.shorts,`M${f(add(w0,n0,wm+.4))}L${f(add(q.p,Np,wh+.8))}Q${f(add(q.p,tp,-3.5))} ${f(add(q.p,Np,-(wh+.8)))}L${f(add(w0,n0,-(wm+.4)))}Z`);
+    set(C.neck,`M${f(q.n)}L${f(lerp(q.n,q.h,.6))}`);
+    limb(C.nearLeg,q.p,q.lk,q.lf); limb(C.nearArm,q.n,q.le,q.lh);
+    // head: an oval along the neck-to-head axis
+    const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], ang=Math.atan2(ax[1],ax[0])*180/Math.PI+90;
+    const H=q.h, rot=`rotate(${ang.toFixed(1)} ${H[0].toFixed(1)} ${H[1].toFixed(1)})`;
+    const ell=(el,cx,cy,rx,ry,tr)=>{el.setAttribute("cx",cx.toFixed(1));el.setAttribute("cy",cy.toFixed(1));el.setAttribute("rx",rx);el.setAttribute("ry",ry);el.setAttribute("transform",tr)};
+    const bn=front?add(H,ax,6.6):add(add(H,ax,5),fd,-3.6);
+    C.bun.setAttribute("cx",bn[0].toFixed(1)); C.bun.setAttribute("cy",bn[1].toFixed(1));
+    if(front){
+      ell(C.hair,H[0],H[1]-.9,6.1,6.9,rot);
+      const fc=add(H,ax,-.7);
+      ell(C.face,fc[0],fc[1],5.3,6.3,rot);
+      C.ear.setAttribute("rx",0);
+      const e1=add(add(fc,fd,-2.1),ax,.6), e2=add(add(fc,fd,2.1),ax,.6);
+      C.eye1.setAttribute("cx",e1[0].toFixed(1)); C.eye1.setAttribute("cy",e1[1].toFixed(1));
+      C.eye2.setAttribute("cx",e2[0].toFixed(1)); C.eye2.setAttribute("cy",e2[1].toFixed(1)); C.eye2.setAttribute("r",.75);
+      // feminine detail: soft lashes instead of straight brows below
+
+      set(C.brow1,`M${f(add(add(e1,ax,1.7),fd,-1))}Q${f(add(e1,ax,2.3))} ${f(add(add(e1,ax,1.8),fd,1))}`); set(C.brow2,`M${f(add(add(e2,ax,1.8),fd,-1))}Q${f(add(e2,ax,2.3))} ${f(add(add(e2,ax,1.7),fd,1))}`);
+      set(C.nose,`M${f(add(fc,ax,-.2))}l.4 1.5l-.9 .1`);
+      const m=add(fc,ax,-3.2); set(C.mouth,`M${f(add(m,fd,-1.2))}Q${f(add(m,ax,-.7))} ${f(add(m,fd,1.2))}`);
+    } else {
+      const hb=add(H,fd,-.8); ell(C.hair,hb[0],hb[1],5.8,6.8,rot);
+      const fc=add(add(H,fd,.9),ax,-.5); ell(C.face,fc[0],fc[1],5.1,6.2,rot);
+      const er=add(add(H,fd,-1),ax,-.4); C.ear.setAttribute("rx",1.3); ell(C.ear,er[0],er[1],1.3,1.9,rot);
+      const e=add(add(H,fd,4),ax,.6);
+      C.eye1.setAttribute("cx",e[0].toFixed(1)); C.eye1.setAttribute("cy",e[1].toFixed(1)); C.eye2.setAttribute("r",0);
+      set(C.brow1,`M${f(add(add(e,ax,1.5),fd,-1))}L${f(add(add(e,ax,1.6),fd,1))}`); set(C.brow2,"M0 0");
+      const nb=add(add(H,fd,5.9),ax,.1); set(C.nose,`M${f(nb)}L${f(add(add(nb,fd,1.2),ax,-1.4))}L${f(add(nb,ax,-1.9))}`);
+      const m=add(add(H,fd,4.6),ax,-3.1); set(C.mouth,`M${f(m)}Q${f(add(add(m,fd,.6),ax,-.3))} ${f(add(m,fd,1.2))}`);
+    }
+  }
+  pose(t){
+    const fr=this.ex.frames, n=fr.length;
+    if(n===1) return fr[0];
+    const u = ((t/this.ex.dur)%1+1)%1*n, i=Math.floor(u), f=u-i, e=(1-Math.cos(Math.PI*f))/2;
+    const A=fr[i], B=fr[(i+1)%n], o={};
+    for(const k of KEYS){o[k]=[A[k][0]+(B[k][0]-A[k][0])*e, A[k][1]+(B[k][1]-A[k][1])*e]}
+    const ca = A.c||[(A.n[0]+A.p[0])/2,(A.n[1]+A.p[1])/2], cb = B.c||[(B.n[0]+B.p[0])/2,(B.n[1]+B.p[1])/2];
+    o.c=[ca[0]+(cb[0]-ca[0])*e, ca[1]+(cb[1]-ca[1])*e];
+    return o;
+  }
+  draw(t){
+    if(!this.ex) return;
+    const q=this.pose(t), f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1);
+    const c=q.c||[(q.n[0]+q.p[0])/2,(q.n[1]+q.p[1])/2];
+    this.farArm.setAttribute("d",`M${f(q.n)}L${f(q.re)}L${f(q.rh)}`);
+    this.farLeg.setAttribute("d",`M${f(q.p)}L${f(q.rk)}L${f(q.rf)}`);
+    this.torso.setAttribute("d",`M${f(q.p)}Q${f(c)} ${f(q.n)}`);
+    this.nearLeg.setAttribute("d",`M${f(q.p)}L${f(q.lk)}L${f(q.lf)}`);
+    this.nearArm.setAttribute("d",`M${f(q.n)}L${f(q.le)}L${f(q.lh)}`);
+    this.head.setAttribute("cx",q.h[0].toFixed(1)); this.head.setAttribute("cy",q.h[1].toFixed(1));
+    { const dx=q.h[0]-q.n[0], dy=q.h[1]-q.n[1], L=Math.hypot(dx,dy)||1, ux=dx/L, uy=dy/L, fr=FRONT.has(this.ex.id);
+      this.sbun.setAttribute("cx",(q.h[0]+ux*7+(fr?0:uy*3.4)).toFixed(1)); this.sbun.setAttribute("cy",(q.h[1]+uy*7+(fr?0:-ux*3.4)).toFixed(1)); }
+    const st=figStyle==="char"||figStyle==="stick"?figStyle:"toon";
+    if(this.shown!==st){ this.shown=st; this.stick.style.display=st==="stick"?"":"none"; this.ch.style.display=st==="char"?"":"none"; this.toon.style.display=st==="toon"?"":"none"; }
+    if(st==="char") this.drawChar(q,c); else if(st==="toon") this.drawToon(q,c);
+    const lowY = Math.max(q.lf[1],q.rf[1],q.lh[1],q.rh[1]);
+    const xs=[q.lf[0],q.rf[0]]; if(q.lh[1]>88) xs.push(q.lh[0]); if(q.p[1]>84) xs.push(q.p[0],q.n[0]);
+    const mn=Math.min(...xs), mx=Math.max(...xs);
+    this.shadow.setAttribute("cx",((mn+mx)/2).toFixed(1)); this.shadow.setAttribute("rx",Math.max(8,(mx-mn)/2+6).toFixed(1));
+    this.shadow.setAttribute("opacity", lowY>90 ? .12 : .06);
+  }
+  destroy(){figures.delete(this)}
+}
+function loop(now){
+  for(const fg of figures){
+    if(!fg.ex||!fg.visible||!fg.animate||!fg.svg.isConnected) continue;
+    fg.draw((now-fg.t0)/1000*fg.speed);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es=>{for(const e of es){if(e.target._fig) e.target._fig.visible=e.isIntersecting}}) : null;
+
+/* ---------- Storage ---------- */
+const store = {
+  get(k,d){try{const v=localStorage.getItem("hy:"+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem("hy:"+k,JSON.stringify(v)); return true}catch(e){ if(!store.warned){ store.warned=true; setTimeout(()=>snack("Can't save on this device: storage is full or blocked"),0); } return false}}
+};
+/* Icons (Lucide, ISC license). Markup writes <span class="ms">name</span>; paintIcon swaps the name for its SVG. */
+const ICONS={"search":"<circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","add":"<path d=\"M5 12h14\"/><path d=\"M12 5v14\"/>","play_arrow":"<polygon points=\"6 3 20 12 6 21 6 3\"/>","close":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","timer":"<line x1=\"10\" x2=\"14\" y1=\"2\" y2=\"2\"/><line x1=\"12\" x2=\"15\" y1=\"14\" y2=\"11\"/><circle cx=\"12\" cy=\"14\" r=\"8\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","remove":"<path d=\"M5 12h14\"/>","delete":"<path d=\"M3 6h18\"/><path d=\"M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6\"/><path d=\"M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2\"/><line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/><line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>","ios_share":"<path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\"/><polyline points=\"16 6 12 2 8 6\"/><line x1=\"12\" x2=\"12\" y1=\"2\" y2=\"15\"/>","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/><path d=\"M12 7v5l4 2\"/>","event_note":"<path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/><path d=\"M8 14h.01\"/><path d=\"M12 14h.01\"/><path d=\"M16 14h.01\"/><path d=\"M8 18h.01\"/><path d=\"M12 18h.01\"/><path d=\"M16 18h.01\"/>","drag_indicator":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","volume_up":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","tune":"<line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\"/><line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\"/><line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\"/><line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\"/><line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\"/><line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\"/><line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\"/><line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\"/>","sync":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","sports_gymnastics":"<circle cx=\"12\" cy=\"5\" r=\"1\"/><path d=\"m9 20 3-6 3 6\"/><path d=\"m6 8 6 2 6-2\"/><path d=\"M12 10v4\"/>","skip_next":"<polygon points=\"5 4 15 12 5 20 5 4\"/><line x1=\"19\" x2=\"19\" y1=\"5\" y2=\"19\"/>","share":"<circle cx=\"18\" cy=\"5\" r=\"3\"/><circle cx=\"6\" cy=\"12\" r=\"3\"/><circle cx=\"18\" cy=\"19\" r=\"3\"/><line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\"/><line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\"/>","schedule":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/>","replay":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","playlist_play":"<path d=\"M12 12H3\"/><path d=\"M16 6H3\"/><path d=\"M12 18H3\"/><path d=\"m16 12 5 3-5 3v-6Z\"/>","pause":"<rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/><rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/>","open_in_new":"<path d=\"M15 3h6v6\"/><path d=\"M10 14 21 3\"/><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>","music_note":"<path d=\"M9 18V5l12-2v13\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/>","menu_book":"<path d=\"M12 7v14\"/><path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\"/>","link":"<path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\"/><path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\"/>","lightbulb":"<path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\"/><path d=\"M9 18h6\"/><path d=\"M10 22h4\"/>","install_mobile":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","home":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\"/><path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>","fitness_center":"<path d=\"M14.4 14.4 9.6 9.6\"/><path d=\"M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l-1.768 1.767a2 2 0 1 1 2.828 2.829z\"/><path d=\"m21.5 21.5-1.4-1.4\"/><path d=\"M3.9 3.9 2.5 2.5\"/><path d=\"M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z\"/>","edit":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","content_copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","bookmarks":"<path d=\"m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z\"/>","arrow_upward":"<path d=\"m5 12 7-7 7 7\"/><path d=\"M12 19V5\"/>","arrow_forward":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","accessibility_new":"<circle cx=\"16\" cy=\"4\" r=\"1\"/><path d=\"m18 19 1-7-6 1\"/><path d=\"m5 8 3-3 5.5 3-2.36 3.5\"/><path d=\"M4.24 14.5a5 5 0 0 0 6.88 6\"/><path d=\"M13.76 17.5a5 5 0 0 0-6.88-6\"/>","self_improvement":"<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\"/><circle cx=\"12\" cy=\"8\" r=\"2\"/><path d=\"M12 10v12\"/><path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\"/><path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\"/>","bolt":"<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/>","directions_walk":"<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\"/><path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\"/><path d=\"M16 17h4\"/><path d=\"M4 13h4\"/>","radio_button_checked":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/>","sports_mma":"<path d=\"M12.409 13.017A5 5 0 0 1 22 15c0 3.866-4 7-9 7-4.077 0-8.153-.82-10.371-2.462-.426-.316-.631-.832-.62-1.362C2.118 12.723 2.627 2 10 2a3 3 0 0 1 3 3 2 2 0 0 1-2 2c-1.105 0-1.64-.444-2-1\"/><path d=\"M15 14a5 5 0 0 0-7.584 2\"/><path d=\"M9.964 6.825C8.019 7.977 9.5 13 8 15\"/>","wb_sunny":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","emoji_events":"<path d=\"M6 9H4.5a2.5 2.5 0 0 1 0-5H6\"/><path d=\"M18 9h1.5a2.5 2.5 0 0 0 0-5H18\"/><path d=\"M4 22h16\"/><path d=\"M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22\"/><path d=\"M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22\"/><path d=\"M18 2H6v7a6 6 0 0 0 12 0V2Z\"/>","timelapse":"<path d=\"M10.1 2.182a10 10 0 0 1 3.8 0\"/><path d=\"M13.9 21.818a10 10 0 0 1-3.8 0\"/><path d=\"M17.609 3.721a10 10 0 0 1 2.69 2.7\"/><path d=\"M2.182 13.9a10 10 0 0 1 0-3.8\"/><path d=\"M20.279 17.609a10 10 0 0 1-2.7 2.69\"/><path d=\"M21.818 10.1a10 10 0 0 1 0 3.8\"/><path d=\"M3.721 6.391a10 10 0 0 1 2.7-2.69\"/><path d=\"M6.391 20.279a10 10 0 0 1-2.69-2.7\"/>","hourglass_top":"<path d=\"M5 22h14\"/><path d=\"M5 2h14\"/><path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\"/><path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\"/>","local_fire_department":"<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\"/>","coffee":"<path d=\"M10 2v2\"/><path d=\"M14 2v2\"/><path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\"/><path d=\"M6 2v2\"/>","logo":"<path d=\"M12 20c-2.5-2-3.5-5-3.5-8S10 6 12 4c2 2 3.5 5 3.5 8s-1 6-3.5 8Z\"/><path d=\"M12 20c-3.5 0-7.5-1.8-9.5-6.5 2.6-.9 4.9-.7 6.6.5\"/><path d=\"M12 20c3.5 0 7.5-1.8 9.5-6.5-2.6-.9-4.9-.7-6.6.5\"/>","spa":"<path d=\"M12 20c-2.5-2-3.5-5-3.5-8S10 6 12 4c2 2 3.5 5 3.5 8s-1 6-3.5 8Z\"/><path d=\"M12 20c-3.5 0-7.5-1.8-9.5-6.5 2.6-.9 4.9-.7 6.6.5\"/><path d=\"M12 20c3.5 0 7.5-1.8 9.5-6.5-2.6-.9-4.9-.7-6.6.5\"/>","bedtime":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\"/>"};
+function paintIcon(el){
+  const n=el.textContent.trim(); if(!n) return;
+  el.dataset.i=n; el.setAttribute("aria-hidden","true");
+  el.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||""}</svg>`;
+}
+document.querySelectorAll(".ms").forEach(paintIcon);
+new MutationObserver(list=>{ for(const m of list){
+  if(m.target.classList&&m.target.classList.contains("ms")) paintIcon(m.target);
+  m.addedNodes.forEach(n=>{ if(n.nodeType!==1) return; if(n.classList.contains("ms")) paintIcon(n); else if(n.firstElementChild) n.querySelectorAll(".ms").forEach(paintIcon); });
+}}).observe(document.body,{childList:true,subtree:true});
+/* Anyone who already has saved data is a returning user; new people start with an empty dashboard. */
+const RETURNING=(()=>{try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith("hy:")) return true}}catch(e){} return false})();
+
+/* ---------- State ---------- */
+const PRESETS = {
+  tabata:{name:"30 / 10",cfg:{prep:10,work:30,rest:10,rounds:8,sets:1,setRest:60}},
+  stretch:{name:"Stretch hold",cfg:{prep:10,work:30,rest:10,rounds:6,sets:1,setRest:30}},
+  p4020:{name:"40 / 20",cfg:{prep:10,work:40,rest:20,rounds:8,sets:1,setRest:60}},
+  p4515:{name:"45 / 15",cfg:{prep:10,work:45,rest:15,rounds:8,sets:1,setRest:60}},
+  yoga:{name:"Yoga flow",cfg:{prep:10,work:40,rest:15,rounds:6,sets:1,setRest:30}},
+  double:{name:"1 min holds",cfg:{prep:10,work:60,rest:15,rounds:6,sets:1,setRest:60}}
+};
+const FIELDS = [
+  {k:"roundLen",label:"Round",unit:"work + rest",min:10,max:600,step:5},
+  {k:"work",label:"Hold",unit:"seconds",min:5,max:600,step:5},
+  {k:"rest",label:"Rest",unit:"seconds",min:0,max:600,step:5},
+  {k:"rounds",label:"Rounds",unit:"per set",min:1,max:50,step:1},
+  {k:"sets",label:"Sets",unit:"cycles",min:1,max:10,step:1},
+  {k:"setRest",label:"Set break",unit:"seconds",min:0,max:600,step:15},
+  {k:"prep",label:"Get ready",unit:"seconds",min:0,max:60,step:5}
+];
+let cfg = Object.assign({},PRESETS.p4515.cfg,{perSet:false,plan:[],lock:true}, store.get("cfg",{}));
+if(!Array.isArray(cfg.plan)) cfg.plan=[];
+if(!cfg.roundLen) cfg.roundLen=cfg.work+cfg.rest;
+/* Fixed round length: work + rest always add up to cfg.roundLen. Changing one moves the other. */
+function linkWR(o,key,v){
+  if(!cfg.lock){ o[key]=v; return; }
+  const R=cfg.roundLen;
+  if(key==="work"){ o.work=Math.min(v,R); o.rest=R-o.work; }
+  else { o.rest=Math.min(v,R-5); o.work=R-o.rest; }
+}
+function setRoundLen(v){
+  cfg.roundLen=v;
+  [cfg].concat(cfg.plan).forEach(o=>{ o.rest=Math.min(o.rest,v-5); o.work=v-o.rest; });
+}
+let liveInputs=[];
+function refreshInputs(){ liveInputs.forEach(x=>{ if(x.inp.isConnected && document.activeElement!==x.inp) x.inp.value=x.get(); }); }
+/* Timing for one set: its own work/rest/rounds when "different per set" is on, otherwise the shared values. */
+function setCfg(n){
+  if(cfg.perSet && cfg.sets>1){ const p=cfg.plan[n-1]; if(p) return p; }
+  return {work:cfg.work,rest:cfg.rest,rounds:cfg.rounds};
+}
+function syncPlan(){
+  for(let i=0;i<cfg.sets;i++){ if(!cfg.plan[i]) cfg.plan[i]=Object.assign({}, cfg.plan[i-1]||{work:cfg.work,rest:cfg.rest,rounds:cfg.rounds}); }
+  cfg.plan.length=Math.min(cfg.plan.length,10);
+}
+const QUICK_PAIRS=[[20,10],[30,15],[40,20],[45,15]];
+function quickPairs(){
+  if(!cfg.lock) return QUICK_PAIRS;
+  const R=cfg.roundLen, out=[];
+  [R-10,R-15,R-20,R/2].forEach(w=>{ if(w>=5&&Number.isInteger(w)&&!out.some(p=>p[0]===w)) out.push([w,R-w]); });
+  return out.sort((a,b)=>b[0]-a[0]);
+}
+let playlist = store.get("playlist",null);
+if(!Array.isArray(playlist)) playlist = RETURNING?EX.filter(e=>e.cat==="stand").map(e=>e.id):[];
+playlist = playlist.filter(id=>byId[id]);
+let filter = store.get("filter","all");
+let soundOn = store.get("sound",true), voiceOn = store.get("voice",true);
+
+/* ---------- Icons ---------- */
+const IC = {
+  plus:'<span class="ms">add</span>', check:'<span class="ms">check</span>',
+  x:'<span class="ms">close</span>', up:'<span class="ms">arrow_upward</span>'
+};
+const $ = id=>document.getElementById(id);
+
+/* ---------- Library ---------- */
+function renderFilters(){
+  const el=$("filters"); el.innerHTML="";
+  [{id:"all",name:"All"}].concat(CATS).forEach(c=>{
+    const b=document.createElement("button"); b.className="chip"; b.setAttribute("aria-pressed",filter===c.id);
+    if(c.id!=="all") setC(b,c.id);
+    b.className="chip sl"; b.innerHTML=(filter===c.id?'<span class="ms">check</span>':(c.id!=="all"?'<span class="dot"></span>':""))+c.name;
+    b.onclick=()=>{filter=c.id;store.set("filter",filter);renderFilters();renderLibrary()};
+    el.appendChild(b);
+  });
+}
+let libFigs=[];
+function renderLibrary(){
+  libFigs.forEach(f=>f.destroy()); libFigs=[];
+  const root=$("library"); root.innerHTML="";
+  const q=($("ex-search").value||"").trim().toLowerCase(), hit=e=>!q||(e.name+" "+e.focus).toLowerCase().includes(q);
+  if(q&&!EX.some(hit)) root.innerHTML=`<p class="lib-none">No poses match "${q.replace(/[<&]/g,"")}".</p>`;
+  CATS.filter(c=>filter==="all"||filter===c.id).forEach(c=>{
+    const items=EX.filter(e=>e.cat===c.id&&hit(e)); if(!items.length) return;
+    const block=document.createElement("section"); block.className="cat-block"; setC(block,c.id);
+    block.innerHTML=`<div class="cat-head"><h3><span class="ms fill">${c.icon}</span>${c.name}</h3><button class="text-btn fill sl" data-cat="${c.id}">Use all ${items.length}<span class="ms">arrow_forward</span></button><span class="sub">${c.blurb} · ${items.length} poses</span></div>`;
+    block.querySelector(".fill").onclick=()=>{useCategory(c.id);showView("timer")};
+    const grid=document.createElement("div"); grid.className="grid";
+    items.forEach(ex=>{
+      const card=document.createElement("article"); card.className="card"; setC(card,ex.cat);
+      const pic=document.createElement("div"); pic.className="pic";
+      const fig=new Figure(ex,{animate:!reduceMotion}); pic.appendChild(fig.svg); libFigs.push(fig);
+      pic._fig=fig; if(io) io.observe(pic);
+      card.appendChild(pic);
+      const meta=document.createElement("div"); meta.className="meta";
+      meta.innerHTML=`<span class="name">${ex.name}</span><span class="sub">${ex.level} · ${ex.focus.split(",")[0]}</span>`;
+      card.appendChild(meta);
+      const open=document.createElement("button"); open.className="open"; open.setAttribute("aria-label","How to do "+ex.name); open.onclick=()=>openSheet(ex);
+      card.appendChild(open);
+      const add=document.createElement("button"); add.className="add sl"; add.dataset.id=ex.id;
+      card.appendChild(add);
+      add.onclick=()=>{togglePlaylist(ex.id)};
+      grid.appendChild(card);
+    });
+    block.appendChild(grid); root.appendChild(block);
+  });
+  syncAddButtons();
+}
+function syncAddButtons(){
+  document.querySelectorAll(".add").forEach(b=>{
+    const on=playlist.includes(b.dataset.id);
+    b.setAttribute("aria-pressed",on); b.innerHTML=on?IC.check:IC.plus;
+    b.setAttribute("aria-label",(on?"Remove ":"Add ")+byId[b.dataset.id].name+(on?" from":" to")+" workout");
+  });
+  const n=playlist.length;
+  $("tray-txt").textContent = n ? "Start practice" : "Open timer";
+  $("tray-n").textContent = n; $("tray-n").hidden = !n;
+  $("tray-go").setAttribute("aria-label", n ? `Start practice with ${n} ${n===1?"pose":"poses"}` : "Open timer");
+  if(currentEx) $("sh-add").innerHTML = playlist.includes(currentEx.id) ? '<span class="ms">check</span><span>In your practice</span>' : '<span class="ms">add</span><span>Add to practice</span>';
+}
+function togglePlaylist(id){
+  const i=playlist.indexOf(id);
+  if(i>=0) playlist.splice(i,1); else playlist.push(id);
+  savePlaylist();
+}
+function savePlaylist(){ store.set("playlist",playlist); syncAddButtons(); renderPlaylist(); syncMyLink(); if(!T.running&&!T.paused) idleStage(); }
+/* Ready-made workouts: each move once per set, 45s work / 15s rest (1-minute rounds), 2 sets. */
+const WORKOUTS = [
+  {id:"morning",name:"Morning Flow",icon:"wb_sunny",c:"stand",blurb:"Wake up your body in 10 minutes",
+   moves:["mountain","sunsal","sunsal","warrior1","warrior2","triangle","fold","easy"],cfg:{work:50,rest:10,sets:1}},
+  {id:"sun",name:"Sun Salutations",icon:"wb_sunny",c:"stand",blurb:"Five slow rounds, one breath per move",moves:["sunsal","sunsal","sunsal","sunsal","sunsal"],cfg:{work:60,rest:10,sets:1}},
+  {id:"balance",name:"Balance & Core",icon:"self_improvement",c:"balance",blurb:"Steady, strong and focused",
+   moves:["tree","tree","dancer","dancer","warrior3","warrior3","boat","plank"],cfg:{work:30,rest:10,sets:2}},
+  {id:"hips",name:"Hip Opener",icon:"spa",c:"floor",blurb:"Release tight hips, both sides",
+   moves:["lowlunge","lowlunge","goddess","pigeon","pigeon","butterfly","frog","happybaby"],cfg:{work:45,rest:15,sets:1}},
+  {id:"back",name:"Gentle Back Care",icon:"spa",c:"floor",blurb:"Mobilise and soothe your spine",
+   moves:["catcow","child","cobra","locust","bridge","twist","twist","child"],cfg:{work:40,rest:15,sets:1}},
+  {id:"strong",name:"Strong Flow",icon:"bolt",c:"balance",blurb:"Build heat and strength",
+   moves:["chair","warrior1","warrior2","goddess","plank","downdog","boat"],cfg:{work:45,rest:15,sets:2}},
+  {id:"evening",name:"Evening Unwind",icon:"bedtime",c:"calm",blurb:"Long, quiet holds before bed",
+   moves:["neck","seatedfold","butterfly","twist","twist","happybaby","legswall","savasana"],cfg:{work:60,rest:10,sets:1}}
+];
+const woCfg = w => Object.assign({prep:10,work:45,rest:15,rounds:w.moves.length,sets:2,setRest:60,perSet:false,plan:[],lock:true,roundLen:60},w.cfg||{});
+// Starting a different workout ends the one in progress (and saves it to History if it counts).
+function stopCurrent(){ if(T.running||T.paused||T.held) reset(); }
+function useWorkout(w){
+  stopCurrent(); setActiveMy(null);
+  playlist=w.moves.slice(); cfg=woCfg(w); saveCfg(); renderFields(); savePlaylist();
+  freeMode=false; store.set("freeMode",false); syncMode(); showView("timer");
+}
+let woFigs=[]; let hiddenWos=store.get("hiddenWos",[]); if(!Array.isArray(hiddenWos)) hiddenWos=[];
+let homeWos=store.get("homeWos",null);
+if(!Array.isArray(homeWos)){ homeWos=RETURNING?WORKOUTS.map(w=>w.id).filter(id=>!hiddenWos.includes(id)):[]; store.set("homeWos",homeWos); }
+const saveHome=()=>{ store.set("homeWos",homeWos); renderWorkouts(); renderFavs(); };
+function woCard(w,home){
+  const c=woCfg(w), uniq=[...new Set(w.moves)], mins=Math.round((c.prep+c.sets*c.rounds*(c.work+c.rest)-c.rest+(c.sets-1)*c.setRest)/60);
+  const card=document.createElement("article"); card.className="wo"; setC(card,w.c);
+  card.innerHTML=`<div class="wo-head"><span class="ms fill">${w.icon}</span><div><h4>${w.name}</h4><p>${w.blurb}</p></div></div><div class="wo-figs"></div><div class="wo-foot"><span>${uniq.length} ${uniq.length===1?"pose":"poses"} · ${c.sets>1?c.sets+" sets":c.rounds+" rounds"} · ${mins} min</span></div>`;
+  const figs=card.querySelector(".wo-figs");
+  uniq.forEach(id=>{ const d=document.createElement("div"); d.className="wo-fig"; d.title=byId[id].name; const fg=new Figure(byId[id],{animate:false}); d.appendChild(fg.svg); woFigs.push(fg); figs.appendChild(d); });
+  const names=document.createElement("p"); names.className="wo-names"; names.textContent=uniq.map(id=>byId[id].name).join(" · "); card.insertBefore(names,card.querySelector(".wo-foot"));
+  const foot=card.querySelector(".wo-foot"), btn=(cls,label,icon)=>{ const x=document.createElement("button"); x.className=cls; x.setAttribute("aria-label",label); x.title=label; x.innerHTML=`<span class="ms">${icon}</span>`; return x; };
+  const on=homeWos.includes(w.id);
+  if(home){
+    const hd=btn("icon-btn sl","Remove from Home","close"); hd.style.marginLeft="auto";
+    hd.onclick=()=>{ homeWos=homeWos.filter(x=>x!==w.id); saveHome();
+      undoSnack(`Unpinned ${w.name}`,()=>{ if(!homeWos.includes(w.id)) homeWos.push(w.id); saveHome(); }); };
+    foot.appendChild(hd);
+  } else {
+    const ah=document.createElement("button"); ah.className="btn btn-tonal with-icon sl on-home"; ah.setAttribute("aria-pressed",on);
+    ah.innerHTML=on?`<span class="ms">check</span>On Home`:`<span class="ms">add</span>Add to Home`;
+    ah.onclick=()=>{ if(on){ homeWos=homeWos.filter(x=>x!==w.id); saveHome(); snack(`Unpinned ${w.name}`); } else { homeWos.push(w.id); saveHome(); snack(`Pinned ${w.name}`); } };
+    foot.appendChild(ah);
+  }
+  const cp=btn("icon-btn sl","Copy to My routines and edit","edit"); cp.onclick=()=>openRoutine({name:w.name,moves:w.moves,cfg:woCfg(w)},null); foot.appendChild(cp);
+  const go=document.createElement("button"); go.className="btn btn-filled with-icon sl"; go.innerHTML=`<span class="ms fill">play_arrow</span>Start`; go.onclick=()=>{ useWorkout(w); start(); }; foot.appendChild(go);
+  return card;
+}
+function renderWorkouts(){
+  woFigs.forEach(f=>f.destroy()); woFigs=[];
+  const el=$("workouts"); el.innerHTML="";
+  const list=homeWos.map(id=>WORKOUTS.find(w=>w.id===id)).filter(Boolean);
+  $("wo-block").hidden=!list.length;
+  list.forEach(w=>el.appendChild(woCard(w,true)));
+  const lib=$("lib-workouts"); lib.innerHTML="";
+  WORKOUTS.forEach(w=>lib.appendChild(woCard(w,false)));
+}
+function useCategory(cat){
+  setActiveMy(null);
+  playlist = EX.filter(e=>e.cat===cat).map(e=>e.id);
+  applyPreset(catOf(cat).preset);
+  savePlaylist();
+}
+
+/* ---------- Sheet ---------- */
+let currentEx=null, sheetFig=null;
+function openSheet(ex){
+  currentEx=ex;
+  const sh=$("sheet"); setC(sh.querySelector(".sheet-in"),ex.cat);
+  setC(sh,ex.cat);
+  if(sheetFig){sheetFig.svg.remove();sheetFig.destroy()}
+  sheetFig=new Figure(ex); $("sh-pic").insertBefore(sheetFig.svg,$("sh-close"));
+  $("sh-cat").innerHTML=`<span class="ms fill">${catOf(ex.cat).icon}</span>${catOf(ex.cat).name}`;
+  $("sh-name").textContent=ex.name;
+  $("sh-tags").innerHTML=[ex.level].concat(ex.focus.split(", ")).map(t=>`<span class="tag">${t}</span>`).join("");
+  $("sh-steps").innerHTML=ex.steps.map(s=>`<li>${s}</li>`).join("");
+  $("sh-cue").innerHTML=`<span class="ms">lightbulb</span><span>${ex.cue}</span>`;
+  syncAddButtons();
+  sh.hidden=false; $("sh-close").focus();
+}
+function closeSheet(){ $("sheet").hidden=true; if(sheetFig){sheetFig.svg.remove();sheetFig.destroy();sheetFig=null} currentEx=null; }
+$("sh-close").onclick=closeSheet;
+$("sheet").addEventListener("click",e=>{if(e.target.id==="sheet")closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("sheet").hidden)closeSheet()});
+$("sh-add").onclick=()=>{ if(currentEx) togglePlaylist(currentEx.id) };
+$("sh-now").onclick=()=>{
+  if(!currentEx) return;
+  const ex=currentEx; closeSheet();
+  playlist=[ex.id]; applyPreset(catOf(ex.cat).preset); savePlaylist(); showView("timer");
+};
+
+/* ---------- Views ---------- */
+function showView(v){
+  ["home","lib","timer","log"].forEach(k=>{ $("view-"+k).hidden = v!==k; $("tab-"+k).setAttribute("aria-selected",v===k); });
+  if(v==="log") renderLog(); if(v==="home") renderHome();
+  store.set("view",v); showSub(libSub); window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+let libSub=store.get("libSub","routines");
+function showSub(v){ libSub=v; store.set("libSub",v);
+  document.querySelectorAll(".lib-seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.sub===v));
+  $("lib-routines").hidden=v!=="routines"; $("lib-moves").hidden=v!=="moves";
+  $("tray").hidden=!($("view-lib").hidden===false&&v==="moves"); }
+document.querySelectorAll(".lib-seg button").forEach(b=>b.onclick=()=>{ showSub(b.dataset.sub); window.scrollTo(0,0); });
+$("tray-go").onclick=()=>showView("timer");
+
+/* ---------- Setup panel ---------- */
+function renderPresets(){
+  const el=$("presets"); el.innerHTML="";
+  for(const k in PRESETS){
+    const p=PRESETS[k].cfg, on=!(cfg.perSet&&cfg.sets>1)&&FIELDS.every(f=>f.k==="roundLen"||cfg[f.k]===p[f.k]);
+    const b=document.createElement("button"); b.className="chip sl"; b.setAttribute("aria-pressed",on);
+    b.innerHTML=`${on?'<span class="ms">check</span>':''}${PRESETS[k].name} <small>${PRESETS[k].name.includes("/")?`${fmt(p.work+p.rest)} rounds × ${p.rounds}`:`${p.work}s / ${p.rest}s × ${p.rounds}`}${p.sets>1?" × "+p.sets:""}</small>`;
+    b.onclick=()=>{applyPreset(k)};
+    el.appendChild(b);
+  }
+}
+function applyPreset(k){ const lock=cfg.lock!==false; cfg=Object.assign({},PRESETS[k].cfg,{perSet:false,plan:[],lock}); cfg.roundLen=cfg.work+cfg.rest; saveCfg(); renderFields(); }
+function stepper(o){
+  const d=document.createElement("div"); d.className="field";
+  d.innerHTML=`<label for="${o.id}">${o.label}</label><div class="stepper"><button class="sl" aria-label="Less ${o.aria||o.label}"><span class="ms">remove</span></button><input id="${o.id}" type="number" inputmode="numeric" min="${o.min}" max="${o.max}" value="${o.get()}"><button class="sl" aria-label="More ${o.aria||o.label}"><span class="ms">add</span></button></div>${o.unit?`<div class="unit">${o.unit}</div>`:""}`;
+  const [minus,plus]=d.querySelectorAll("button"), inp=d.querySelector("input");
+  const set=v=>{v=Math.round(Number(v));if(!isFinite(v))v=o.get();v=Math.min(o.max,Math.max(o.min,v));inp.value=v;o.set(v)};
+  minus.onclick=()=>set(o.get()-o.step); plus.onclick=()=>set(o.get()+o.step);
+  inp.onchange=()=>set(inp.value);
+  liveInputs.push({inp,get:o.get});
+  return d;
+}
+function renderFields(){
+  const el=$("fields"); el.innerHTML=""; liveInputs=[];
+  const per=cfg.perSet&&cfg.sets>1;
+  $("t-lock").setAttribute("aria-checked",!!cfg.lock);
+  FIELDS.forEach(f=>{
+    if(per && (f.k==="work"||f.k==="rest"||f.k==="rounds")) return;
+    if(f.k==="roundLen" && !cfg.lock) return;
+    el.appendChild(stepper({id:"f-"+f.k,label:f.label,unit:f.unit,min:f.min,max:f.max,step:f.step,get:()=>cfg[f.k],
+      set:v=>{
+        const changedSets=f.k==="sets"&&v!==cfg.sets;
+        if(f.k==="work"||f.k==="rest") linkWR(cfg,f.k,v);
+        else if(f.k==="roundLen") setRoundLen(v);
+        else cfg[f.k]=v;
+        if(cfg.perSet) syncPlan();
+        saveCfg(); refreshInputs();
+        if(changedSets||f.k==="roundLen") renderFields();
+      }}));
+  });
+  renderPlan();
+}
+function renderPlan(){
+  const box=$("perset"); box.hidden = cfg.sets<2;
+  $("t-perset").setAttribute("aria-checked", !!(cfg.perSet&&cfg.sets>1));
+  const el=$("plan"); el.innerHTML="";
+  if(!(cfg.perSet&&cfg.sets>1)) return;
+  syncPlan();
+  for(let i=0;i<cfg.sets;i++){
+    const p=cfg.plan[i], row=document.createElement("div"); row.className="setrow";
+    row.innerHTML=`<div class="setrow-head"><b>Set ${i+1}</b><span>${fmt((p.work+p.rest)*p.rounds)}</span></div>`;
+    const g=document.createElement("div"); g.className="setrow-fields";
+    const upd=()=>{ row.querySelector(".setrow-head span").textContent=fmt((p.work+p.rest)*p.rounds); saveCfg(); refreshInputs(); };
+    [["work","Hold",5,600,5],["rest","Rest",0,600,5],["rounds","Rounds",1,50,1]].forEach(([k,l,mn,mx,st])=>{
+      g.appendChild(stepper({id:`p${i}-${k}`,label:l,aria:`${l} in set ${i+1}`,min:mn,max:mx,step:st,get:()=>p[k],set:v=>{ if(k==="rounds") p[k]=v; else linkWR(p,k,v); upd();syncQuick()}}));
+    });
+    row.appendChild(g);
+    const q=document.createElement("div"); q.className="quick";
+    const syncQuick=()=>q.querySelectorAll("button").forEach(b=>{const [w,r]=b.dataset.p.split("/").map(Number);const on=p.work===w&&p.rest===r;b.setAttribute("aria-pressed",on);b.innerHTML=(on?'<span class="ms">check</span>':"")+`${w} / ${r}`});
+    quickPairs().forEach(([w,r])=>{
+      const b=document.createElement("button"); b.className="chip sl"; b.dataset.p=w+"/"+r;
+      b.setAttribute("aria-label",`Set ${i+1}: ${w} seconds work, ${r} seconds rest`);
+      b.onclick=()=>{p.work=w;p.rest=r;g.querySelector(`#p${i}-work`).value=w;g.querySelector(`#p${i}-rest`).value=r;upd();syncQuick()};
+      q.appendChild(b);
+    });
+    syncQuick(); row.appendChild(q); el.appendChild(row);
+  }
+}
+function saveCfg(){ store.set("cfg",cfg); if(typeof syncMyLink==="function") try{ syncMyLink(); }catch(e){} renderPresets(); $("total").textContent=fmt(totalSeconds()); if(!T.running&&!T.paused) idleStage(); }
+let plFigs=[];
+/* Simple drag-to-reorder for any list: drag the grip, drop between items. */
+function sortDrag(e,list,li,from,done){
+  const g=document.createElement("div"); g.className="ghost"; g.textContent=li.querySelector(".nm").firstChild.textContent; document.body.appendChild(g);
+  const items=[...list.children]; li.classList.add("dragging");
+  let at=from, y=e.clientY, raf;
+  const place=(cx,cy)=>{ g.style.left=cx+"px"; g.style.top=cy+"px"; y=cy; at=items.length;
+    for(let i=0;i<items.length;i++){ const b=items[i].getBoundingClientRect(); if(cy<b.top+b.height/2){ at=i; break; } }
+    items.forEach(x=>x.classList.remove("drop","drop-end"));
+    if(at<items.length) items[at].classList.add("drop"); else items[items.length-1].classList.add("drop-end"); };
+  const scroll=()=>{ const h=innerHeight, edge=80; if(y<edge) scrollBy(0,-Math.ceil((edge-y)/5)); else if(y>h-edge-90) scrollBy(0,Math.ceil((y-(h-edge-90))/5)); raf=requestAnimationFrame(scroll); };
+  const move=ev=>{ if(ev.pointerId!==e.pointerId) return; ev.preventDefault(); place(ev.clientX,ev.clientY); };
+  const end=(ev,ok)=>{ cancelAnimationFrame(raf); g.remove(); li.classList.remove("dragging"); items.forEach(x=>x.classList.remove("drop","drop-end"));
+    li.removeEventListener("pointermove",move); li.removeEventListener("pointerup",up); li.removeEventListener("pointercancel",cancel);
+    if(!ok) return; const to=at>from?at-1:at; if(to!==from) done(from,to); };
+  const up=ev=>end(ev,true), cancel=ev=>end(ev,false);
+  try{ li.setPointerCapture(e.pointerId); }catch(_){}
+  li.addEventListener("pointermove",move); li.addEventListener("pointerup",up); li.addEventListener("pointercancel",cancel);
+  place(e.clientX,e.clientY); raf=requestAnimationFrame(scroll);
+}
+function renderPlaylist(){
+  plFigs.forEach(f=>f.destroy()); plFigs=[];
+  const ul=$("plist"); ul.innerHTML="";
+  if(!playlist.length){ ul.innerHTML='<li class="empty">No poses yet. Pick a group below or add poses from the Catalog.</li>'; }
+  playlist.forEach((id,i)=>{
+    const ex=byId[id], li=document.createElement("li"); setC(li,ex.cat);
+    const mini=document.createElement("div"); mini.className="mini"; const fg=new Figure(ex,{animate:false}); mini.appendChild(fg.svg); plFigs.push(fg);
+    li.appendChild(mini);
+    const nm=document.createElement("div"); nm.className="nm"; nm.innerHTML=`${ex.name}<small>${catOf(ex.cat).name}</small>`; li.appendChild(nm);
+    const up=document.createElement("span"); up.className="grip"; up.innerHTML='<span class="ms">drag_indicator</span>'; up.setAttribute("aria-label","Drag to reorder "+ex.name);
+    up.addEventListener("pointerdown",e=>{ e.preventDefault(); sortDrag(e,ul,li,i,(from,to)=>{ const [m]=playlist.splice(from,1); playlist.splice(to,0,m); savePlaylist(); }); });
+    const rm=document.createElement("button"); rm.className="icon-btn sl"; rm.innerHTML=IC.x; rm.setAttribute("aria-label","Remove "+ex.name);
+    rm.onclick=()=>{playlist.splice(i,1);savePlaylist()};
+    li.insertBefore(up,li.firstChild); li.appendChild(rm); ul.appendChild(li);
+  });
+  const q=$("quick"); q.innerHTML="";
+  CATS.forEach(c=>{
+    const b=document.createElement("button"); b.className="chip sl"; setC(b,c.id);
+    b.innerHTML=`<span class="dot"></span>All ${c.name}`; b.onclick=()=>useCategory(c.id); q.appendChild(b);
+  });
+  WORKOUTS.forEach(w=>{
+    const b=document.createElement("button"); b.className="chip sl"; b.innerHTML=`<span class="ms">${w.icon}</span>${w.name}`;
+    b.onclick=()=>{ setActiveMy(null); playlist=w.moves.slice(); cfg=woCfg(w); saveCfg(); renderFields(); savePlaylist(); };
+    q.appendChild(b);
+  });
+  if(playlist.length){const cl=document.createElement("button");cl.className="chip sl";cl.textContent="Clear";cl.onclick=()=>{playlist=[];savePlaylist()};q.appendChild(cl)}
+}
+
+/* ---------- Audio ---------- */
+let actx=null;
+/* Mix our beeps and voice with music from other apps instead of pausing it (Safari/iOS 16.4+ Audio Session API). */
+function mixAudio(){ try{ if(navigator.audioSession && navigator.audioSession.type!=="ambient") navigator.audioSession.type="ambient"; }catch(e){} }
+mixAudio();
+/* iOS interrupts Web Audio and speech when another app (the music app) takes over. Wake both again on return and on the next tap. */
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ audio(); try{ speechSynthesis.cancel(); }catch(e){} } });
+["pointerdown","touchend"].forEach(ev=>document.addEventListener(ev,()=>{ if(actx&&actx.state!=="running") audio(); },{passive:true,capture:true}));
+function audio(){ mixAudio();
+  try{ if(!actx||actx.state==="closed") actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state!=="running") actx.resume().catch(()=>{}); }catch(e){}
+  return actx; }
+function beep(freq,len,when=0,vol=.25,type="sine"){
+  if(!soundOn||T.quiet) return; const a=audio(); if(!a) return;
+  const t=a.currentTime+when, o=a.createOscillator(), g=a.createGain();
+  o.type=type; o.frequency.value=freq; o.connect(g); g.connect(a.destination);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.01); g.gain.exponentialRampToValueAtTime(.001,t+len);
+  o.start(t); o.stop(t+len+.05);
+}
+const SFX = {
+  tick:()=>beep(880,.12,0,.22),
+  work:()=>{beep(1320,.14,0,.3,"square");beep(1320,.3,.18,.3,"square")},
+  rest:()=>beep(520,.5,0,.3),
+  done:()=>{beep(660,.2,0,.3);beep(880,.2,.2,.3);beep(1320,.5,.4,.3)}
+};
+/* Voice coach: prefer the most natural-sounding voice the device offers. */
+let voiceName = store.get("voiceName","");
+function voiceScore(v){
+  const n=(v.name+" "+(v.voiceURI||"")).toLowerCase(); let s=0;
+  if(/natural|neural|premium|enhanced|wavenet|studio|journey/.test(n)) s+=20;
+  if(/siri/.test(n)) s+=15;
+  if(/(ava|zoe|evan|nathan|samantha|allison|susan|serena|daniel|karen|moira|aria|jenny|guy|sonia|libby|ryan|emma|brian|andrew)/.test(n)) s+=6;
+  if(/google/.test(n)) s+=5;
+  if(!v.localService) s+=3;
+  if(/compact|espeak|robot|whisper|zarvox|trinoids|albert|bad news|bells|boing|bubbles|cellos|jester|organ|superstar|wobble|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|flo|eddy|reed|sandy/.test(n)) s-=30;
+  if(/^en[-_](us|gb|au|ie|ca|nz)/i.test(v.lang)) s+=4;
+  return s;
+}
+function voiceList(){
+  if(!("speechSynthesis" in window)) return [];
+  let vs=speechSynthesis.getVoices()||[];
+  const lang=(navigator.language||"en").slice(0,2).toLowerCase();
+  let mine=vs.filter(v=>(v.lang||"").toLowerCase().startsWith(lang));
+  if(lang!=="en") mine=mine.concat(vs.filter(v=>(v.lang||"").toLowerCase().startsWith("en")));
+  if(!mine.length) mine=vs;
+  return mine.slice().sort((a,b)=>voiceScore(b)-voiceScore(a));
+}
+function pickVoice(){ if(useCoach()) return null; return voiceList().find(v=>v.name===voiceName)||null; }
+function renderVoices(){
+  const sel=$("voice-sel"); if(!sel) return;
+  const vs=voiceList(), cur=pickVoice();
+  sel.innerHTML = '<option value="__coach">Haruku coach (plays over music)</option><option value="__device">Device default</option>';
+
+  vs.forEach((v,i)=>{ const o=document.createElement("option"); o.value=v.name; o.textContent=v.name.replace(/^Microsoft |^Google /,"")+` · ${v.lang}`; sel.appendChild(o); });
+  sel.value=useCoach()?COACH:(cur?cur.name:"__device");
+}
+if("speechSynthesis" in window){ try{ speechSynthesis.addEventListener("voiceschanged",renderVoices); }catch(e){} }
+/* Coach voice: recorded clips played through Web Audio, which mixes with music on iPhone.
+   The device voice (speechSynthesis) pauses other apps' music on iOS, so it is only a fallback. */
+const COACH="__coach", clips={}, clipLoad={};
+const useCoach=()=>!voiceName||voiceName===COACH;
+if(!store.get("coachV1",false)){ voiceName=COACH; store.set("voiceName",COACH); store.set("coachV1",true); }
+function loadClip(k){
+  if(clips[k]||clipLoad[k]) return clipLoad[k]||Promise.resolve(clips[k]);
+  const a=audio(); if(!a||!window.fetch) return Promise.resolve(null);
+  return clipLoad[k]=fetch("voice/"+k+".mp3").then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); })
+    .then(b=>new Promise((ok,no)=>a.decodeAudioData(b,ok,no))).then(buf=>(clips[k]=buf)).catch(()=>{ delete clipLoad[k]; return null; });
+}
+function preloadClips(){
+  if(!useCoach()) return;
+  ["go","lastgo","rest","setdone","ready","done","nextup","firstup","sample"].forEach(loadClip);
+  new Set(playlist).forEach(id=>loadClip("ex_"+id));
+}
+let voiceSrc=[], sayN=0;
+function say(parts,text,force){
+  if((!voiceOn&&!force)||(T.quiet&&!force)) return;
+  if(!useCoach()){ speak(text,force); return; }
+  const play=()=>{ const a=audio(); voiceSrc.forEach(n=>{try{n.stop()}catch(e){}}); voiceSrc=[];
+    let t=a.currentTime+.05; const g=a.createGain(); g.gain.value=1; g.connect(a.destination);
+    parts.forEach(k=>{ const n=a.createBufferSource(); n.buffer=clips[k]; n.connect(g); n.start(t); t+=clips[k].duration+.04; voiceSrc.push(n); }); };
+  if(parts.every(k=>clips[k])){ play(); return; }
+  const t0=performance.now(), seq=++sayN;
+  Promise.all(parts.map(loadClip)).then(b=>{
+    if(seq!==sayN) return;
+    if(b.every(Boolean)){ if(performance.now()-t0<2500) play(); }
+    else speak(text,force); // clips unavailable (offline or embedded): fall back to the device voice
+  });
+}
+function speak(text,force){
+  if((!voiceOn&&!force)||!("speechSynthesis" in window)||(T.quiet&&!force)) return;
+  mixAudio();
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text), v=pickVoice();
+    if(v){ u.voice=v; u.lang=v.lang; }
+    u.rate=1; u.pitch=1; u.volume=1;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function buzz(p){ if(T.quiet) return; try{ navigator.vibrate&&navigator.vibrate(p) }catch(e){} }
+
+/* ---------- Timer ---------- */
+const T = {act:{w:0,all:0,rounds:0},quiet:false,schedule:[],idx:0,phaseStart:0,elapsed:0,running:false,paused:false,lastSec:null,wake:null};
+function buildSchedule(){
+  const s=[], list=freeMode?[null]:(playlist.length?playlist:[EX[0].id]); let k=0;
+  if(cfg.prep>0) s.push({type:"prep",dur:cfg.prep,ex:list[0]});
+  for(let set=1;set<=cfg.sets;set++){
+    const sc=setCfg(set);
+    for(let r=1;r<=sc.rounds;r++){
+      const ex=list[k%list.length]; k++;
+      s.push({type:"work",dur:sc.work,ex,round:r,set,rounds:sc.rounds});
+      const last=r===sc.rounds;
+      if(!(last && set===cfg.sets) && sc.rest>0) s.push({type:"rest",dur:sc.rest,ex:list[k%list.length],round:r,set,rounds:sc.rounds});
+      if(last && set<cfg.sets && cfg.setRest>0) s.push({type:"setrest",dur:cfg.setRest,ex:list[k%list.length],round:r,set,rounds:sc.rounds});
+    }
+  }
+  return s;
+}
+function totalSeconds(){ return buildSchedule().reduce((a,b)=>a+b.dur,0); }
+function fmt(sec){ sec=Math.max(0,Math.ceil(sec)); const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
+const PHASE_ICO={idle:"timer",prep:"hourglass_top",work:"spa",rest:"self_improvement",setrest:"bedtime",done:"emoji_events",paused:"pause"};
+const setPhaseIco=k=>{$("phase-ico").textContent=PHASE_ICO[k]||"timer"};
+const PHASE_LABEL={prep:"Get ready",work:"Hold",rest:"Relax",setrest:"Set break",done:"Done",idle:"Ready"};
+const stageFig = new Figure(byId[playlist[0]]||EX[0]);
+$("stage-fig").appendChild(stageFig.svg);
+const RING=289.03;
+
+function renderDots(cur){
+  const el=$("dots"); el.innerHTML="";
+  const n=(cur&&cur.rounds)||setCfg(1).rounds;
+  for(let r=1;r<=n;r++){ const i=document.createElement("i"); if(cur&&r<cur.round) i.className="on"; if(cur&&r===cur.round) i.className=cur.type==="work"?"cur":"on"; el.appendChild(i); }
+}
+function idleStage(){
+  const list=playlist.length?playlist:[EX[0].id];
+  $("stage").dataset.phase="idle"; $("phase").textContent="Ready"; setPhaseIco("idle");
+  $("digits").textContent=fmt(totalSeconds()); $("digits").classList.remove("blink");
+  stageFig.setEx(byId[list[0]]); stageFig.speed=1; $("ring-ico-s").textContent="timer";
+  $("exname").textContent=freeMode?"Timer only":(playlist.length?byId[list[0]].name:"Add poses to start");
+  $("next").textContent = (cfg.perSet&&cfg.sets>1)
+    ? Array.from({length:cfg.sets},(_,i)=>{const p=setCfg(i+1);return `Set ${i+1}: ${p.work}s / ${p.rest}s × ${p.rounds}`}).join(" · ")
+    : `${cfg.rounds} rounds of ${cfg.work}s work + ${cfg.rest}s rest${cfg.lock?` (${fmt(cfg.roundLen)} each)`:""}${cfg.sets>1?` · ${cfg.sets} sets`:""}`;
+  $("c-round").textContent=`Round 0/${setCfg(1).rounds}`; $("c-set").textContent=`Set 1/${cfg.sets}`;
+  $("ring").setAttribute("stroke-dashoffset",RING);
+  renderDots(null); setPlayIcon(false); $("setup").hidden=false;
+}
+function setPlayIcon(playing){ $("ico-play").toggleAttribute("hidden",playing); $("ico-pause").toggleAttribute("hidden",!playing); $("btn-play").setAttribute("aria-label",playing?"Pause":(T.paused?"Resume":"Start")); }
+function enterPhase(i){
+  T.idx=i; T.lastSec=null;
+  const ph=T.schedule[i];
+  if(!ph){ finish(); return; }
+  $("stage").dataset.phase=ph.type; $("phase").textContent=PHASE_LABEL[ph.type]; setPhaseIco(ph.type);
+  $("c-round").textContent=`Round ${ph.round||0}/${ph.rounds||setCfg(1).rounds}`; $("c-set").textContent=`Set ${ph.set||1}/${cfg.sets}`;
+  renderDots(ph);
+  const nxt = T.schedule[i+1];
+  if(freeMode){
+    $("ring-ico-s").textContent=PHASE_ICO[ph.type]||"timer";
+    const rn = ph.type==="prep" ? 1 : (ph.type==="work" ? ph.round : ph.round+1);
+    $("exname").textContent = ph.type==="work" ? `Round ${ph.round} of ${ph.rounds}` : ph.type==="prep" ? "Starting soon" : ph.type==="setrest" ? `Set ${ph.set} done` : "Breathe";
+    $("next").textContent = nxt ? `Next: ${PHASE_LABEL[nxt.type].toLowerCase()} ${nxt.dur}s` : "Last interval. Give it everything.";
+    if(ph.type==="work"){ SFX.work(); buzz([120,60,120]); { const last=ph.round===ph.rounds&&ph.set===cfg.sets; say([last?"lastgo":"go"],last?"Last pose. Begin.":"Begin."); } }
+    else if(ph.type==="rest"){ SFX.rest(); buzz(250); say(["rest"],"Relax."); }
+    else if(ph.type==="setrest"){ SFX.rest(); buzz(250); say(["setdone"],"Round done. Rest a moment."); }
+    else if(ph.type==="prep"){ say(["ready"],"Get ready."); }
+    return;
+  }
+  const ex=byId[ph.ex];
+  stageFig.setEx(ex); stageFig.speed = ph.type==="work"?1:0.6;
+  $("exname").textContent = (ph.type==="work"?"":"Next: ")+ex.name;
+  const nxtW = T.schedule.slice(i+1).find(p=>p.type==="work");
+  $("next").textContent = ph.type==="work" ? (nxtW?`Then: ${byId[nxtW.ex].name}`:"Last interval. Give it everything.") : ex.cue;
+  if(ph.type==="work"){ SFX.work(); buzz([120,60,120]); say(["ex_"+ex.id,"go"],`${ex.name}. Begin.`); }
+  else if(ph.type==="rest"){ SFX.rest(); buzz(250); say(["nextup","ex_"+ex.id],`Rest. Next up, ${ex.name}.`); }
+  else if(ph.type==="setrest"){ SFX.rest(); buzz(250); say(["setdone"],"Round done. Rest a moment."); }
+  else if(ph.type==="prep"){ say(["firstup","ex_"+ex.id],`Get ready. First up, ${ex.name}.`); }
+}
+function finish(){
+  T.running=false; T.paused=false; releaseWake();
+  $("stage").dataset.phase="done"; $("phase").textContent="Done"; setPhaseIco("done");
+  $("digits").textContent="0:00"; $("digits").classList.remove("blink");
+  $("exname").textContent="Practice complete"; $("ring-ico-s").textContent="emoji_events"; { const t=workedSoFar(); $("next").textContent=`${fmt(t.all)} total · ${fmt(t.w)} of work · ${t.rounds} ${t.rounds===1?"round":"rounds"}. Nice job.`; }
+  $("ring").setAttribute("stroke-dashoffset",0); renderDots({round:999,rounds:setCfg(cfg.sets).rounds});
+  setPlayIcon(false); $("btn-play").setAttribute("aria-label","Start again"); $("setup").hidden=false;
+  SFX.done(); buzz([200,100,200,100,400]); say(["done"],"Practice done. Namaste.");
+  logWorkout(true);
+  T.done=true;
+}
+/* Credit the interval being left with the time really spent in it.
+   A work interval counts as a round once at least half of it was done. */
+function credit(ph,sec){
+  if(!ph) return; sec=Math.max(0,Math.min(sec,ph.dur));
+  T.act.all+=sec; if(ph.type==="work"){ T.act.w+=sec; if(sec>=ph.dur/2) T.act.rounds++; }
+}
+function tick(){
+  if(!T.running) return;
+  const ph=T.schedule[T.idx]; if(!ph) return;
+  const now=performance.now();
+  let el=(now-T.phaseStart)/1000;
+  if(el>=ph.dur){ credit(ph,ph.dur); T.phaseStart+=ph.dur*1000; const nx=T.schedule[T.idx+1];
+    T.quiet=!!nx && (now-T.phaseStart)/1000>=nx.dur; enterPhase(T.idx+1); T.quiet=false; if(T.running) tick(); return; }
+  const rem=ph.dur-el, sec=Math.ceil(rem);
+  $("digits").textContent=fmt(rem);
+  $("digits").classList.toggle("blink", sec<=3);
+  $("ring").setAttribute("stroke-dashoffset",(RING*(el/ph.dur)).toFixed(2));
+  if(sec!==T.lastSec){ if(sec<=3&&sec>0&&T.lastSec!==null) SFX.tick(); T.lastSec=sec; }
+}
+setInterval(tick,100);
+(function raf(){ tick(); requestAnimationFrame(raf); })();
+
+async function requestWake(){ try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
+function releaseWake(){ try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"&&T.running) requestWake(); });
+
+/* Music: open the chosen music app (optionally on a playlist) when a workout starts.
+   A web app can open another app by link, but can't press play inside it. */
+let musicSvc=store.get("musicSvc","none"), musicLink=store.get("musicLink",""), musicAuto=store.get("musicAuto",true);
+const MUSIC_NAME={deezer:"Deezer",spotify:"Spotify",apple:"Apple Music",ytm:"YouTube Music",link:"Music"};
+function musicUrl(){
+  const l=(musicLink||"").trim(), http=/^https?:\/\//i.test(l); let m;
+  switch(musicSvc){
+    case "deezer":
+      if((m=l.match(/deezer\.com\/(?:[a-z]{2}(?:-[a-z]{2})?\/)?(playlist|album|artist|track)\/(\d+)/i))) return `deezer://www.deezer.com/${m[1]}/${m[2]}?autoplay=true`;
+      if(/^\d{3,}$/.test(l)) return `deezer://www.deezer.com/playlist/${l}?autoplay=true`;
+      return http?l:"deezer://";
+    case "spotify":
+      if((m=l.match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?(playlist|album|artist|track)\/([A-Za-z0-9]+)/i))) return `spotify:${m[1]}:${m[2]}`;
+      if(/^spotify:/i.test(l)) return l; return http?l:"spotify:";
+    case "apple":
+      if(/^https:\/\/music\.apple\.com\//i.test(l)) return "music://"+l.slice(8); return "music://";
+    case "ytm": return http?l:"https://music.youtube.com/";
+    case "link": return l||null;
+  }
+  return null;
+}
+function openMusic(){
+  const u=musicUrl(); if(!u) return false;
+  if(/^https?:/i.test(u)){ const w=window.open(u,"_blank","noopener"); if(!w) location.href=u; }
+  else location.href=u;
+  return true;
+}
+function syncMusic(){
+  $("m-svc").value=musicSvc; $("m-link").value=musicLink; $("t-music").setAttribute("aria-checked",musicAuto);
+  const on=musicSvc!=="none"; $("m-note").hidden=$("m-link").hidden=$("t-music").hidden=$("m-test").parentElement.hidden=!on;
+  $("m-link").placeholder=musicSvc==="link"?"Paste any link to open":"Playlist link (optional)";
+  $("btn-music").hidden=!on; $("btn-music-t").textContent=MUSIC_NAME[musicSvc]||"Music";
+  const short=on&&musicSvc==="deezer"&&/(link\.deezer\.com|deezer\.page\.link|dzr\.page\.link)/i.test(musicLink||"");
+  $("m-hint").hidden=!short; if(short) $("m-hint-open").href=musicLink;
+}
+$("m-svc").onchange=e=>{ musicSvc=e.target.value; store.set("musicSvc",musicSvc); syncMusic(); };
+$("m-link").oninput=$("m-link").onchange=e=>{ musicLink=e.target.value.trim(); store.set("musicLink",musicLink); syncMusic(); };
+$("t-music").onclick=()=>{ musicAuto=!musicAuto; store.set("musicAuto",musicAuto); syncMusic(); };
+$("m-test").onclick=()=>{ musicLink=$("m-link").value.trim(); store.set("musicLink",musicLink); if(!openMusic()) snack("Paste a link first"); };
+$("btn-music").onclick=()=>{ if(!openMusic()) snack("Choose a music app first"); };
+function start(){
+  audio(); preloadClips();
+  // Fresh start with music on: open the music app and start the timer at the same moment.
+  const music=!T.paused && !T.running && musicAuto && musicSvc!=="none" && musicUrl() && openMusic();
+  realStart();
+  T.musicAt=music?performance.now():0;
+}
+/* Opening the music app sends this page to the background, where iOS stops it and its sounds.
+   If that happens right at the start, hold the workout and begin it when the person comes back. */
+document.addEventListener("visibilitychange",()=>{
+  const hidden=document.visibilityState==="hidden";
+  if(hidden&&T.running&&T.musicAt&&performance.now()-T.musicAt<6000&&T.idx===0){ T.held=true; T.running=false; releaseWake(); $("phase").textContent="Starts when you're back"; }
+  else if(!hidden&&T.held){ T.held=false; T.musicAt=0; T.running=false; T.paused=false; realStart(); }
+  else if(hidden) T.musicAt=0;
+});
+function realStart(){
+  if(T.paused){ T.paused=false; T.running=true; T.phaseStart=performance.now()-T.elapsed*1000; stageFig.t0=performance.now(); setPlayIcon(true); requestWake(); const ph=T.schedule[T.idx]; if(ph){ $("phase").textContent=PHASE_LABEL[ph.type]||""; setPhaseIco(ph.type); } return; }
+  if(!freeMode && !playlist.length){ showView("timer"); $("plist").scrollIntoView({behavior:"smooth",block:"center"}); return; }
+  T.schedule=buildSchedule(); T.act={w:0,all:0,rounds:0}; T.done=false; T.running=true; T.paused=false;
+  T.phaseStart=performance.now(); $("setup").hidden=true;
+  setPlayIcon(true); requestWake();
+  enterPhase(0); tick();
+  if(window.innerWidth<900) $("stage").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function pause(){
+  if(!T.running) return;
+  T.elapsed=(performance.now()-T.phaseStart)/1000; T.running=false; T.paused=true;
+  setPlayIcon(false); $("phase").textContent="Paused"; setPhaseIco("paused"); releaseWake();
+  try{speechSynthesis.cancel()}catch(e){}
+}
+function reset(){ if(T.running||T.paused) logWorkout(false); T.held=false; T.musicAt=0; T.running=false; T.paused=false; T.done=false; releaseWake(); try{speechSynthesis.cancel()}catch(e){} idleStage(); }
+$("btn-play").onclick=()=>{ if(T.running) pause(); else start(); };
+$("btn-reset").onclick=reset;
+$("btn-skip").onclick=()=>{
+  if(!T.running&&!T.paused) return;
+  const wasPaused=T.paused; credit(T.schedule[T.idx], wasPaused?(T.elapsed||0):(performance.now()-T.phaseStart)/1000);
+  T.phaseStart=performance.now(); T.elapsed=0; enterPhase(T.idx+1);
+  if(wasPaused&&T.schedule[T.idx]){ $("phase").textContent="Paused"; setPhaseIco("paused"); const ph=T.schedule[T.idx]; $("digits").textContent=fmt(ph.dur); $("ring").setAttribute("stroke-dashoffset",0); }
+};
+function syncToggles(){ $("t-sound").setAttribute("aria-checked",soundOn); $("t-voice").setAttribute("aria-checked",voiceOn); }
+$("t-sound").onclick=()=>{soundOn=!soundOn;store.set("sound",soundOn);syncToggles();if(soundOn){audio();SFX.tick()}};
+$("voice-sel").onchange=e=>{ voiceName=e.target.value; store.set("voiceName",voiceName); preloadClips(); loadClip("sample").then(()=>say(["sample"],"Tree pose. Begin.",true)); };
+$("voice-test").onclick=()=>{ audio(); if(useCoach()) loadClip("sample").then(()=>say(["sample"],"Tree pose. Begin.",true)); else speak("Tree pose. Begin.",true); };
+$("t-lock").onclick=()=>{ cfg.lock=!cfg.lock; if(cfg.lock){ cfg.roundLen=cfg.work+cfg.rest; cfg.plan.forEach(p=>{p.rest=Math.min(p.rest,cfg.roundLen-5);p.work=cfg.roundLen-p.rest}); } saveCfg(); renderFields(); };
+$("t-perset").onclick=()=>{cfg.perSet=!(cfg.perSet&&cfg.sets>1); if(cfg.perSet){cfg.plan=[];syncPlan();} saveCfg(); renderFields();};
+$("t-voice").onclick=()=>{voiceOn=!voiceOn;store.set("voice",voiceOn);syncToggles();if(!voiceOn)try{speechSynthesis.cancel()}catch(e){}};
+document.addEventListener("keydown",e=>{
+  if($("view-timer").hidden||e.target.tagName==="INPUT") return;
+  if(e.code==="Space"){ e.preventDefault(); $("btn-play").click(); }
+});
+
+/* Workout log: one entry per finished (or stopped after a minute of work) session. */
+let workLog = store.get("log", []); if(!Array.isArray(workLog)) workLog=[];
+function workedSoFar(){
+  const a=T.act||{w:0,all:0,rounds:0}; let w=a.w, all=a.all, rounds=a.rounds;
+  const cur=(T.schedule||[])[T.idx];
+  if(cur&&(T.running||T.paused)){ const el=Math.min(cur.dur,T.running?(performance.now()-T.phaseStart)/1000:(T.elapsed||0)); all+=el; if(cur.type==="work"){ w+=el; if(el>=cur.dur/2) rounds++; } }
+  return {w:Math.round(w), all:Math.round(all), rounds};
+}
+function logWorkout(done){
+  const sch=T.schedule||[]; if(!sch.length) return;
+  const t=workedSoFar();
+  // Skip near-empty sessions, e.g. a workout skipped straight to the end.
+  const planned=sch.filter(p=>p.type==="work").reduce((a,p)=>a+p.dur,0);
+  if(t.w<Math.min(60,planned/2)) return;
+  const ids=[...new Set(sch.filter(p=>p.type==="work"&&p.ex).map(p=>p.ex))];
+  const wo=WORKOUTS.find(w=>w.moves.length===playlist.length&&w.moves.every((m,i)=>m===playlist[i]));
+  const rounds=t.rounds;
+  workLog.unshift({at:Date.now(), name:freeMode?"Timer only":(wo?wo.name:"Custom practice"), moves:freeMode?[]:ids.map(id=>byId[id]?byId[id].name:id),
+    work:t.w, total:t.all, rounds, done});
+  if(workLog.length>1000) workLog.length=1000;
+  store.set("log",workLog);
+}
+const dayKey=d=>{const x=new Date(d);return x.getFullYear()+"-"+x.getMonth()+"-"+x.getDate()};
+const mins=s=>Math.max(1,Math.round(s/60));
+function fillStats(p){
+  const now=new Date(), wk=new Date(now); wk.setHours(0,0,0,0); wk.setDate(wk.getDate()-((wk.getDay()+6)%7));
+  const thisWeek=workLog.filter(e=>e.at>=wk.getTime());
+  $(p+"-week").textContent=thisWeek.length;
+  $(p+"-min").textContent=Math.round(thisWeek.reduce((a,e)=>a+e.total,0)/60);
+  const days=new Set(workLog.map(e=>dayKey(e.at))); let streak=0; const d=new Date(now);
+  if(!days.has(dayKey(d))) d.setDate(d.getDate()-1);
+  while(days.has(dayKey(d))){ streak++; d.setDate(d.getDate()-1); }
+  $(p+"-streak").textContent=streak;
+}
+/* My workouts: saved move lists with their own timing; starred ones show on Home. */
+let myWos = store.get("myWorkouts", []); if(!Array.isArray(myWos)) myWos=[];
+myWos = myWos.filter(w=>w&&Array.isArray(w.moves)).map(w=>Object.assign(w,{moves:w.moves.filter(id=>byId[id])}));
+const MAX_FAV=8;
+function saveMy(){ const ok=store.set("myWorkouts",myWos); renderMy(); return ok; }
+let activeMy=store.get("activeMy",null);
+const setActiveMy=id=>{ activeMy=id; store.set("activeMy",id); syncMyLink(); };
+function syncMyLink(){
+  const w=activeMy&&myWos.find(x=>x.id===activeMy), el=$("my-link");
+  if(!w){ el.hidden=true; return; }
+  const c=w.cfg||{}, changed=w.moves.join()!==playlist.join()||c.work!==cfg.work||c.rest!==cfg.rest||(c.sets||1)!==cfg.sets;
+  el.hidden=!changed; $("my-link-t").textContent=`You changed "${w.name}". Keep these changes?`;
+}
+$("my-link-save").onclick=()=>{
+  const w=activeMy&&myWos.find(x=>x.id===activeMy); if(!w||!playlist.length) return;
+  w.moves=playlist.slice(); w.cfg=Object.assign({},w.cfg||{},{work:cfg.work,rest:cfg.rest,sets:cfg.sets,rounds:playlist.length,roundLen:cfg.work+cfg.rest});
+  saveMy(); renderFavs(); syncMyLink(); snack(`Saved ${w.name}`);
+};
+function runMy(w,go){
+  stopCurrent(); setActiveMy(w.id);
+  playlist=w.moves.slice(); cfg=Object.assign({},w.cfg||cfg); saveCfg(); renderFields(); savePlaylist();
+  freeMode=false; store.set("freeMode",false); syncMode(); showView("timer"); if(go) start();
+}
+function runNames(ms){ const out=[]; ms.forEach(id=>{ const l=out[out.length-1]; if(l&&l.id===id) l.n++; else out.push({id,n:1}); });
+  return out.map(r=>byId[r.id].name+(r.n>1?` ×${r.n}`:"")).join(" · "); }
+function myMeta(w){ const c=w.cfg||cfg; return `${w.moves.length} round${w.moves.length===1?"":"s"} · ${c.work}s / ${c.rest}s${c.sets>1?` · ${c.sets} sets`:""}`; }
+function renderMy(){
+  const el=$("mw-list"); el.innerHTML="";
+  if(!myWos.length){ el.innerHTML=`<p class="hint" style="margin:0;grid-column:1/-1">No routines yet.</p>`; }
+  myWos.forEach((w,i)=>{
+    const c=document.createElement("article"); c.className="mw";
+    c.innerHTML=`<div class="mw-top"><h4></h4><button class="icon-btn sl star" aria-label="Favorite" title="Add to Home"><span class="ms">star</span></button></div><p class="meta"></p><p class="mv"></p>
+      <div class="row"><button class="btn btn-filled with-icon sl go"><span class="ms fill">play_arrow</span>Start</button>
+      <button class="icon-btn sl sh" aria-label="Share routine" title="Share"><span class="ms">share</span></button>
+      <button class="icon-btn sl ed" aria-label="Edit routine" title="Edit"><span class="ms">edit</span></button>
+      <button class="icon-btn sl del" aria-label="Delete" title="Delete"><span class="ms">delete</span></button></div>`;
+    c.querySelector("h4").textContent=w.name; c.querySelector(".meta").textContent=myMeta(w);
+    c.querySelector(".mv").textContent=runNames(w.moves);
+    const st=c.querySelector(".star"); st.setAttribute("aria-pressed",!!w.fav);
+    st.onclick=()=>{ if(!w.fav&&myWos.filter(x=>x.fav).length>=MAX_FAV){ snack(`Limit is ${MAX_FAV} pinned routines`); return; } w.fav=!w.fav; saveMy(); if(w.fav) snack(`Pinned ${w.name}`); };
+    c.querySelector(".go").onclick=()=>runMy(w,true);
+    c.querySelector(".ed").onclick=()=>openRoutine(w,w);
+    c.querySelector(".sh").onclick=()=>shareRoutine(w);
+    c.querySelector(".del").onclick=()=>{ if(confirm(`Delete ${w.name}?`)){ myWos.splice(i,1); saveMy(); } };
+    el.appendChild(c);
+  });
+}
+$("mw-save").onclick=()=>openRoutine({name:"",moves:playlist.slice(),cfg:{work:cfg.work,rest:cfg.rest,sets:1}},null);
+/* Routine editor */
+let rtD=null, rtT=null, rtSnap=null;
+const rtState=()=>rtD?JSON.stringify([$("rt-name").value.trim(),rtD.moves,rtD.work,rtD.rest,rtD.sets,rtD.setRest,$("rt-fav").checked]):null;
+const rtDirty=()=>!!rtD&&rtState()!==rtSnap;
+function tryCloseRt(){ if(rtDirty()&&!confirm("Discard your changes to this routine?")) return; closeRt(); }
+const RT_F=[{k:"work",label:"Hold",unit:"sec",min:5,max:600,step:5},{k:"rest",label:"Rest",unit:"sec",min:0,max:300,step:5},{k:"sets",label:"Sets",unit:"times through the list",min:1,max:10,step:1},{k:"setRest",label:"Break between sets",unit:"sec",min:0,max:600,step:15}];
+function openRoutine(src,target){
+  const c=src.cfg||{};
+  rtT=target; rtSnap=null; rtD={name:src.name||"", moves:(src.moves||[]).filter(id=>byId[id]), work:c.work||40, rest:c.rest==null?20:c.rest, sets:c.sets||1, setRest:c.setRest==null?60:c.setRest, fav:target?!!target.fav:false};
+  $("rt-title").textContent=target?"Edit routine":"New routine"; $("rt-name").value=rtD.name; $("rt-fav").checked=rtD.fav; $("rt-del").hidden=!target;
+  const t=$("rt-times"); t.innerHTML="";
+  RT_F.forEach(o=>{ const d=document.createElement("div"); d.className="field";
+    d.innerHTML=`<label>${o.label}</label><div class="stepper"><button class="sl" aria-label="Less ${o.label}"><span class="ms">remove</span></button><input type="number" inputmode="numeric" min="${o.min}" max="${o.max}" aria-label="${o.label}"><button class="sl" aria-label="More ${o.label}"><span class="ms">add</span></button></div><div class="unit">${o.unit}</div>`;
+    const [mi,pl]=d.querySelectorAll("button"), inp=d.querySelector("input"); inp.value=rtD[o.k];
+    const set=v=>{v=Math.round(Number(v)); if(!isFinite(v)) v=rtD[o.k]; v=Math.min(o.max,Math.max(o.min,v)); rtD[o.k]=v; inp.value=v; rtSum();};
+    mi.onclick=()=>set(rtD[o.k]-o.step); pl.onclick=()=>set(rtD[o.k]+o.step); inp.onchange=()=>set(inp.value);
+    t.appendChild(d); });
+  $("pal-q").value=""; renderRt(); renderPal(); $("rt").hidden=false; rtSnap=rtState(); setTimeout(()=>{ if(!rtD.name) $("rt-name").focus(); },50);
+}
+function rtSum(){
+  const n=rtD.moves.length, secs=10+rtD.sets*n*(rtD.work+rtD.rest)-rtD.rest+(rtD.sets-1)*rtD.setRest;
+  const sr=$("rt-times").children[3]; if(sr) sr.classList.toggle("off",rtD.sets<2);
+  $("rt-sum").textContent=n?`${n} move${n===1?"":"s"} × ${rtD.sets} set${rtD.sets===1?"":"s"} · about ${Math.max(1,Math.round(secs/60))} min`:"Add at least one move";
+}
+function renderRt(){
+  const ol=$("rt-list"); ol.innerHTML="";
+  rtD.moves.forEach((id,i)=>{ const li=document.createElement("li");
+    li.innerHTML=`<span class="grip" aria-label="Drag to reorder"><span class="ms">drag_indicator</span></span><span class="num">${i+1}</span><span class="nm"></span>
+      <button class="icon-btn sl" data-a="dup" aria-label="Repeat this move" title="Repeat (for the other side)"><span class="ms">content_copy</span></button>
+      <button class="icon-btn sl" data-a="del" aria-label="Remove"><span class="ms">close</span></button>`;
+    li.querySelector(".nm").textContent=byId[id].name;
+    li.querySelectorAll("button").forEach(b=>b.onclick=()=>{ const m=rtD.moves, a=b.dataset.a;
+      if(a==="dup") m.splice(i+1,0,id); else if(a==="del") m.splice(i,1); renderRt(); });
+    li.querySelector(".grip").addEventListener("pointerdown",e=>{ e.preventDefault(); dragStart(e,{from:i,id},li); });
+    ol.appendChild(li); });
+  if(!rtD.moves.length) ol.innerHTML=`<li class="rt-empty">Drag poses here, or tap them below</li>`;
+  rtSum();
+}
+/* Move palette: tap a tile to add it, or drag it into the list. */
+let palCat="all"; const palFigs=[];
+function renderPal(){
+  const ch=$("pal-chips"); ch.innerHTML="";
+  [{id:"all",name:"All"}].concat(CATS).forEach(c=>{ const b=document.createElement("button"); b.className="chip sl"; b.textContent=c.name; b.setAttribute("aria-pressed",palCat===c.id);
+    b.onclick=()=>{ palCat=c.id; renderPal(); }; ch.appendChild(b); });
+  palFigs.splice(0).forEach(f=>f.destroy());
+  const p=$("pal"); p.innerHTML=""; p.scrollLeft=0;
+  const pq=($("pal-q").value||"").trim().toLowerCase();
+  EX.filter(e=>(palCat==="all"||e.cat===palCat)&&(!pq||(e.name+" "+e.focus).toLowerCase().includes(pq))).forEach(ex=>{
+    const t=document.createElement("button"); t.className="tile"; setC(t,ex.cat); t.setAttribute("aria-label","Add "+ex.name);
+    t.innerHTML=`<div class="tf"></div><span></span>`; t.querySelector("span").textContent=ex.name;
+    const fg=new Figure(ex,{animate:false}); t.querySelector(".tf").appendChild(fg.svg); palFigs.push(fg);
+    let sx=0, sy=0, pid=null, moved=false, hold=null;
+    t.addEventListener("pointerdown",e=>{ sx=e.clientX; sy=e.clientY; pid=e.pointerId; moved=false; clearTimeout(hold);
+      if(e.pointerType==="mouse") return;
+      hold=setTimeout(()=>{ if(pid==null) return; moved=true; try{navigator.vibrate&&navigator.vibrate(15)}catch(_){} dragStart({pointerId:pid,clientX:sx,clientY:sy,preventDefault(){}},{from:-1,id:ex.id},t); },350); });
+    t.addEventListener("pointermove",e=>{ if(pid!==e.pointerId||moved) return; const dx=Math.abs(e.clientX-sx), dy=Math.abs(e.clientY-sy);
+      if(e.pointerType==="mouse"&&dy>8&&dy>dx){ moved=true; pid=null; dragStart(e,{from:-1,id:ex.id},t); }
+      else if(dx>8||dy>8){ clearTimeout(hold); pid=null; if(dx>8) moved=true; } });
+    t.addEventListener("pointerup",()=>{ clearTimeout(hold); pid=null; });
+    t.addEventListener("pointercancel",()=>{ clearTimeout(hold); pid=null; });
+    t.addEventListener("touchmove",e=>{ if(drag) e.preventDefault(); },{passive:false});
+    t.addEventListener("contextmenu",e=>e.preventDefault());
+    t.onclick=()=>{ if(moved) return; rtD.moves.push(ex.id); renderRt(); snack(`Added ${ex.name}`);
+      const last=$("rt-list").lastElementChild; if(last) last.scrollIntoView({block:"nearest",behavior:"smooth"}); };
+    p.appendChild(t); });
+}
+/* Drag engine: works for mouse and touch through pointer events. */
+let drag=null;
+function dragStart(e,info,srcEl){
+  const g=document.createElement("div"); g.className="ghost"; g.textContent=byId[info.id].name; document.body.appendChild(g);
+  drag={...info,g,srcEl,at:null,pointer:e.pointerId,y:e.clientY,x:e.clientX};
+  if(info.from>=0) srcEl.classList.add("dragging");
+  try{ srcEl.setPointerCapture(e.pointerId); }catch(_){}
+  dragMove(e);
+  srcEl.addEventListener("pointermove",dragMove); srcEl.addEventListener("pointerup",dragEnd); srcEl.addEventListener("pointercancel",dragCancel);
+  drag.raf=requestAnimationFrame(autoScroll);
+}
+function dropIndex(x,y){
+  const ol=$("rt-list"), r=ol.getBoundingClientRect(), box=$("rt").querySelector(".rt-in").getBoundingClientRect();
+  if(drag.from<0 && (y>r.bottom+40||y<box.top||x<box.left||x>box.right)) return null;
+  const items=[...ol.querySelectorAll("li:not(.rt-empty)")];
+  for(let i=0;i<items.length;i++){ const b=items[i].getBoundingClientRect(); if(y<b.top+b.height/2) return i; }
+  return items.length;
+}
+function dragMove(e){
+  if(!drag||e.pointerId!==drag.pointer) return; e.preventDefault();
+  drag.x=e.clientX; drag.y=e.clientY; drag.g.style.left=e.clientX+"px"; drag.g.style.top=e.clientY+"px";
+  const at=dropIndex(e.clientX,e.clientY); drag.at=at;
+  const ol=$("rt-list"), items=[...ol.querySelectorAll("li")];
+  items.forEach(li=>li.classList.remove("drop","drop-end"));
+  if(at==null) return;
+  const empty=ol.querySelector(".rt-empty"); if(empty){ empty.classList.add("drop"); return; }
+  const real=[...ol.querySelectorAll("li:not(.rt-empty)")];
+  if(at<real.length) real[at].classList.add("drop"); else if(real.length) real[real.length-1].classList.add("drop-end");
+}
+function autoScroll(){
+  if(!drag) return; const sc=$("rt").querySelector(".rt-in"), b=sc.getBoundingClientRect(), edge=60;
+  if(drag.y<b.top+edge) sc.scrollTop-=Math.ceil((b.top+edge-drag.y)/6);
+  else if(drag.y>b.bottom-edge) sc.scrollTop+=Math.ceil((drag.y-(b.bottom-edge))/6);
+  drag.raf=requestAnimationFrame(autoScroll);
+}
+function dragCleanup(){
+  if(!drag) return; cancelAnimationFrame(drag.raf); drag.g.remove(); drag.srcEl.classList.remove("dragging");
+  drag.srcEl.removeEventListener("pointermove",dragMove); drag.srcEl.removeEventListener("pointerup",dragEnd); drag.srcEl.removeEventListener("pointercancel",dragCancel);
+  $("rt-list").querySelectorAll("li").forEach(li=>li.classList.remove("drop","drop-end")); drag=null;
+}
+function dragEnd(e){
+  if(!drag||e.pointerId!==drag.pointer) return;
+  const {from,id}=drag, at=dropIndex(e.clientX,e.clientY); dragCleanup();
+  if(at==null) return;
+  const m=rtD.moves;
+  if(from<0){ m.splice(at,0,id); snack(`Added ${byId[id].name}`); }
+  else { const to=at>from?at-1:at; if(to===from) { renderRt(); return; } m.splice(from,1); m.splice(to,0,id); }
+  renderRt();
+}
+function dragCancel(){ dragCleanup(); }
+function closeRt(){ dragCleanup(); $("rt").hidden=true; rtD=rtT=null; palFigs.splice(0).forEach(f=>f.destroy()); $("pal").innerHTML=""; }
+$("rt-close").onclick=tryCloseRt; $("rt-cancel").onclick=tryCloseRt;
+$("rt").addEventListener("click",e=>{ if(e.target.id==="rt"&&!rtDirty()) closeRt(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("rt").hidden) tryCloseRt(); });
+$("rt-del").onclick=()=>{ if(rtT&&confirm(`Delete ${rtT.name}?`)){ myWos.splice(myWos.indexOf(rtT),1); saveMy(); renderFavs(); closeRt(); } };
+$("rt-save").onclick=()=>{
+  const name=$("rt-name").value.trim();
+  if(!name){ $("rt-name").focus(); snack("Name required"); return; }
+  if(!rtD.moves.length){ snack("Add at least one move"); return; }
+  let fav=$("rt-fav").checked;
+  if(fav&&!(rtT&&rtT.fav)&&myWos.filter(x=>x.fav).length>=MAX_FAV){ fav=false; snack(`Saved (not pinned, limit is ${MAX_FAV})`); }
+  else snack(`Saved ${name}`);
+  const c=Object.assign({},woCfg({moves:rtD.moves}),{work:rtD.work,rest:rtD.rest,sets:rtD.sets,setRest:rtD.setRest,rounds:rtD.moves.length,roundLen:rtD.work+rtD.rest});
+  const data={name,moves:rtD.moves.slice(),cfg:c,fav};
+  if(rtT) Object.assign(rtT,data); else myWos.unshift(Object.assign(data,{id:"m"+Date.now()}));
+  saveMy(); renderFavs(); closeRt();
+};
+function renderFavs(){
+  const favs=myWos.filter(w=>w.fav).slice(0,MAX_FAV), el=$("favs"); el.innerHTML="";
+  $("fav-head").hidden=el.hidden=!favs.length; $("fav-hint").hidden=!!(favs.length||homeWos.length);
+  favs.forEach(w=>{ const b=document.createElement("div"); b.className="fav sl"; b.setAttribute("role","button"); b.tabIndex=0;
+    b.innerHTML=`<b></b><span></span><span class="ms fill" aria-hidden="true">play_arrow</span><button class="unpin" aria-label="Remove from Home" title="Remove from Home"><span class="ms">star</span></button>`;
+    b.querySelector("b").textContent=w.name; b.querySelector("span").textContent=myMeta(w);
+    b.setAttribute("aria-label","Start "+w.name); b.onclick=()=>runMy(w,true);
+    b.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); runMy(w,true); } };
+    b.querySelector(".unpin").onclick=e=>{ e.stopPropagation(); w.fav=false; saveMy(); renderFavs();
+      undoSnack(`Unpinned ${w.name}`,()=>{ w.fav=true; saveMy(); renderFavs(); }); };
+    el.appendChild(b); });
+}
+/* Sharing: a routine packs into a short code that rides in a link (#r=CODE) */
+const SHARE_BASE="https://haruku08.github.io/yoga/";
+function encRoutine(w){ const c=w.cfg||cfg, j=JSON.stringify({v:1,n:w.name,m:w.moves,w:c.work,r:c.rest,s:c.sets||1});
+  let b=""; new TextEncoder().encode(j).forEach(x=>b+=String.fromCharCode(x));
+  return btoa(b).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function decRoutine(code){
+  try{ code=String(code||"").trim(); const m=code.match(/[#&?]r=([A-Za-z0-9_-]+)/); if(m) code=m[1];
+    const b=atob(code.replace(/-/g,"+").replace(/_/g,"/")), u=Uint8Array.from(b,ch=>ch.charCodeAt(0)), d=JSON.parse(new TextDecoder().decode(u));
+    const moves=(Array.isArray(d.m)?d.m:[]).filter(id=>byId[id]).slice(0,60); if(!moves.length) return null;
+    const cl=(v,lo,hi,df)=>{ v=Math.round(Number(v)); return isFinite(v)?Math.min(hi,Math.max(lo,v)):df; };
+    const work=cl(d.w,5,600,40), rest=cl(d.r,0,300,20), sets=cl(d.s,1,10,1);
+    return {name:String(d.n||"Shared routine").slice(0,40), moves, cfg:Object.assign({},woCfg({moves}),{work,rest,sets,rounds:moves.length,roundLen:work+rest})};
+  }catch(e){ return null; }
+}
+function shareRoutine(w){
+  const url=SHARE_BASE+"#r="+encRoutine(w), text=`${w.name} on Haruku Yoga`;
+  const copy=()=>{ try{ navigator.clipboard.writeText(url).then(()=>snack("Link copied"),()=>prompt("Copy this link:",url)); }catch(e){ prompt("Copy this link:",url); } };
+  if(navigator.share) navigator.share({title:w.name,text,url}).catch(e=>{ if(e&&e.name!=="AbortError") copy(); });
+  else copy();
+}
+function importRoutine(code,ask){
+  const r=decRoutine(code); if(!r){ snack("Invalid routine link"); return false; }
+  if(ask&&!confirm(`Add the shared routine "${r.name}" (${r.moves.length} poses) to your routines?`)) return false;
+  const fav=myWos.filter(x=>x.fav).length<MAX_FAV;
+  myWos.unshift(Object.assign(r,{id:"m"+Date.now(),fav})); saveMy(); renderFavs();
+  snack(fav?`Added ${r.name}`:`Added ${r.name}`);
+  return true;
+}
+$("imp").onsubmit=e=>{ e.preventDefault(); const v=$("imp-in").value; if(!v.trim()) return; if(importRoutine(v,false)) $("imp-in").value=""; };
+function checkShareHash(){
+  if(!/^#r=/.test(location.hash)) return;
+  const code=location.hash; try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){}
+  if(importRoutine(code,true)) showView("home");
+}
+window.addEventListener("hashchange",checkShareHash);
+let exT=null; $("ex-search").addEventListener("input",()=>{ clearTimeout(exT); exT=setTimeout(renderLibrary,150); });
+$("pal-q").addEventListener("input",()=>renderPal());
+$("fav-cat").onclick=()=>{ libSub="routines"; showView("lib"); };
+/* Backup: every saved key packed into one code (HFB1:...) that can be pasted back or saved as a file */
+function backupCode(){
+  const d={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith("hy:")) d[k]=localStorage.getItem(k); } }catch(e){}
+  let b=""; new TextEncoder().encode(JSON.stringify(d)).forEach(x=>b+=String.fromCharCode(x));
+  return "HFB1:"+btoa(b);
+}
+function restoreBackup(text){
+  const m=String(text||"").match(/HFB1:([A-Za-z0-9+/=]+)/); let d=null;
+  try{ d=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m[1]),c=>c.charCodeAt(0)))); }catch(e){}
+  if(!d||typeof d!=="object"){ snack("Invalid backup code"); return; }
+  const n=(()=>{ try{ return JSON.parse(d["hy:log"]||"[]").length; }catch(e){ return 0; } })();
+  if(!confirm(`Restore this backup (${n} session${n===1?"":"s"})? It replaces what's on this device.`)) return;
+  try{ Object.keys(localStorage).filter(k=>k.startsWith("hy:")).forEach(k=>localStorage.removeItem(k));
+    Object.entries(d).forEach(([k,v])=>{ if(k.startsWith("hy:")&&typeof v==="string") localStorage.setItem(k,v); }); }catch(e){ snack("Restore failed"); return; }
+  location.reload();
+}
+$("bk-copy").onclick=()=>{ const c=backupCode();
+  try{ navigator.clipboard.writeText(c).then(()=>snack("Backup copied. Paste it somewhere safe, like Notes."),()=>prompt("Copy this backup code:",c)); }catch(e){ prompt("Copy this backup code:",c); } };
+$("bk-file").onclick=()=>{ const blob=new Blob([backupCode()],{type:"text/plain"}), f=new File([blob],`haruku-yoga-backup-${new Date().toISOString().slice(0,10)}.txt`,{type:"text/plain"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})) navigator.share({files:[f],title:"Haruku Yoga backup"}).catch(()=>{});
+  else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=f.name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); } };
+$("bk-form").onsubmit=e=>{ e.preventDefault(); restoreBackup($("bk-in").value); };
+$("bk-pick").onchange=e=>{ const f=e.target.files[0]; if(f) f.text().then(restoreBackup); e.target.value=""; };
+/* Install hint: shown in a phone browser until the app runs from the home screen or is dismissed */
+(function(){
+  let framed=false; try{ framed=window.top!==window; }catch(e){ framed=true; }
+  const standalone=navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
+  const ua=navigator.userAgent, ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1), android=/Android/.test(ua);
+  if(framed||standalone||!(ios||android)||store.get("installHintOff",false)) return;
+  $("install-how").innerHTML=ios
+    ? (/CriOS|FxiOS|EdgiOS/.test(ua)?"Open in Safari, then tap ":"Tap ")+`<b>Share</b> <span class="ms" style="font-size:16px;vertical-align:-3px">ios_share</span> → <b>Add to Home Screen</b>.`
+    : `Open the <b>⋮</b> menu → <b>Add to Home screen</b>.`;
+  $("install").hidden=false;
+  $("install-x").onclick=()=>{ $("install").hidden=true; store.set("installHintOff",true); };
+})();
+$("btn-shareapp").onclick=()=>{
+  const url=SHARE_BASE, text="Haruku Yoga: yoga timer, poses and flows.";
+  const copy=()=>{ try{ navigator.clipboard.writeText(url).then(()=>snack("Link copied"),()=>prompt("Copy this link:",url)); }catch(e){ prompt("Copy this link:",url); } };
+  if(navigator.share) navigator.share({title:"Haruku Yoga",text,url}).catch(e=>{ if(e&&e.name!=="AbortError") copy(); });
+  else copy();
+};
+/* Home dashboard */
+const QUICK=["p4515","yoga","tabata","double"];
+const QF=[{k:"work",l:"Hold",u:"sec",min:5,max:600,st:5},{k:"rest",l:"Rest",u:"sec",min:0,max:300,st:5},{k:"rounds",l:"Rounds",u:"per set",min:1,max:50,st:1},
+          {k:"sets",l:"Sets",u:"",min:1,max:20,st:1},{k:"setRest",l:"Set break",u:"sec",min:0,max:600,st:15},{k:"prep",l:"Get ready",u:"sec",min:0,max:60,st:5}];
+let quick=(()=>{ const q=store.get("quickCfg",null); const base=PRESETS[store.get("quick","p4515")]||PRESETS.p4515;
+  return Object.assign({},base.cfg,q&&typeof q==="object"?q:{}); })();
+const saveQuick=()=>store.set("quickCfg",quick);
+function renderQuickFields(){
+  const g=$("qgrid"); if(!g.children.length){
+    QF.forEach(o=>{ const d=document.createElement("div"); d.className="qf"; d.dataset.k=o.k;
+      d.innerHTML=`<label for="qf-${o.k}">${o.l}</label><div class="row"><button class="sl" aria-label="Less ${o.l}"><span class="ms">remove</span></button><input id="qf-${o.k}" type="number" inputmode="numeric" min="${o.min}" max="${o.max}"><button class="sl" aria-label="More ${o.l}"><span class="ms">add</span></button></div><small>${o.u||"&nbsp;"}</small>`;
+      const [mi,pl]=d.querySelectorAll("button"), inp=d.querySelector("input");
+      const set=v=>{ v=Math.round(Number(v)); if(!isFinite(v)) v=quick[o.k]; quick[o.k]=Math.min(o.max,Math.max(o.min,v)); saveQuick(); renderQuickFields(); };
+      mi.onclick=()=>set(quick[o.k]-o.st); pl.onclick=()=>set(quick[o.k]+o.st); inp.onchange=()=>set(inp.value);
+      g.appendChild(d); });
+  }
+  QF.forEach(o=>{ const inp=$("qf-"+o.k); if(document.activeElement!==inp) inp.value=quick[o.k]; });
+  g.querySelector('[data-k="setRest"]').classList.toggle("off",quick.sets<2);
+  $("q-shape").textContent=`${quick.rounds} round${quick.rounds===1?"":"s"}${quick.sets>1?` × ${quick.sets} sets`:""} · ${quick.work}s / ${quick.rest}s`;
+  const secs=quick.prep+quick.sets*quick.rounds*(quick.work+quick.rest)-quick.rest+(quick.sets-1)*quick.setRest;
+  $("q-total").textContent=fmt(secs);
+  document.querySelectorAll("#qchips button").forEach(b=>{ const p=PRESETS[b.dataset.k].cfg; b.setAttribute("aria-pressed",p.work===quick.work&&p.rest===quick.rest&&p.rounds===quick.rounds&&p.sets===quick.sets); });
+}
+function renderHome(){
+  const h=new Date().getHours();
+  $("hello").textContent=h<12?"Good morning":h<18?"Good afternoon":"Good evening";
+  $("today").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+  const q=$("qchips"); q.innerHTML="";
+  QUICK.forEach(k=>{ const b=document.createElement("button"); b.className="sl"; b.textContent=PRESETS[k].name; b.dataset.k=k;
+    b.onclick=()=>{ quick=Object.assign({},quick,PRESETS[k].cfg); saveQuick(); renderQuickFields(); }; q.appendChild(b); });
+  renderQuickFields();
+  const names=playlist.map(id=>byId[id].name);
+  $("h-moves").textContent=names.length?`${names.length} move${names.length===1?"":"s"}: ${names.join(" · ")}`:"No poses yet.";
+  $("h-go").disabled=!names.length;
+  renderFavs();
+}
+$("q-go").onclick=()=>{ stopCurrent(); freeMode=true; store.set("freeMode",true);
+  cfg=Object.assign({},quick,{perSet:false,plan:[],lock:false,roundLen:quick.work+quick.rest}); saveCfg(); renderFields();
+  syncMode(); showView("timer"); start(); };
+$("h-go").onclick=()=>{ if(!playlist.length) return; freeMode=false; store.set("freeMode",false); syncMode(); showView("timer"); start(); };
+$("h-edit").onclick=()=>{ freeMode=false; store.set("freeMode",false); syncMode(); showView("timer"); };
+$("h-cat").onclick=()=>showView("lib");
+function renderLog(){
+  const now=new Date(); fillStats("st");
+  const el=$("log-list"); el.innerHTML="";
+  if(!workLog.length){ el.innerHTML=`<div class="log-empty"><span class="ms">history</span>No sessions yet.</div>`; return; }
+  const today=dayKey(now), yd=new Date(now); yd.setDate(yd.getDate()-1);
+  let last="";
+  workLog.forEach((e,i)=>{
+    const k=dayKey(e.at);
+    if(k!==last){ last=k; const h=document.createElement("div"); h.className="log-day";
+      h.textContent=k===today?"Today":k===dayKey(yd)?"Yesterday":new Date(e.at).toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric",year:new Date(e.at).getFullYear()===now.getFullYear()?undefined:"numeric"});
+      el.appendChild(h); }
+    const it=document.createElement("div"); it.className="log-item"+(e.done?"":" partial");
+    const time=new Date(e.at).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+    it.innerHTML=`<span class="ms fill">${e.done?"emoji_events":"timelapse"}</span><div class="log-main"><h4></h4><p class="meta"></p><p class="mv"></p></div><button class="icon-btn sl" aria-label="Delete entry" title="Delete"><span class="ms">delete</span></button>`;
+    const h4=it.querySelector("h4"); h4.textContent=e.name;
+    if(!e.done){ const t=document.createElement("span"); t.className="tag"; t.textContent="Stopped early"; h4.appendChild(t); }
+    it.querySelector(".meta").textContent=`${time} · ${mins(e.total)} min · ${e.rounds} round${e.rounds===1?"":"s"} · ${mins(e.work)} min of work`;
+    const mv=it.querySelector(".mv"); if(e.moves&&e.moves.length) mv.textContent=e.moves.join(" · "); else mv.remove();
+    it.querySelector("button").onclick=()=>{ if(confirm("Delete this session from your log?")){ workLog.splice(i,1); store.set("log",workLog); renderLog(); } };
+    el.appendChild(it);
+  });
+}
+
+/* Timer only: plain interval timer with no exercises attached. */
+let freeMode = store.get("freeMode", false);
+function syncMode(){
+  document.querySelectorAll(".mode-seg button").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.mode==="free")===freeMode));
+  $("wo-section").hidden=freeMode; $("stage-fig").hidden=freeMode; $("ring-ico").hidden=!freeMode;
+  $("total").previousElementSibling.lastChild.textContent = "Total";
+  if(!T.running&&!T.paused) idleStage();
+}
+document.querySelectorAll(".mode-seg button").forEach(b=>b.onclick=()=>{ freeMode=b.dataset.mode==="free"; store.set("freeMode",freeMode); syncMode(); });
+function syncStyle(){
+  document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.style===figStyle));
+  for(const fg of figures) if(fg.ex) fg.draw(fg.animate&&!reduceMotion?(performance.now()-fg.t0)/1000*fg.speed:fg.restT());
+}
+document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
+/* ---------- Updates ----------
+   The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
+const APP_VERSION = "1.0.0";
+let snackTimer=null, newVersion=null;
+function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
+function snack(msg, action){
+  $("snack-txt").textContent=msg; $("snack").hidden=false;
+  const a=$("snack-act"); a.hidden=!action; if(action){ a.textContent=action.label; a.onclick=action.run; }
+  clearTimeout(snackTimer); if(!action) snackTimer=setTimeout(()=>{$("snack").hidden=true},3500);
+}
+function applyUpdate(){ $("snack-txt").textContent="Updating…"; const u=new URL(location.href); u.searchParams.set("v",newVersion||Date.now()); location.replace(u.toString()); }
+async function checkUpdate(manual){
+  try{
+    const r=await fetch("version.json?t="+Date.now(),{cache:"no-store"});
+    if(!r.ok) throw 0;
+    const v=(await r.json()).version;
+    if(v && v!==APP_VERSION){ newVersion=v; $("upd-dot").hidden=false; snack(`Version ${v} is ready`,{label:"Update",run:applyUpdate}); }
+    else if(manual) snack(`Up to date (v${APP_VERSION})`);
+  }catch(e){ if(manual) snack("Update check failed"); }
+}
+$("btn-update").onclick=()=>{ if(newVersion) applyUpdate(); else checkUpdate(true); };
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") checkUpdate(false); });
+setTimeout(()=>checkUpdate(false),1500);
+/* ---------- Boot ---------- */
+addEventListener("scroll",()=>{$("appbar").classList.toggle("scrolled",scrollY>4)},{passive:true});
+syncMusic(); renderVoices(); syncStyle(); syncMode(); renderWorkouts(); renderMy(); renderFilters(); renderLibrary(); renderPresets(); renderFields(); renderPlaylist(); syncToggles(); syncMyLink();
+$("total").textContent=fmt(totalSeconds()); idleStage();
+showView("home"); setTimeout(checkShareHash,300);
+})();
+</script>
+</body>
+</html>
