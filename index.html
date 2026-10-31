@@ -76,6 +76,9 @@ h1,h2,h3{margin:0;font-family:var(--title);font-weight:600;letter-spacing:0;text
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 .appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);transition:background .2s}
 .appbar.scrolled{background:var(--sc)}
+/* Timer screen: no app bar, just the timer */
+body[data-view="timer"] .appbar{display:none}
+body[data-view="timer"] main{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
 .appbar-in{height:64px;display:flex;align-items:center;gap:12px;max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .appbar .logo{width:40px;height:40px;border-radius:var(--r-sm);background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
 .appbar h1{font-size:20px;line-height:28px;font-weight:700;letter-spacing:0}
@@ -166,12 +169,15 @@ main .wrap{padding-block:8px 32px}
 .stage{--pc:var(--on-surface-variant);--pcc:var(--sc-highest);background:var(--sc);border-radius:var(--r-lg);padding:16px 20px 24px;display:flex;flex-direction:column;align-items:center;gap:4px;transition:background .3s}
 .stage[data-phase="work"]{--pc:var(--work);--pcc:var(--stand-c)} .stage[data-phase="rest"]{--pc:var(--rest);--pcc:var(--floor-c)}
 .stage[data-phase="prep"]{--pc:var(--prep);--pcc:var(--floor-c)} .stage[data-phase="setrest"]{--pc:var(--setrest);--pcc:var(--balance-c)} .stage[data-phase="done"]{--pc:var(--rest);--pcc:var(--floor-c)}
+.stage-top[hidden]{display:none}
+.snd-off{height:36px;border-radius:999px;border:0;background:var(--alert);color:#fff;display:inline-flex;align-items:center;gap:6px;padding:0 14px 0 10px;font:500 14px var(--font);margin-bottom:4px}
+.snd-off[hidden]{display:none}
 .stage-top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
 .phase{height:32px;border-radius:var(--r-sm);padding:0 12px 0 8px;background:var(--pcc);color:var(--pc);display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;letter-spacing:.1px;transition:background .3s}
 .phase .ms{font-size:18px}
 .counts{display:flex;gap:8px}
 .count{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--on-surface-variant)}
-.ring-wrap{position:relative;width:min(300px,76vw);aspect-ratio:1/1;max-width:100%;margin-top:8px}
+.ring-wrap{position:relative;width:min(300px,76vw);aspect-ratio:1/1;max-width:100%;margin-top:0}
 .ring-wrap>svg{position:absolute;inset:0;width:100%;height:100%}
 .ring-bg{stroke:var(--pcc);transition:stroke .3s} .ring-fg{stroke:var(--pc);transition:stroke .3s}
 .ring-fig{position:absolute;inset:15%;border-radius:50%}
@@ -519,10 +525,11 @@ main .wrap{padding-block:8px 32px}
   <section id="view-timer" class="wrap" hidden>
     <div class="timer-grid">
       <div class="stage" id="stage" data-phase="idle">
-        <div class="stage-top">
+        <div class="stage-top" hidden>
           <div class="phase"><span class="ms" id="phase-ico">timer</span><span id="phase">Ready</span></div>
           <div class="counts"><span class="count" id="c-round">Round 0/8</span><span class="count" id="c-set">Set 1/1</span></div>
         </div>
+        <button class="snd-off sl" id="snd-off" hidden><span class="ms">volume_up</span>Tap to bring the beeps and voice back</button>
         <div class="ring-wrap">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle class="ring-bg" cx="50" cy="50" r="46" fill="none" stroke-width="4"/>
@@ -576,8 +583,7 @@ main .wrap{padding-block:8px 32px}
             <option value="none">None</option><option value="deezer">Deezer</option><option value="spotify">Spotify</option><option value="apple">Apple Music</option><option value="ytm">YouTube Music</option><option value="link">Other (any link)</option></select></div>
           <input class="mlink" id="m-link" type="url" inputmode="url" autocomplete="off" placeholder="Playlist link (e.g. deezer.com/playlist/…)">
           <div class="mhint" id="m-hint" hidden>Short links can't open the app. <a id="m-hint-open" href="#" target="_blank" rel="noopener">Open it</a>, then paste the full deezer.com/playlist/… address or the playlist number.</div>
-          <button class="sw-row" role="switch" id="t-music" aria-checked="true"><span class="switch"></span>Open on start</button>
-          <p class="supporting" id="m-note">Come back to Haruku Yoga once the music plays. Your practice starts then. Keep Silent mode off to hear the voice and beeps.</p>
+          <p class="supporting" id="m-note">Music never starts by itself. Tap the music button on the timer when you want it, and the app asks first. Beeps and the voice work with or without music. Keep Silent mode off to hear them.</p>
           <div><button class="btn btn-tonal with-icon sl" id="m-test"><span class="ms">open_in_new</span>Open</button></div>
         </div>
         <div id="wo-section" class="wo-section">
@@ -950,17 +956,21 @@ class Figure{
         o.footInk.setAttribute("d",fd2); o.foot.setAttribute("d",fd2);
       } else o.hand.setAttribute("d",ring(e,1.4,s));
     };
-    limb(D.farArm,q.n,q.re,q.rh,-1); limb(D.farLeg,q.p,q.rk,q.rf,1);
+    // Facing the viewer, arms hang from two shoulders and legs from two hips, not from one point as in a side view.
+    const side=front?(()=>{ const pp=perp(unit(sub(q.n,q.p))); return pp[0]<0?[-pp[0],-pp[1]]:pp; })():[0,0];
+    const shL=add(q.n,side,-3.9), shR=add(q.n,side,3.9), hpL=add(q.p,side,-3), hpR=add(q.p,side,3);
+    limb(D.farArm,front?shR:q.n,q.re,q.rh,-1); limb(D.farLeg,front?hpR:q.p,q.rk,q.rf,1);
     const top=lerp(q.n,c,.1);
     // hourglass: a narrow bare waist between a crop top and wide high-waisted leggings
-    D.body.ink.setAttribute("stroke-width",front?8.6:6.9); D.body.fill.setAttribute("stroke-width",front?7.1:5.4);
-    D.chest.ink.setAttribute("stroke-width",front?10.4:8.2); D.chest.fill.setAttribute("stroke-width",front?8.9:6.7); D.chest.col.setAttribute("stroke-width",front?6.8:4.9);
-    D.shorts.ink.setAttribute("stroke-width",front?12.6:9.4); D.shorts.fill.setAttribute("stroke-width",front?11.1:7.9); D.shorts.col.setAttribute("stroke-width",front?8.2:5.8);
+    D.body.ink.setAttribute("stroke-width",front?10.4:6.9); D.body.fill.setAttribute("stroke-width",front?8.9:5.4);
+    D.chest.ink.setAttribute("stroke-width",front?12.4:8.2); D.chest.fill.setAttribute("stroke-width",front?10.9:6.7); D.chest.col.setAttribute("stroke-width",front?8.4:4.9);
+    const off=front?"translate(.6 .9)":"translate(1.3 1)"; D.chest.col.setAttribute("transform",off); D.shorts.col.setAttribute("transform",off);
+    D.shorts.ink.setAttribute("stroke-width",front?14:9.4); D.shorts.fill.setAttribute("stroke-width",front?12.5:7.9); D.shorts.col.setAttribute("stroke-width",front?9.4:5.8);
     setP(D.body,`M${f(q.p)}Q${f(c)} ${f(top)}`);
     const ql=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
     setP(D.chest,`M${f(ql(.55))}Q${f(ql(.8))} ${f(top)}`);
     setP(D.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.5))}L${f(ql(.3))}`);
-    limb(D.nearLeg,q.p,q.lk,q.lf,1); limb(D.nearArm,q.n,q.le,q.lh,1);
+    limb(D.nearLeg,front?hpL:q.p,q.lk,q.lf,1); limb(D.nearArm,front?shL:q.n,q.le,q.lh,1);
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,6.8), R=5.5;
     setP(D.neck,`M${f(q.n)}L${f(add(q.n,ax,2.4))}`);
     const dot=(p,r)=>`M${f(add(p,[-r,0]))}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
@@ -1352,7 +1362,7 @@ function woCard(w,home){
     ah.onclick=()=>{ if(on){ homeWos=homeWos.filter(x=>x!==w.id); saveHome(); snack(`Unpinned ${w.name}`); } else { homeWos.push(w.id); saveHome(); snack(`Pinned ${w.name}`); } };
     foot.appendChild(ah);
   }
-  const cp=btn("icon-btn sl","Copy to My routines and edit","edit"); cp.onclick=()=>openRoutine({name:w.name,moves:w.moves,cfg:woCfg(w)},null); foot.appendChild(cp);
+  const cp=btn("icon-btn sl","Copy to My routines and edit","edit"); cp.onclick=()=>openRoutine({name:w.name,moves:w.moves,cfg:woCfg(w),from:w.id},null); foot.appendChild(cp);
   const go=document.createElement("button"); go.className="btn btn-filled with-icon sl"; go.innerHTML=`<span class="ms fill">play_arrow</span>Start`; go.onclick=()=>{ useWorkout(w); start(); }; foot.appendChild(go);
   return card;
 }
@@ -1402,6 +1412,7 @@ $("sh-now").onclick=()=>{
 /* ---------- Views ---------- */
 function showView(v){
   ["home","lib","timer","log"].forEach(k=>{ $("view-"+k).hidden = v!==k; $("tab-"+k).setAttribute("aria-selected",v===k); });
+  document.body.dataset.view=v; // the timer screen hides the app bar so only the timer shows
   if(v==="log") renderLog(); if(v==="home") renderHome();
   store.set("view",v); showSub(libSub); window.scrollTo(0,0);
 }
@@ -1475,7 +1486,7 @@ function renderPlan(){
     const syncQuick=()=>q.querySelectorAll("button").forEach(b=>{const [w,r]=b.dataset.p.split("/").map(Number);const on=p.work===w&&p.rest===r;b.setAttribute("aria-pressed",on);b.innerHTML=(on?'<span class="ms">check</span>':"")+`${w} / ${r}`});
     quickPairs().forEach(([w,r])=>{
       const b=document.createElement("button"); b.className="chip sl"; b.dataset.p=w+"/"+r;
-      b.setAttribute("aria-label",`Set ${i+1}: ${w} seconds work, ${r} seconds rest`);
+      b.setAttribute("aria-label",`Set ${i+1}: ${w} seconds hold, ${r} seconds rest`);
       b.onclick=()=>{p.work=w;p.rest=r;g.querySelector(`#p${i}-work`).value=w;g.querySelector(`#p${i}-rest`).value=r;upd();syncQuick()};
       q.appendChild(b);
     });
@@ -1537,12 +1548,26 @@ let actx=null;
 function mixAudio(){ try{ if(navigator.audioSession && navigator.audioSession.type!=="ambient") navigator.audioSession.type="ambient"; }catch(e){} }
 mixAudio();
 /* iOS interrupts Web Audio and speech when another app (the music app) takes over. Wake both again on return and on the next tap. */
-document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ audio(); try{ speechSynthesis.cancel(); }catch(e){} } });
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ audio(); onAudioState(); try{ speechSynthesis.cancel(); }catch(e){} } });
 ["pointerdown","touchend"].forEach(ev=>document.addEventListener(ev,()=>{ if(actx&&actx.state!=="running") audio(); },{passive:true,capture:true}));
+/* Keep the beeps and voice independent of the music app: when the music starts, stops or is paused,
+   iOS can leave our audio "interrupted". Resume it straight away, and if it stays stuck during a workout,
+   show a button (any tap brings it back, since iOS only allows that from a tap). */
 function audio(){ mixAudio();
-  try{ if(!actx||actx.state==="closed") actx=new (window.AudioContext||window.webkitAudioContext)();
-    if(actx.state!=="running") actx.resume().catch(()=>{}); }catch(e){}
+  try{ if(!actx||actx.state==="closed"){ actx=new (window.AudioContext||window.webkitAudioContext)(); actx.onstatechange=onAudioState; }
+    if(actx.state!=="running") actx.resume().then(onAudioState,()=>{}); }catch(e){}
   return actx; }
+let sndTimer=0;
+function onAudioState(){
+  if(!actx) return;
+  const ok=actx.state==="running";
+  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); return; }
+  if(document.visibilityState!=="visible") return;
+  try{ actx.resume().catch(()=>{}); }catch(e){}
+  if(!sndTimer) sndTimer=setTimeout(()=>{ sndTimer=0; if(actx&&actx.state!=="running"&&document.visibilityState==="visible") sndOff(true); },1200);
+}
+function sndOff(on){ const b=document.getElementById("snd-off"); if(b) b.hidden=!(on&&(T.running||T.paused)&&(soundOn||voiceOn)); }
+setInterval(()=>{ if(actx&&T.running&&actx.state!=="running") onAudioState(); },2000);
 function beep(freq,len,when=0,vol=.25,type="sine"){
   if(!soundOn||T.quiet) return; const a=audio(); if(!a) return;
   const t=a.currentTime+when, o=a.createOscillator(), g=a.createGain();
@@ -1671,7 +1696,7 @@ function idleStage(){
   $("exname").textContent=freeMode?"Timer only":(playlist.length?byId[list[0]].name:"Add poses to start");
   $("next").textContent = (cfg.perSet&&cfg.sets>1)
     ? Array.from({length:cfg.sets},(_,i)=>{const p=setCfg(i+1);return `Set ${i+1}: ${p.work}s / ${p.rest}s × ${p.rounds}`}).join(" · ")
-    : `${cfg.rounds} rounds of ${cfg.work}s work + ${cfg.rest}s rest${cfg.lock?` (${fmt(cfg.roundLen)} each)`:""}${cfg.sets>1?` · ${cfg.sets} sets`:""}`;
+    : `${cfg.rounds} rounds of ${cfg.work}s hold + ${cfg.rest}s rest${cfg.lock?` (${fmt(cfg.roundLen)} each)`:""}${cfg.sets>1?` · ${cfg.sets} sets`:""}`;
   $("c-round").textContent=`Round 0/${setCfg(1).rounds}`; $("c-set").textContent=`Set 1/${cfg.sets}`;
   $("ring").setAttribute("stroke-dashoffset",RING);
   renderDots(null); setPlayIcon(false); $("setup").hidden=false;
@@ -1710,7 +1735,7 @@ function finish(){
   T.running=false; T.paused=false; releaseWake();
   $("stage").dataset.phase="done"; $("phase").textContent="Done"; setPhaseIco("done");
   $("digits").textContent="0:00"; $("digits").classList.remove("blink");
-  $("exname").textContent="Practice complete"; $("ring-ico-s").textContent="emoji_events"; { const t=workedSoFar(); $("next").textContent=`${fmt(t.all)} total · ${fmt(t.w)} of work · ${t.rounds} ${t.rounds===1?"round":"rounds"}. Nice job.`; }
+  $("exname").textContent="Practice complete"; $("ring-ico-s").textContent="emoji_events"; { const t=workedSoFar(); $("next").textContent=`${fmt(t.all)} total · ${fmt(t.w)} of holding · ${t.rounds} ${t.rounds===1?"round":"rounds"}. Nice job.`; }
   $("ring").setAttribute("stroke-dashoffset",0); renderDots({round:999,rounds:setCfg(cfg.sets).rounds});
   setPlayIcon(false); $("btn-play").setAttribute("aria-label","Start again"); $("setup").hidden=false;
   SFX.done(); buzz([200,100,200,100,400]); say(["done"],"Practice done. Namaste.");
@@ -1743,9 +1768,9 @@ async function requestWake(){ try{ if("wakeLock" in navigator) T.wake=await navi
 function releaseWake(){ try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"&&T.running) requestWake(); });
 
-/* Music: open the chosen music app (optionally on a playlist) when a workout starts.
+/* Music: open the chosen music app (optionally on a playlist) only when the person asks for it.
    A web app can open another app by link, but can't press play inside it. */
-let musicSvc=store.get("musicSvc","none"), musicLink=store.get("musicLink",""), musicAuto=store.get("musicAuto",true);
+let musicSvc=store.get("musicSvc","none"), musicLink=store.get("musicLink","");
 const MUSIC_NAME={deezer:"Deezer",spotify:"Spotify",apple:"Apple Music",ytm:"YouTube Music",link:"Music"};
 function musicUrl(){
   const l=(musicLink||"").trim(), http=/^https?:\/\//i.test(l); let m;
@@ -1771,8 +1796,8 @@ function openMusic(){
   return true;
 }
 function syncMusic(){
-  $("m-svc").value=musicSvc; $("m-link").value=musicLink; $("t-music").setAttribute("aria-checked",musicAuto);
-  const on=musicSvc!=="none"; $("m-note").hidden=$("m-link").hidden=$("t-music").hidden=$("m-test").parentElement.hidden=!on;
+  $("m-svc").value=musicSvc; $("m-link").value=musicLink;
+  const on=musicSvc!=="none"; $("m-note").hidden=$("m-link").hidden=$("m-test").parentElement.hidden=!on;
   $("m-link").placeholder=musicSvc==="link"?"Paste any link to open":"Playlist link (optional)";
   $("btn-music").hidden=!on; $("btn-music-t").textContent=MUSIC_NAME[musicSvc]||"Music";
   const short=on&&musicSvc==="deezer"&&/(link\.deezer\.com|deezer\.page\.link|dzr\.page\.link)/i.test(musicLink||"");
@@ -1780,23 +1805,23 @@ function syncMusic(){
 }
 $("m-svc").onchange=e=>{ musicSvc=e.target.value; store.set("musicSvc",musicSvc); syncMusic(); };
 $("m-link").oninput=$("m-link").onchange=e=>{ musicLink=e.target.value.trim(); store.set("musicLink",musicLink); syncMusic(); };
-$("t-music").onclick=()=>{ musicAuto=!musicAuto; store.set("musicAuto",musicAuto); syncMusic(); };
 $("m-test").onclick=()=>{ musicLink=$("m-link").value.trim(); store.set("musicLink",musicLink); if(!openMusic()) snack("Paste a link first"); };
-$("btn-music").onclick=()=>{ if(!openMusic()) snack("Choose a music app first"); };
-function start(){
-  audio(); preloadClips();
-  // Fresh start with music on: open the music app and start the timer at the same moment.
-  const music=!T.paused && !T.running && musicAuto && musicSvc!=="none" && musicUrl() && openMusic();
-  realStart();
-  T.musicAt=music?performance.now():0;
-}
-/* Opening the music app sends this page to the background, where iOS stops it and its sounds.
-   If that happens right at the start, hold the workout and begin it when the person comes back. */
+/* Ask first. Opening the music app sends this page to the background, where iOS stops the timer's sounds,
+   so a running workout pauses and carries on by itself when the person comes back. */
+$("btn-music").onclick=()=>{
+  if(!musicUrl()){ snack("Choose a music app first"); return; }
+  const name=MUSIC_NAME[musicSvc]||"your music";
+  const msg=T.running?`Open ${name}? Your practice pauses and carries on when you come back.`:`Open ${name}? Come back here and press Start when the music plays.`;
+  if(!confirm(msg)) return;
+  audio();
+  if(T.running){ pause(); T.held=true; }
+  openMusic();
+  // If the app didn't open (not installed), stay paused instead of resuming later out of the blue.
+  setTimeout(()=>{ if(document.visibilityState==="visible") T.held=false; },2500);
+};
+function start(){ T.held=false; audio(); preloadClips(); realStart(); }
 document.addEventListener("visibilitychange",()=>{
-  const hidden=document.visibilityState==="hidden";
-  if(hidden&&T.running&&T.musicAt&&performance.now()-T.musicAt<6000&&T.idx===0){ T.held=true; T.running=false; releaseWake(); $("phase").textContent="Starts when you're back"; }
-  else if(!hidden&&T.held){ T.held=false; T.musicAt=0; T.running=false; T.paused=false; realStart(); }
-  else if(hidden) T.musicAt=0;
+  if(document.visibilityState==="visible"&&T.held){ T.held=false; if(T.paused) realStart(); }
 });
 function realStart(){
   if(T.paused){ T.paused=false; T.running=true; T.phaseStart=performance.now()-T.elapsed*1000; stageFig.t0=performance.now(); setPlayIcon(true); requestWake(); const ph=T.schedule[T.idx]; if(ph){ $("phase").textContent=PHASE_LABEL[ph.type]||""; setPhaseIco(ph.type); } return; }
@@ -1813,9 +1838,10 @@ function pause(){
   setPlayIcon(false); $("phase").textContent="Paused"; setPhaseIco("paused"); releaseWake();
   try{speechSynthesis.cancel()}catch(e){}
 }
-function reset(){ if(T.running||T.paused) logWorkout(false); T.held=false; T.musicAt=0; T.running=false; T.paused=false; T.done=false; releaseWake(); try{speechSynthesis.cancel()}catch(e){} idleStage(); }
+function reset(){ if(T.running||T.paused) logWorkout(false); T.held=false; T.running=false; T.paused=false; T.done=false; releaseWake(); sndOff(false); try{speechSynthesis.cancel()}catch(e){} idleStage(); }
 $("btn-play").onclick=()=>{ if(T.running) pause(); else start(); };
 $("btn-reset").onclick=reset;
+$("snd-off").onclick=()=>{ audio(); onAudioState(); if(soundOn) SFX.tick(); };
 $("btn-skip").onclick=()=>{
   if(!T.running&&!T.paused) return;
   const wasPaused=T.paused; credit(T.schedule[T.idx], wasPaused?(T.elapsed||0):(performance.now()-T.phaseStart)/1000);
@@ -1834,7 +1860,7 @@ document.addEventListener("keydown",e=>{
   if(e.code==="Space"){ e.preventDefault(); $("btn-play").click(); }
 });
 
-/* Workout log: one entry per finished (or stopped after a minute of work) session. */
+/* Workout log: one entry per finished (or stopped after a minute of holding) session. */
 let workLog = store.get("log", []); if(!Array.isArray(workLog)) workLog=[];
 function workedSoFar(){
   const a=T.act||{w:0,all:0,rounds:0}; let w=a.w, all=a.all, rounds=a.rounds;
@@ -1924,7 +1950,9 @@ function tryCloseRt(){ if(rtDirty()&&!confirm("Discard your changes to this rout
 const RT_F=[{k:"work",label:"Hold",unit:"sec",min:5,max:600,step:5},{k:"rest",label:"Rest",unit:"sec",min:0,max:300,step:5},{k:"sets",label:"Sets",unit:"times through the list",min:1,max:10,step:1},{k:"setRest",label:"Break between sets",unit:"sec",min:0,max:600,step:15}];
 function openRoutine(src,target){
   const c=src.cfg||{};
-  rtT=target; rtSnap=null; rtD={name:src.name||"", moves:(src.moves||[]).filter(id=>byId[id]), work:c.work||40, rest:c.rest==null?20:c.rest, sets:c.sets||1, setRest:c.setRest==null?60:c.setRest, fav:target?!!target.fav:false};
+  rtT=target; rtSnap=null; rtD={name:src.name||"", moves:(src.moves||[]).filter(id=>byId[id]), work:c.work||40, rest:c.rest==null?20:c.rest, sets:c.sets||1, setRest:c.setRest==null?60:c.setRest, from:target?null:(src.from||null),
+    // Editing a ready-made routine that sits on Home: the edited copy takes its place there.
+    fav:target?!!target.fav:!!(src.from&&homeWos.includes(src.from))};
   $("rt-title").textContent=target?"Edit routine":"New routine"; $("rt-name").value=rtD.name; $("rt-fav").checked=rtD.fav; $("rt-del").hidden=!target;
   const t=$("rt-times"); t.innerHTML="";
   RT_F.forEach(o=>{ const d=document.createElement("div"); d.className="field";
@@ -2042,11 +2070,14 @@ $("rt-save").onclick=()=>{
   if(!name){ $("rt-name").focus(); snack("Name required"); return; }
   if(!rtD.moves.length){ snack("Add at least one move"); return; }
   let fav=$("rt-fav").checked;
+  // A pinned copy of a ready-made routine replaces the original on Home, so the new order is what you see and start.
+  let replaces=false;
   if(fav&&!(rtT&&rtT.fav)&&myWos.filter(x=>x.fav).length>=MAX_FAV){ fav=false; snack(`Saved (not pinned, limit is ${MAX_FAV})`); }
-  else snack(`Saved ${name}`);
+  else { replaces=!rtT&&fav&&!!rtD.from&&homeWos.includes(rtD.from); snack(replaces?`Saved ${name}. It replaces the original on Home`:`Saved ${name}`); }
   const c=Object.assign({},woCfg({moves:rtD.moves}),{work:rtD.work,rest:rtD.rest,sets:rtD.sets,setRest:rtD.setRest,rounds:rtD.moves.length,roundLen:rtD.work+rtD.rest});
   const data={name,moves:rtD.moves.slice(),cfg:c,fav};
   if(rtT) Object.assign(rtT,data); else myWos.unshift(Object.assign(data,{id:"m"+Date.now()}));
+  if(replaces){ homeWos=homeWos.filter(x=>x!==rtD.from); store.set("homeWos",homeWos); renderWorkouts(); }
   saveMy(); renderFavs(); closeRt();
 };
 function renderFavs(){
@@ -2198,7 +2229,7 @@ function renderLog(){
     it.innerHTML=`<span class="ms fill">${e.done?"emoji_events":"timelapse"}</span><div class="log-main"><h4></h4><p class="meta"></p><p class="mv"></p></div><button class="icon-btn sl" aria-label="Delete entry" title="Delete"><span class="ms">delete</span></button>`;
     const h4=it.querySelector("h4"); h4.textContent=e.name;
     if(!e.done){ const t=document.createElement("span"); t.className="tag"; t.textContent="Stopped early"; h4.appendChild(t); }
-    it.querySelector(".meta").textContent=`${time} · ${mins(e.total)} min · ${e.rounds} round${e.rounds===1?"":"s"} · ${mins(e.work)} min of work`;
+    it.querySelector(".meta").textContent=`${time} · ${mins(e.total)} min · ${e.rounds} round${e.rounds===1?"":"s"} · ${mins(e.work)} min of holding`;
     const mv=it.querySelector(".mv"); if(e.moves&&e.moves.length) mv.textContent=e.moves.join(" · "); else mv.remove();
     it.querySelector("button").onclick=()=>{ if(confirm("Delete this session from your log?")){ workLog.splice(i,1); store.set("log",workLog); renderLog(); } };
     el.appendChild(it);
@@ -2221,7 +2252,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.2.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
