@@ -253,6 +253,7 @@ main .wrap{padding-block:8px 32px}
 .segmented button .ms{font-size:18px;display:none}
 .segmented button[aria-pressed="true"]{background:var(--secondary-container);color:var(--on-secondary-container)}
 .segmented button[aria-pressed="true"] .ms{display:inline-block}
+@media (max-width:400px){.segmented button{padding:0 10px}}
 .mode-seg{align-self:stretch;display:flex}
 .mode-seg button{flex:1;justify-content:center}
 .wo-section{display:flex;flex-direction:column;gap:20px}
@@ -488,6 +489,7 @@ main .wrap{padding-block:8px 32px}
     <div class="lib-tools">
       <div class="chips" id="filters"></div>
       <div class="segmented" role="group" aria-label="Figure style">
+        <button class="sl" data-style="doodle"><span class="ms">check</span>Doodle</button>
         <button class="sl" data-style="toon"><span class="ms">check</span>Cartoon</button>
         <button class="sl" data-style="char"><span class="ms">check</span>Realistic</button>
         <button class="sl" data-style="stick"><span class="ms">check</span>Stick</button>
@@ -804,11 +806,13 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const figures = new Set();
 
 function mk(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
-let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["char","toon","stick"].includes(v)?v:"toon"; }catch(e){ return "toon"; } })();
+let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["doodle","char","toon","stick"].includes(v)?v:"doodle"; }catch(e){ return "doodle"; } })();
 /* Exercises drawn facing the viewer; all others are side views facing right. */
 const FRONT = new Set(["neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
+/* Doodle style colors: warm ink, tan skin, and soft washes (rose top, lavender leggings) printed slightly off the lines. */
+const DO = {ink:"#2A1D1F", paper:"#FFFFFF", skin:"#D9A06E", shirt:"#F28FA5", shorts:"#A98BD6", cheek:"#E8798A", hair:"#2A1D1F"};
 const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
 class Figure{
   constructor(ex,opts={}){
@@ -824,7 +828,7 @@ class Figure{
     this.nearLeg = mk("path",near,g); this.nearArm = mk("path",near,g);
     this.head = mk("circle",{r:6.6,fill:"var(--fig)"},this.stick);
     this.sbun = mk("circle",{r:3,fill:"var(--fig)"},this.stick);
-    this.buildChar(); this.buildToon();
+    this.buildChar(); this.buildToon(); this.buildDoodle();
     this.animate = opts.animate!==false; this.visible = true; this.speed = 1; this.t0 = performance.now();
     this.setEx(ex);
     figures.add(this);
@@ -890,6 +894,92 @@ class Figure{
     T.lash=mk("path",{stroke:TO.line,"stroke-width":.8},g);
     T.nose=mk("path",{stroke:TO.line,"stroke-width":.8},g);
     T.mouth=mk("path",{stroke:TO.mouth,"stroke-width":.95},g);
+  }
+  /* Doodle style: hand-drawn ink outlines, white bodies, offset color fills (like CocoMaterial's people). */
+  buildDoodle(){
+    const g=this.doo=mk("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},this.svg);
+    g.style.display="none";
+    const LW=1.5, P=(a)=>mk("path",a,g);
+    // ink outline + paper body, plus an optional color layer nudged off the lines
+    // bare=true gives only the color layer, laid over the limb's own lines
+    const part=(w,col,bare,base)=>{ const o=bare?{}:{ink:P({stroke:DO.ink,"stroke-width":w+LW}),fill:P({stroke:base||DO.paper,"stroke-width":w})};
+      if(col) o.col=P({stroke:col,"stroke-width":w*.72,transform:"translate(1.3 1)",style:bare?"":"mix-blend-mode:multiply"});
+      o.w=w; return o; };
+    const limb=(far,leg)=>{
+      const o={leg,far};
+      // legs: white leggings outline with a lavender wash down the whole leg, then a small bare foot; arms are bare
+      if(leg){ o.footInk=P({stroke:DO.ink,"stroke-width":3.1}); o.foot=P({stroke:DO.skin,"stroke-width":1.7}); }
+      o.body=part(leg?3.1:1.9,null,false,leg?DO.paper:DO.skin);
+      if(leg) o.cloth=part(3.1,DO.shorts,true);
+      else o.hand=P({fill:DO.skin,stroke:DO.ink,"stroke-width":.75});
+      return o;
+    };
+    const D=this.d={farArm:limb(true,false),farLeg:limb(true,true)};
+    D.body=part(11,DO.shirt); D.shorts=part(12,DO.shorts);
+    D.nearLeg=limb(false,true); D.nearArm=limb(false,false);
+    D.neck=part(1.8,null,false,DO.skin);
+    D.bun=P({fill:DO.hair,stroke:DO.ink,"stroke-width":.75});
+    D.hair=P({fill:DO.hair,stroke:DO.ink,"stroke-width":.75});
+    D.face=P({fill:DO.skin,stroke:DO.ink,"stroke-width":.8});
+    D.fringe=P({fill:DO.hair});
+    D.cheeks=P({fill:DO.cheek,opacity:.7});
+    D.eyes=P({fill:DO.ink});
+    D.mouth=P({stroke:DO.ink,"stroke-width":.7});
+  }
+  drawDoodle(q,c){
+    const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), D=this.d, front=FRONT.has(this.ex.id);
+    const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+    const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
+    const setP=(o,d)=>{if(o.ink){o.ink.setAttribute("d",d);o.fill.setAttribute("d",d)} if(o.col)o.col.setAttribute("d",d)};
+    // a slightly bowed line, so segments look drawn by hand instead of ruled
+    const bow=(a,b,k)=>`Q${f(add(lerp(a,b,.5),perp(unit(sub(b,a))),k))} ${f(b)}`;
+    // a hand-drawn ring: uneven radius, and the stroke runs a little past where it started
+    const ring=(C,r,seed)=>{ const n=7, pts=[];
+      for(let i=0;i<=n+1;i++){ const a=i/n*Math.PI*2+seed, rr=r*(1+.045*Math.sin(i*2.3+seed*3)); pts.push([C[0]+Math.cos(a)*rr,C[1]+Math.sin(a)*rr]); }
+      let d=`M${f(lerp(pts[0],pts[1],.5))}`; for(let i=1;i<=n;i++) d+=`Q${f(pts[i])} ${f(lerp(pts[i],pts[i+1],.5))}`;
+      return d+`Q${f(pts[1])} ${f(lerp(pts[1],pts[2],.35))}`; };
+    const limb=(o,a,b,e,s)=>{
+      const k=o.leg?.7:.55;
+      setP(o.body,`M${f(lerp(a,b,o.leg?.12:.06))}${bow(lerp(a,b,o.leg?.12:.06),b,k*s)}${bow(b,e,-k*s)}`);
+      if(o.leg){
+        setP(o.cloth,`M${f(lerp(a,b,.08))}${bow(lerp(a,b,.08),b,k*s)}${bow(b,lerp(b,e,.86),-k*s*.86)}`);
+        const d=unit(sub(e,b)); let toe=front?[0,0]:[d[1],-d[0]]; if(!front&&toe[0]<0) toe=[-toe[0],-toe[1]];
+        const h=front?add(e,[-.5,.7]):add(e,toe,-.3), t=front?add(e,[.5,.7]):add(e,toe,2.6), fd2=`M${f(h)}L${f(t)}`;
+        o.footInk.setAttribute("d",fd2); o.foot.setAttribute("d",fd2);
+      } else o.hand.setAttribute("d",ring(e,1.4,s));
+    };
+    limb(D.farArm,q.n,q.re,q.rh,-1); limb(D.farLeg,q.p,q.rk,q.rf,1);
+    const top=lerp(q.n,c,.1);
+    D.body.ink.setAttribute("stroke-width",front?10.2:7.8); D.body.fill.setAttribute("stroke-width",front?8.7:6.3); D.body.col.setAttribute("stroke-width",front?6.6:4.6);
+    D.shorts.ink.setAttribute("stroke-width",front?11.6:8.6); D.shorts.fill.setAttribute("stroke-width",front?10.1:7.1); D.shorts.col.setAttribute("stroke-width",front?7.6:5.2);
+    setP(D.body,`M${f(q.p)}Q${f(c)} ${f(top)}`);
+    const ql=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    setP(D.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.5))}L${f(ql(.3))}`);
+    limb(D.nearLeg,q.p,q.lk,q.lf,1); limb(D.nearArm,q.n,q.le,q.lh,1);
+    const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,6.8), R=5.5;
+    setP(D.neck,`M${f(q.n)}L${f(add(q.n,ax,2.4))}`);
+    const dot=(p,r)=>`M${f(add(p,[-r,0]))}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
+    // the bun: on top of the head from the front, high at the back from the side
+    D.bun.setAttribute("d",ring(front?add(H,ax,R+2.2):add(add(H,ax,R*.75),fd,-R*.8),2.5,.9));
+    if(front){
+      D.hair.setAttribute("d",ring(add(H,ax,1),R+.4,.4));
+      const fc=add(H,ax,-.4); D.face.setAttribute("d",ring(fc,R-.4,1.1));
+      const fr=add(fc,ax,R*.6);
+      D.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.85))}Q${f(add(add(fc,ax,R*.2),fd,-R*.1))} ${f(add(fr,fd,R*.35))}Q${f(add(add(fc,ax,R*.35),fd,R*.6))} ${f(add(fr,fd,R*.85))}Q${f(add(fr,ax,R*.5))} ${f(add(fr,fd,-R*.85))}Z`);
+      const e1=add(add(fc,fd,-2),ax,.3), e2=add(add(fc,fd,2),ax,.3);
+      D.eyes.setAttribute("d",dot(e1,.6)+dot(e2,.6));
+      D.cheeks.setAttribute("d",dot(add(add(fc,fd,-3.2),ax,-1.4),.9)+dot(add(add(fc,fd,3.2),ax,-1.4),.9));
+      const m=add(fc,ax,-2.3); D.mouth.setAttribute("d",`M${f(add(add(m,fd,-1.1),ax,.3))}Q${f(add(m,ax,-.8))} ${f(add(add(m,fd,1.1),ax,.3))}`);
+    } else {
+      D.hair.setAttribute("d",ring(add(add(H,ax,.8),fd,-1.1),R+.3,.4));
+      const fc=add(add(H,ax,-.3),fd,.6); D.face.setAttribute("d",ring(fc,R-.5,1.1));
+      const fr=add(add(fc,ax,R*.55),fd,R*.1);
+      D.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.95))}Q${f(add(fr,ax,R*.5))} ${f(add(fr,fd,R*.7))}Q${f(add(add(fc,ax,R*.25),fd,R*.2))} ${f(add(fr,fd,-R*.95))}Z`);
+      const e=add(add(fc,fd,2.8),ax,.4);
+      D.eyes.setAttribute("d",dot(e,.6));
+      D.cheeks.setAttribute("d",dot(add(add(fc,fd,1.8),ax,-1.6),.9));
+      const m=add(add(fc,fd,3.1),ax,-2.2); D.mouth.setAttribute("d",`M${f(add(m,fd,-.8))}Q${f(add(m,ax,-.6))} ${f(add(add(m,fd,1.1),ax,.4))}`);
+    }
   }
   drawToon(q,c){
     const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set2=(pr,d)=>{pr[0].setAttribute("d",d);pr[1].setAttribute("d",d)}, T=this.t;
@@ -1035,9 +1125,9 @@ class Figure{
     this.head.setAttribute("cx",q.h[0].toFixed(1)); this.head.setAttribute("cy",q.h[1].toFixed(1));
     { const dx=q.h[0]-q.n[0], dy=q.h[1]-q.n[1], L=Math.hypot(dx,dy)||1, ux=dx/L, uy=dy/L, fr=FRONT.has(this.ex.id);
       this.sbun.setAttribute("cx",(q.h[0]+ux*7+(fr?0:uy*3.4)).toFixed(1)); this.sbun.setAttribute("cy",(q.h[1]+uy*7+(fr?0:-ux*3.4)).toFixed(1)); }
-    const st=figStyle==="char"||figStyle==="stick"?figStyle:"toon";
-    if(this.shown!==st){ this.shown=st; this.stick.style.display=st==="stick"?"":"none"; this.ch.style.display=st==="char"?"":"none"; this.toon.style.display=st==="toon"?"":"none"; }
-    if(st==="char") this.drawChar(q,c); else if(st==="toon") this.drawToon(q,c);
+    const st=["char","stick","toon"].includes(figStyle)?figStyle:"doodle";
+    if(this.shown!==st){ this.shown=st; this.stick.style.display=st==="stick"?"":"none"; this.ch.style.display=st==="char"?"":"none"; this.toon.style.display=st==="toon"?"":"none"; this.doo.style.display=st==="doodle"?"":"none"; }
+    if(st==="char") this.drawChar(q,c); else if(st==="toon") this.drawToon(q,c); else if(st==="doodle") this.drawDoodle(q,c);
     const lowY = Math.max(q.lf[1],q.rf[1],q.lh[1],q.rh[1]);
     const xs=[q.lf[0],q.rf[0]]; if(q.lh[1]>88) xs.push(q.lh[0]); if(q.p[1]>84) xs.push(q.p[0],q.n[0]);
     const mn=Math.min(...xs), mx=Math.max(...xs);
@@ -2117,7 +2207,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){

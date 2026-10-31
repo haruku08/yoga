@@ -5,7 +5,7 @@ A yoga app with a built-in pose timer, the sister app of [Haruku Fit](https://ha
 ## What it does
 
 - **Home:** a dashboard with a quick timer (hold, rest, rounds, sets and set-break settings), your current practice, this week's stats and the routines you pinned. New users start with an empty dashboard and pick what goes on it from the Catalog.
-- **Poses:** 31 yoga poses in four groups (Standing, Balance & core, Floor & stretch, Restore), including a full Sun Salutation flow. Each one has an animated figure in a cartoon, realistic or stick-figure style, plus steps and a tip.
+- **Poses:** 31 yoga poses in four groups (Standing, Balance & core, Floor & stretch, Restore), including a full Sun Salutation flow. Each one has an animated figure in a hand-drawn doodle (default), cartoon, realistic or stick-figure style, plus steps and a tip.
 - **Ready-made routines (Catalog):** Morning Flow, Sun Salutations, Balance & Core, Hip Opener, Gentle Back Care, Strong Flow and Evening Unwind. Tap Add to Home to put one on your dashboard.
 - **My routines:** build, edit and save your own routines, or copy a ready-made one and change it. Star up to four to pin them on Home. Share a routine as a link.
 - **Music:** pick Deezer, Spotify, Apple Music or YouTube Music (and optionally paste a playlist link) to have the app open it the moment you press Start. Beeps and the recorded coach voice mix over your music instead of pausing it (iOS 16.4+, Silent mode off). The calm female coach clips in `voice/` were made with the open Kokoro TTS model (voice `af_heart`).
