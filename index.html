@@ -812,7 +812,7 @@ const FRONT = new Set(["neck","crescent","butterfly","warrior2","tree","triangle
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
 /* Doodle style colors: warm ink, tan skin, and soft washes (rose top, lavender leggings) printed slightly off the lines. */
-const DO = {ink:"#2A1D1F", paper:"#FFFFFF", skin:"#D9A06E", shirt:"#F28FA5", shorts:"#A98BD6", cheek:"#E8798A", hair:"#2A1D1F"};
+const DO = {ink:"#2A1D1F", paper:"#FFFFFF", skin:"#D9A06E", shirt:"#F28FA5", shorts:"#A98BD6", cheek:"#E8798A", hair:"#2A1D1F", lip:"#C9506A"};
 const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
 class Figure{
   constructor(ex,opts={}){
@@ -915,8 +915,9 @@ class Figure{
       return o;
     };
     const D=this.d={farArm:limb(true,false),farLeg:limb(true,true)};
-    D.body=part(11,DO.shirt); D.shorts=part(12,DO.shorts);
+    D.body=part(11,null,false,DO.skin); D.chest=part(11,DO.shirt); D.shorts=part(12,DO.shorts);
     D.nearLeg=limb(false,true); D.nearArm=limb(false,false);
+    D.tail=P({fill:DO.hair,stroke:DO.ink,"stroke-width":.75});
     D.neck=part(1.8,null,false,DO.skin);
     D.bun=P({fill:DO.hair,stroke:DO.ink,"stroke-width":.75});
     D.hair=P({fill:DO.hair,stroke:DO.ink,"stroke-width":.75});
@@ -924,7 +925,8 @@ class Figure{
     D.fringe=P({fill:DO.hair});
     D.cheeks=P({fill:DO.cheek,opacity:.7});
     D.eyes=P({fill:DO.ink});
-    D.mouth=P({stroke:DO.ink,"stroke-width":.7});
+    D.lash=P({stroke:DO.ink,"stroke-width":.6});
+    D.mouth=P({stroke:DO.lip,"stroke-width":.95});
   }
   drawDoodle(q,c){
     const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), D=this.d, front=FRONT.has(this.ex.id);
@@ -950,24 +952,35 @@ class Figure{
     };
     limb(D.farArm,q.n,q.re,q.rh,-1); limb(D.farLeg,q.p,q.rk,q.rf,1);
     const top=lerp(q.n,c,.1);
-    D.body.ink.setAttribute("stroke-width",front?10.2:7.8); D.body.fill.setAttribute("stroke-width",front?8.7:6.3); D.body.col.setAttribute("stroke-width",front?6.6:4.6);
-    D.shorts.ink.setAttribute("stroke-width",front?11.6:8.6); D.shorts.fill.setAttribute("stroke-width",front?10.1:7.1); D.shorts.col.setAttribute("stroke-width",front?7.6:5.2);
+    // hourglass: a narrow bare waist between a crop top and wide high-waisted leggings
+    D.body.ink.setAttribute("stroke-width",front?8.6:6.9); D.body.fill.setAttribute("stroke-width",front?7.1:5.4);
+    D.chest.ink.setAttribute("stroke-width",front?10.4:8.2); D.chest.fill.setAttribute("stroke-width",front?8.9:6.7); D.chest.col.setAttribute("stroke-width",front?6.8:4.9);
+    D.shorts.ink.setAttribute("stroke-width",front?12.6:9.4); D.shorts.fill.setAttribute("stroke-width",front?11.1:7.9); D.shorts.col.setAttribute("stroke-width",front?8.2:5.8);
     setP(D.body,`M${f(q.p)}Q${f(c)} ${f(top)}`);
     const ql=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    setP(D.chest,`M${f(ql(.55))}Q${f(ql(.8))} ${f(top)}`);
     setP(D.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.5))}L${f(ql(.3))}`);
     limb(D.nearLeg,q.p,q.lk,q.lf,1); limb(D.nearArm,q.n,q.le,q.lh,1);
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,6.8), R=5.5;
     setP(D.neck,`M${f(q.n)}L${f(add(q.n,ax,2.4))}`);
     const dot=(p,r)=>`M${f(add(p,[-r,0]))}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
     // the bun: on top of the head from the front, high at the back from the side
-    D.bun.setAttribute("d",ring(front?add(H,ax,R+2.2):add(add(H,ax,R*.75),fd,-R*.8),2.5,.9));
+    if(front){ D.bun.setAttribute("d",ring(add(H,ax,R+2.2),2.6,.9)); D.tail.setAttribute("d","M0 0"); }
+    else {
+      // a high ponytail that falls down her back
+      D.bun.setAttribute("d",ring(add(add(H,ax,R*.55),fd,-R*.95),1.6,.9));
+      const A=add(add(H,ax,R*.45),fd,-R*1.0), dir=unit(add([-ax[0]*.95,-ax[1]*.95],fd,-.4)), nn=perp(dir);
+      const T=add(add(A,dir,11.5),nn,1.2), M1=add(A,dir,5.5);
+      D.tail.setAttribute("d",`M${f(add(A,nn,1.8))}C${f(add(M1,nn,3.4))} ${f(add(add(A,dir,10),nn,3))} ${f(T)}C${f(add(add(A,dir,9),nn,.2))} ${f(add(M1,nn,-1.6))} ${f(add(A,nn,-1.9))}Z`);
+    }
     if(front){
       D.hair.setAttribute("d",ring(add(H,ax,1),R+.4,.4));
       const fc=add(H,ax,-.4); D.face.setAttribute("d",ring(fc,R-.4,1.1));
       const fr=add(fc,ax,R*.6);
       D.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.85))}Q${f(add(add(fc,ax,R*.2),fd,-R*.1))} ${f(add(fr,fd,R*.35))}Q${f(add(add(fc,ax,R*.35),fd,R*.6))} ${f(add(fr,fd,R*.85))}Q${f(add(fr,ax,R*.5))} ${f(add(fr,fd,-R*.85))}Z`);
       const e1=add(add(fc,fd,-2),ax,.3), e2=add(add(fc,fd,2),ax,.3);
-      D.eyes.setAttribute("d",dot(e1,.6)+dot(e2,.6));
+      D.eyes.setAttribute("d",dot(e1,.62)+dot(e2,.62));
+      D.lash.setAttribute("d",`M${f(add(add(e1,fd,-.4),ax,.4))}l${f(add([0,0],add(fd,ax,1),-.85).map((v,i)=>i?v:v))}M${f(add(add(e2,fd,.4),ax,.4))}l${f(add(fd,ax,1).map(v=>v*.85))}`);
       D.cheeks.setAttribute("d",dot(add(add(fc,fd,-3.2),ax,-1.4),.9)+dot(add(add(fc,fd,3.2),ax,-1.4),.9));
       const m=add(fc,ax,-2.3); D.mouth.setAttribute("d",`M${f(add(add(m,fd,-1.1),ax,.3))}Q${f(add(m,ax,-.8))} ${f(add(add(m,fd,1.1),ax,.3))}`);
     } else {
@@ -976,7 +989,8 @@ class Figure{
       const fr=add(add(fc,ax,R*.55),fd,R*.1);
       D.fringe.setAttribute("d",`M${f(add(fr,fd,-R*.95))}Q${f(add(fr,ax,R*.5))} ${f(add(fr,fd,R*.7))}Q${f(add(add(fc,ax,R*.25),fd,R*.2))} ${f(add(fr,fd,-R*.95))}Z`);
       const e=add(add(fc,fd,2.8),ax,.4);
-      D.eyes.setAttribute("d",dot(e,.6));
+      D.eyes.setAttribute("d",dot(e,.62));
+      D.lash.setAttribute("d",`M${f(add(add(e,fd,-.3),ax,.45))}l${f(add([-fd[0]*.6,-fd[1]*.6],ax,.9))}M${f(add(e,ax,.6))}l${f(add([fd[0]*.1,fd[1]*.1],ax,.9))}`);
       D.cheeks.setAttribute("d",dot(add(add(fc,fd,1.8),ax,-1.6),.9));
       const m=add(add(fc,fd,3.1),ax,-2.2); D.mouth.setAttribute("d",`M${f(add(m,fd,-.8))}Q${f(add(m,ax,-.6))} ${f(add(add(m,fd,1.1),ax,.4))}`);
     }
