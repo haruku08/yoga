@@ -723,6 +723,10 @@ const EX = [
   frames:[{h:[48,36],n:[47,45],p:[45,71],le:[53,57],lh:[61,66],re:[52,58],rh:[60,67],lk:[64,72],lf:[65,94],rk:[33,92],rf:[17,94]},
           {h:[52,33],n:[51,42],p:[50,73],le:[53,30],lh:[54,19],re:[52,30],rh:[53,19],lk:[66,72],lf:[65,94],rk:[34,92],rf:[18,94]}],
   steps:["Step into a lunge and lower your back knee with the other foot flat in front of you.","Tuck your pelvis and gently push your hips forward.","Reach your arms up for a crescent shape. Switch sides each round."],cue:"Keep your front knee over your ankle, not past your toes."},
+{id:"doorway",cat:"stand",name:"Doorway Chest Opener",dur:6,level:"Easy",focus:"Chest, front shoulders",
+  props:[["path",{d:"M30 96V5H70V96","stroke-width":3}]],
+  frames:[P(F,{le:[33,27],lh:[32,13],re:[67,27],rh:[68,13]}),P(F,{h:[50,15],n:[50,25],le:[33,26],lh:[32,12],re:[67,26],rh:[68,12],rk:[54,73],rf:[55,94]})],
+  steps:["Stand in a doorway and lift your arms out to the sides, elbows bent at shoulder height.","Rest your forearms on the door frame.","Step one foot forward and lean gently until you feel a stretch across your chest."],cue:"Keep your ribs soft and your neck relaxed."},
 {id:"crescent",cat:"stand",name:"Standing Crescent Moon",dur:7,level:"Easy",focus:"Obliques, lats",
   frames:[SIDEL,SIDEL,mirror(SIDEL),mirror(SIDEL)],
   steps:["Stand with feet hip-width apart.","Reach both arms overhead.","Lean to one side, hold, then lean to the other."],cue:"Reach long rather than collapsing sideways."},
@@ -814,7 +818,7 @@ const figures = new Set();
 function mk(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["doodle","char","toon","stick"].includes(v)?v:"doodle"; }catch(e){ return "doodle"; } })();
 /* Exercises drawn facing the viewer; all others are side views facing right. */
-const FRONT = new Set(["neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
+const FRONT = new Set(["doorway","neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
 /* Doodle style colors: warm ink, tan skin, and soft washes (rose top, lavender leggings) printed slightly off the lines. */
@@ -1316,8 +1320,8 @@ function togglePlaylist(id){
 function savePlaylist(){ store.set("playlist",playlist); syncAddButtons(); renderPlaylist(); syncMyLink(); if(!T.running&&!T.paused) idleStage(); }
 /* Ready-made workouts: each move once per set, 45s work / 15s rest (1-minute rounds), 2 sets. */
 const WORKOUTS = [
-  {id:"morning",name:"Morning Flow",icon:"wb_sunny",c:"stand",blurb:"Wake up your body in 10 minutes",
-   moves:["mountain","sunsal","sunsal","warrior1","warrior2","triangle","fold","easy"],cfg:{work:50,rest:10,sets:1}},
+  {id:"morning",name:"Morning Flow",icon:"wb_sunny",c:"stand",blurb:"Open your hips, chest and spine to start the day",
+   moves:["catcow","lowlunge","lowlunge","doorway","frog","twist","twist"],cfg:{sets:2}},
   {id:"sun",name:"Sun Salutations",icon:"wb_sunny",c:"stand",blurb:"Five slow rounds, one breath per move",moves:["sunsal","sunsal","sunsal","sunsal","sunsal"],cfg:{work:60,rest:10,sets:1}},
   {id:"balance",name:"Balance & Core",icon:"self_improvement",c:"balance",blurb:"Steady, strong and focused",
    moves:["tree","tree","dancer","dancer","warrior3","warrior3","boat","plank"],cfg:{work:30,rest:10,sets:2}},
@@ -2252,7 +2256,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.2.1";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
