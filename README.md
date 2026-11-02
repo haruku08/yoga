@@ -12,6 +12,7 @@ A yoga app with a built-in pose timer, the sister app of [Haruku Fit](https://ha
 - **History:** every session you finish (or stop after at least a minute) is saved on the device, with weekly totals and a day streak. **Backup** copies everything as a code or file you can restore later.
 - **Timer:** a focused screen without the top bar, with the illustration on top.
 - **Design:** Material 3 in a warm rose, blush and terracotta palette with Eczar for the brand and titles and Plus Jakarta Sans for text. Icons are inline SVGs from Lucide (ISC license). Light mode and a warm plum dark mode.
+- **Home screen help:** phone visitors see a banner on Home with a "Show me how" button that walks them through adding the app to the home screen (iPhone, Android, Samsung Internet, and in-app browsers like Instagram). Android Chrome also gets a one-tap Install button. The steps stay available under History.
 - **Updates:** tap the sync button in the top bar to get the latest version. The app also checks when you open it.
 
 Settings are saved in your browser, separately from Haruku Fit.
