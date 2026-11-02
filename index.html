@@ -350,6 +350,19 @@ main .wrap{padding-block:8px 32px}
 .install div>b{display:block;font-size:15px;margin-bottom:4px}
 .install p{margin:0;font-size:14px;line-height:20px}
 .install .icon-btn{color:inherit}
+.install-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.install .btn-tonal{background:var(--sc-lowest);color:var(--primary)}
+.how-head{display:flex;align-items:center;gap:8px;padding:12px 12px 0 24px}
+.how-head h2{flex:1;font-size:24px;line-height:32px;margin:0}
+#how .body{padding-top:8px}
+#how .supporting{margin:0;color:var(--on-surface-variant);font-size:15px;line-height:22px}
+#how .how-steps{list-style:none;padding:0;margin:0;gap:14px;counter-reset:hs}
+#how .how-steps li{counter-increment:hs;display:flex;gap:14px;align-items:flex-start;font-size:16px;line-height:24px;letter-spacing:.2px}
+#how .how-steps li::before{content:counter(hs);flex:none;width:28px;height:28px;border-radius:999px;background:var(--primary-container);color:var(--on-primary-container);font-weight:600;font-size:14px;display:grid;place-items:center}
+#how .how-steps small{display:block;color:var(--on-surface-variant);font-size:14px;line-height:20px;margin-top:2px}
+#how .how-steps .ms{font-size:18px;vertical-align:-3px}
+#how .cue p{margin:0;font-size:14px;line-height:20px}
+.how-open{align-self:flex-start;margin:24px 0 0 -12px}
 .backup{margin-top:32px;padding-top:24px;border-top:1px solid var(--outline-variant);display:flex;flex-direction:column;gap:12px}
 .backup .supporting{margin:0;color:var(--on-surface-variant)}
 .backup .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -447,7 +460,8 @@ main .wrap{padding-block:8px 32px}
     <div class="intro"><h2 id="hello">Hi Kim</h2><p id="today"></p></div>
     <div class="install" id="install" hidden>
       <span class="ms fill">install_mobile</span>
-      <div><b>Install Haruku Yoga</b><p id="install-how"></p></div>
+      <div><b>Save it to your home screen</b><p id="install-why"></p>
+        <div class="install-acts"><button class="btn btn-filled sl" id="install-go" hidden>Install</button><button class="btn btn-tonal sl" id="install-show">Show me how</button></div></div>
       <button class="icon-btn sl" id="install-x" aria-label="Dismiss"><span class="ms">close</span></button>
     </div>
     <div class="home-grid">
@@ -520,6 +534,7 @@ main .wrap{padding-block:8px 32px}
       <form class="imp" id="bk-form"><span class="ms">replay</span><input id="bk-in" placeholder="Paste backup code" autocomplete="off" aria-label="Backup code"><button class="btn btn-tonal sl" type="submit">Restore</button></form>
       <label class="text-btn sl bk-pick"><input type="file" id="bk-pick" accept=".txt,text/plain" hidden>Restore from file</label>
     </div>
+    <button class="text-btn sl how-open" id="how-open" hidden><span class="ms">install_mobile</span>How to add Haruku Yoga to your home screen</button>
   </section>
 
   <section id="view-timer" class="wrap" hidden>
@@ -622,6 +637,18 @@ main .wrap{padding-block:8px 32px}
     <label class="rt-fav"><input type="checkbox" id="rt-fav">Pin to Home</label>
     <div class="rt-actions"><button class="text-btn sl" id="rt-del" style="color:var(--alert)"><span class="ms">delete</span>Delete</button><span class="sp"></span>
       <button class="text-btn sl" id="rt-cancel">Cancel</button><button class="btn btn-filled with-icon sl" id="rt-save"><span class="ms">check</span>Save</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="how" hidden>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="how-title">
+    <div class="how-head"><h2 id="how-title">Add to Home Screen</h2><button class="icon-btn sl" id="how-x" aria-label="Close"><span class="ms">close</span></button></div>
+    <div class="body">
+      <p class="supporting" id="how-intro"></p>
+      <ol class="how-steps" id="how-steps"></ol>
+      <div class="cue" id="how-note"><span class="ms">lightbulb</span><p id="how-note-txt"></p></div>
+      <div class="actions"><button class="btn btn-tonal with-icon sl" id="how-copy" hidden><span class="ms">link</span>Copy link</button><button class="btn btn-filled sl" id="how-ok">Got it</button></div>
+    </div>
   </div>
 </div>
 
@@ -2153,20 +2180,75 @@ $("bk-file").onclick=()=>{ const blob=new Blob([backupCode()],{type:"text/plain"
   else { const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=f.name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); } };
 $("bk-form").onsubmit=e=>{ e.preventDefault(); restoreBackup($("bk-in").value); };
 $("bk-pick").onchange=e=>{ const f=e.target.files[0]; if(f) f.text().then(restoreBackup); e.target.value=""; };
-/* Install hint: shown in a phone browser until the app runs from the home screen or is dismissed */
+/* Home screen help: a banner on Home for phone visitors (until the app runs from the home screen or is dismissed),
+   a step-by-step sheet, and a link under History to open the steps again */
 (function(){
   let framed=false; try{ framed=window.top!==window; }catch(e){ framed=true; }
   const standalone=navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);
   const ua=navigator.userAgent, ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1), android=/Android/.test(ua);
-  if(framed||standalone||!(ios||android)||store.get("installHintOff",false)) return;
-  $("install-how").innerHTML=ios
-    ? (/CriOS|FxiOS|EdgiOS/.test(ua)?"Open in Safari, then tap ":"Tap ")+`<b>Share</b> <span class="ms" style="font-size:16px;vertical-align:-3px">ios_share</span> → <b>Add to Home Screen</b>.`
-    : `Open the <b>⋮</b> menu → <b>Add to Home screen</b>.`;
+  const inApp=/Instagram|FBAN|FBAV|FB_IAB|FBIOS|Line\/|Snapchat|musical_ly|TikTok|BytedanceWebview|LinkedInApp|Pinterest|GSA\/|; wv\)/.test(ua);
+  const iosOther=ios&&/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua), samsung=/SamsungBrowser/.test(ua);
+  const browser=ios?"Safari":"Chrome", ic=n=>`<span class="ms">${n}</span>`;
+  let deferred=null;
+  function steps(){
+    let intro, list, note, copy=false;
+    if(inApp&&(ios||android)){
+      intro=`You opened Haruku Yoga inside another app. Saving to the home screen only works in ${browser}, so open it there first.`;
+      list=[`Tap the <b>•••</b> or <b>⋮</b> menu in this app and choose <b>Open in ${browser}</b>.<small>No menu? Tap Copy link below, open ${browser} and paste it into the address bar.</small>`,
+            ios?`In ${browser}, tap <b>Share</b> ${ic("ios_share")} and then <b>Add to Home Screen</b>.`:`In Chrome, tap <b>⋮</b> and then <b>Add to Home screen</b>.`,
+            `Tap <b>${ios?"Add":"Install"}</b>. Haruku Yoga is now on your home screen.`];
+      copy=true;
+    } else if(ios){
+      intro="Haruku Yoga isn't in the App Store. It's a web app, so you add it from the browser in a few taps. There's nothing to download.";
+      list=[iosOther?`Tap <b>Share</b> ${ic("ios_share")} in the address bar.<small>In Firefox, open the <b>☰</b> menu first and then tap Share.</small>`
+                    :`Tap the <b>Share</b> button ${ic("ios_share")}.<small>It's at the bottom of the screen, or behind the <b>•••</b> button next to the address bar. On iPad it's at the top right.</small>`,
+            `Scroll down and tap <b>Add to Home Screen</b>.<small>Don't see it? Tap <b>View More</b> or <b>Edit Actions</b> first.</small>`,
+            `Tap <b>Add</b>. Haruku Yoga is now on your home screen.`];
+      if(iosOther){ intro+=" If you can't find the button, open the link in Safari, where it always works."; copy=true; }
+    } else if(android){
+      intro="Haruku Yoga isn't in the Play Store. It's a web app, so you add it from the browser in a few taps. There's nothing to download.";
+      list=samsung?[`Tap the <b>☰</b> menu at the bottom right.`,`Tap <b>Add page to</b> and then <b>Home screen</b>.`,`Tap <b>Add</b>. Haruku Yoga is now on your home screen.`]
+                  :[`Tap the <b>⋮</b> menu at the top right.`,`Tap <b>Add to Home screen</b> or <b>Install app</b>.`,`Tap <b>Install</b> (or <b>Add</b>). Haruku Yoga is now on your home screen.`];
+    } else {
+      intro="Haruku Yoga works best on your phone, saved to the home screen. Copy the link, send it to your phone and open it there.";
+      list=[`<b>iPhone or iPad:</b> open the link in Safari, tap <b>Share</b> ${ic("ios_share")} and then <b>Add to Home Screen</b>.`,
+            `<b>Android:</b> open the link in Chrome, tap <b>⋮</b> and then <b>Add to Home screen</b>.`,
+            `Tap <b>Add</b> or <b>Install</b>. Haruku Yoga is now on your home screen.`];
+      copy=true;
+    }
+    note=ios?"From now on, open Haruku Yoga from the new icon. On iPhone the home screen app starts fresh, so if you already saved routines here, use History → Backup to copy them over."
+            :"From now on, open Haruku Yoga from the new icon. It opens full screen, just like a normal app.";
+    return {intro,list,note,copy};
+  }
+  function openHow(){
+    const t=steps();
+    $("how-intro").textContent=t.intro;
+    $("how-steps").innerHTML=t.list.map(x=>`<li><div>${x}</div></li>`).join("");
+    $("how-note-txt").textContent=t.note;
+    $("how-copy").hidden=!t.copy;
+    $("how").hidden=false; setTimeout(()=>$("how-ok").focus(),50);
+  }
+  const closeHow=()=>{ $("how").hidden=true; };
+  $("how-x").onclick=$("how-ok").onclick=closeHow;
+  $("how").onclick=e=>{ if(e.target===$("how")) closeHow(); };
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("how").hidden) closeHow(); });
+  $("how-copy").onclick=()=>{ const url=SHARE_BASE; try{ navigator.clipboard.writeText(url).then(()=>snack(`Link copied. Paste it into ${ios||!android?"Safari or Chrome":"Chrome"}.`),()=>prompt("Copy this link:",url)); }catch(e){ prompt("Copy this link:",url); } };
+  $("install-show").onclick=openHow;
+  $("how-open").onclick=openHow;
+  if(framed||standalone) return;
+  $("how-open").hidden=false;
+  /* Android Chrome can install in one tap when it offers the prompt */
+  addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); deferred=e; $("install-go").hidden=false; });
+  $("install-go").onclick=()=>{ if(!deferred){ openHow(); return; } deferred.prompt(); deferred.userChoice.finally(()=>{ deferred=null; $("install-go").hidden=true; }); };
+  addEventListener("appinstalled",()=>{ $("install").hidden=true; $("how-open").hidden=true; store.set("installHintOff",true); });
+  if(!(ios||android)||store.get("installHintOff",false)) return;
+  $("install-why").textContent=inApp?`You're inside another app. Open this page in ${browser} to save it as an app.`
+    :`There's nothing to download. Add it to your home screen once and it opens like a normal app.`;
   $("install").hidden=false;
-  $("install-x").onclick=()=>{ $("install").hidden=true; store.set("installHintOff",true); };
+  $("install-x").onclick=()=>{ $("install").hidden=true; store.set("installHintOff",true); snack("You can find these steps again under History"); };
 })();
 $("btn-shareapp").onclick=()=>{
-  const url=SHARE_BASE, text="Haruku Yoga: yoga timer, poses and flows.";
+  const url=SHARE_BASE, text="Haruku Yoga: yoga timer, poses and flows. Open the link in Safari or Chrome, then add it to your Home Screen to use it like an app.";
   const copy=()=>{ try{ navigator.clipboard.writeText(url).then(()=>snack("Link copied"),()=>prompt("Copy this link:",url)); }catch(e){ prompt("Copy this link:",url); } };
   if(navigator.share) navigator.share({title:"Haruku Yoga",text,url}).catch(e=>{ if(e&&e.name!=="AbortError") copy(); });
   else copy();
@@ -2252,7 +2334,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.3.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
