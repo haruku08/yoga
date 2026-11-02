@@ -375,6 +375,12 @@ main .wrap{padding-block:8px 32px}
 .search{display:flex;align-items:center;gap:8px;margin:0 0 16px;padding:0 14px;height:48px;border:1px solid var(--outline-variant);border-radius:999px;background:var(--sc-lowest);color:var(--on-surface-variant)}
 .search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--on-surface);outline:none}
 .pal-search{height:40px;margin:0}
+.find{background:var(--sc-low,var(--sc-lowest));border:1px solid var(--outline-variant);border-radius:var(--r-lg,24px);padding:24px 20px 20px;margin:0 0 28px;text-align:center}
+.find-ic{width:56px;height:56px;margin:0 auto 12px;border-radius:var(--r-md);display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container);font-size:30px}
+.find h3{margin:0;font-size:22px;line-height:28px;font-weight:600}
+.find p{margin:8px auto 18px;max-width:46ch;color:var(--on-surface-variant);font-size:15px;line-height:22px}
+.find-search{max-width:520px;margin:0 auto 12px}
+.find-chips{justify-content:center;margin:0}
 .lib-none{color:var(--on-surface-variant);padding:24px 4px}
 .rt-label b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:11px;margin-right:6px}
 .rt-help{margin:-6px 0 0;font-size:13px;color:var(--on-surface-variant)}
@@ -496,13 +502,20 @@ main .wrap{padding-block:8px 32px}
       </div>
     </div>
     <div id="lib-routines">
+    <section class="find" aria-labelledby="find-h">
+      <span class="ms fill find-ic" aria-hidden="true">self_improvement</span>
+      <h3 id="find-h">Find the perfect routine for you</h3>
+      <p>Search by name, pose or what you want to work on. Found one you love? Add it to Home, make it your own, or share it with friends.</p>
+      <div class="search find-search"><span class="ms">search</span><input id="wo-search" type="search" placeholder="Try hips, morning or tree pose" autocomplete="off" aria-label="Search routines" aria-controls="lib-workouts"></div>
+      <div class="chips find-chips" id="wo-sugg" aria-label="Suggestions"></div>
+    </section>
+    <section class="wo-block" id="wo-results" hidden aria-live="polite">
+      <div class="cat-head"><h3><span class="ms fill" style="--c:var(--primary);--cc:var(--primary-container)">event_note</span><span id="wo-res-h">Results</span></h3></div>
+      <div class="wo-grid" id="lib-workouts"></div>
+    </section>
     <div class="cat-head"><h3><span class="ms fill" style="--c:var(--stand);--cc:var(--stand-c)">bookmarks</span>My routines</h3><button class="btn btn-tonal with-icon sl" id="mw-save" style="margin-left:auto"><span class="ms">add</span>New routine</button></div>
     <div class="mw-grid" id="mw-list"></div>
     <form class="imp" id="imp"><span class="ms">link</span><input id="imp-in" placeholder="Paste a routine link or code" autocomplete="off" aria-label="Shared routine link or code"><button class="btn btn-tonal sl" type="submit">Add</button></form>
-    <section class="wo-block">
-      <div class="cat-head"><h3><span class="ms fill" style="--c:var(--primary);--cc:var(--primary-container)">event_note</span>Routines</h3></div>
-      <div class="wo-grid" id="lib-workouts"></div>
-    </section>
     </div>
     <div id="lib-moves" hidden>
     <div class="search"><span class="ms">search</span><input id="ex-search" type="search" placeholder="Search poses" autocomplete="off" aria-label="Search poses"></div>
@@ -1403,9 +1416,36 @@ function renderWorkouts(){
   const list=homeWos.map(id=>WORKOUTS.find(w=>w.id===id)).filter(Boolean);
   $("wo-block").hidden=!list.length;
   list.forEach(w=>el.appendChild(woCard(w,true)));
-  const lib=$("lib-workouts"); lib.innerHTML="";
-  WORKOUTS.forEach(w=>lib.appendChild(woCard(w,false)));
+  renderWoSearch();
 }
+/* Catalog routines stay hidden until the user searches for them. */
+const WO_SUGG=["Morning","Hips","Back","Balance","Strength","Relax"];
+const woNorm=t=>t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const woText=w=>woNorm([w.name,w.blurb,w.id,w.c,...new Set(w.moves.map(id=>byId[id]?byId[id].name+" "+(byId[id].focus||"")+" "+catOf(byId[id].cat).name:""))].join(" "));
+// Friendly words map to what the routines actually say.
+const WO_ALIAS={strength:"strong",strong:"strength",relax:"calm",calm:"relax",sleep:"evening",bed:"evening",night:"evening",spine:"back"};
+function woMatches(q){
+  const words=woNorm(q).split(/\s+/).filter(Boolean);
+  if(!words.length) return [];
+  return WORKOUTS.filter(w=>{ const t=woText(w); return words.every(x=>t.includes(x)||(WO_ALIAS[x]&&t.includes(WO_ALIAS[x]))); });
+}
+let libWoFigs=[];
+function renderWoSearch(){
+  libWoFigs.forEach(f=>f.destroy()); libWoFigs=[];
+  const q=$("wo-search").value.trim(), lib=$("lib-workouts"), box=$("wo-results"); lib.innerHTML="";
+  const sg=$("wo-sugg"); sg.innerHTML="";
+  WO_SUGG.forEach(t=>{ const b=document.createElement("button"); b.className="chip sl"; b.type="button";
+    const on=woNorm(q)===woNorm(t); b.setAttribute("aria-pressed",on); b.innerHTML=(on?'<span class="ms">check</span>':"")+t;
+    b.onclick=()=>{ $("wo-search").value=on?"":t; renderWoSearch(); }; sg.appendChild(b); });
+  box.hidden=!q; if(!q) return;
+  const res=woMatches(q);
+  $("wo-res-h").textContent=res.length?`${res.length} routine${res.length===1?"":"s"} found`:"No routines found";
+  if(!res.length){ lib.innerHTML=`<p class="lib-none" style="grid-column:1/-1">Nothing matches “${q.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}”. Try a pose, a body part, or one of the suggestions above.</p>`; return; }
+  const before=woFigs.length;
+  res.forEach(w=>lib.appendChild(woCard(w,false)));
+  libWoFigs=woFigs.splice(before);
+}
+let woT=null; $("wo-search").addEventListener("input",()=>{ clearTimeout(woT); woT=setTimeout(renderWoSearch,150); });
 function useCategory(cat){
   setActiveMy(null);
   playlist = EX.filter(e=>e.cat===cat).map(e=>e.id);
@@ -2338,7 +2378,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.3.1";
+const APP_VERSION = "1.4.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
