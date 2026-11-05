@@ -1145,7 +1145,10 @@ class Figure{
       const S=add(B(.94),N(.94),6.2*side), off=sub(S,q.n);
       const straight=dot(unit(sub(q[e],q.n)),unit(sub(q[h],q[e])))>.96;
       // a straight arm moves out with its shoulder; a bent one mostly keeps its hand where the pose puts it
-      if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
+      // arms hanging free by the sides (not reaching for the feet or floor) fall straight from the shoulder
+      const down=tan(.5), hanging=q[h][1]<84&&dot(unit(sub(q[e],q.n)),down)<-.8&&dot(unit(sub(q[h],q[e])),down)<-.8;
+      if(hanging){ const H=add(S,unit(add(sub(add(q[h],off,.6),S),down,-.1*(l1+l2))),l1+l2-1); J[h]=H; J[e]=lerp(S,H,l1/(l1+l2)); }
+      else if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
       else { J[e]=add(q[e],off,.8); J[h]=add(q[h],off,.3); }
       return S;
     };
@@ -1208,6 +1211,10 @@ class Figure{
       [L.foot,L.low,L.up,L.hi,L.cloth].forEach(el=>this.ch.insertBefore(el,before));
       L.low.setAttribute("fill",lg); L.up.setAttribute("fill",lg); L.cloth.setAttribute("fill",lg);
       L.foot.setAttribute("fill",front?CH.skin:CH.skinFar);
+      // same for the second arm: beside the body in the same skin tone when facing the viewer
+      const A=C.farArm, sk=front?CH.skin:CH.skinFar;
+      [A.low,A.up,A.hi,A.cloth,A.hand].forEach(el=>this.ch.insertBefore(el,front?C.nearArm.low:L.foot));
+      A.low.setAttribute("fill",sk); A.up.setAttribute("fill",sk); A.hand.setAttribute("fill",sk); A.hi.setAttribute("opacity",front?.8:0);
     }
     limb(C.farArm,shR,J.re,J.rh); limb(C.farLeg,hpR,J.rk,J.rf);
     set(C.neck,`M${f(add(q.n,tan(1),-1))}L${f(lerp(q.n,q.h,.6))}`);
