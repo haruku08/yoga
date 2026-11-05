@@ -1182,7 +1182,8 @@ class Figure{
       if(o.leg){
         // thigh full at the hip, narrowing to the knee; calf swells just below the knee, slim ankle
         set(o.up,seg(a,b,4.2,4.3,2.6,.3)); set(o.low,seg(b,e,2.5,2.9,1.3,.32));
-        set(o.cloth,tube(lerp(a,b,-.12),lerp(a,b,.3),4.8,4.4));
+        // cloth patch hides the thigh's rounded top where it meets the shorts (taller when facing the viewer)
+        set(o.cloth,front?tube(lerp(a,b,-.3),lerp(a,b,.3),2.6,4.3):tube(lerp(a,b,-.12),lerp(a,b,.3),4.8,4.4));
         const dn=perp(unit(sub(e,b))); set(o.hi,`M${f(add(lerp(b,e,.12),dn,1.6))}L${f(add(lerp(b,e,.45),dn,1.9))}`);
         const d=unit(sub(e,b));
         if(front){ set(o.foot,spline(local(e,[1,0],[0,1],FOOT_FRONT),true)); return; }
@@ -1200,6 +1201,14 @@ class Figure{
         set(o.hand,spline(pts,true));
       }
     };
+    // facing the viewer, both legs come out from under the hips, so the second leg is drawn over the
+    // shorts in the same colors as the first; in side views it stays behind the body, shaded darker
+    if(this.chFront!==front){ this.chFront=front;
+      const L=C.farLeg, before=front?C.nearLeg.foot:C.neck, lg=front?CH.shorts:CH.shortsFar;
+      [L.foot,L.low,L.up,L.hi,L.cloth].forEach(el=>this.ch.insertBefore(el,before));
+      L.low.setAttribute("fill",lg); L.up.setAttribute("fill",lg); L.cloth.setAttribute("fill",lg);
+      L.foot.setAttribute("fill",front?CH.skin:CH.skinFar);
+    }
     limb(C.farArm,shR,J.re,J.rh); limb(C.farLeg,hpR,J.rk,J.rf);
     set(C.neck,`M${f(add(q.n,tan(1),-1))}L${f(lerp(q.n,q.h,.6))}`);
     set(C.torso,body(TORSO,-.12,1.06));
