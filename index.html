@@ -880,20 +880,21 @@ class Figure{
     const limb=(far,leg)=>{
       // legs wear full-length leggings, arms are bare (tank top), feet are bare for the mat
       const sk=far?CH.skinFar:CH.skin, lg=far?CH.shortsFar:CH.shorts, o={leg};
-      if(leg){ o.footOut=P({stroke:CH.skinLine,"stroke-width":3.6}); o.foot=P({stroke:sk,"stroke-width":2.5}); }
+      if(leg) o.foot=F({fill:sk,stroke:CH.skinLine,"stroke-width":.7});
       o.low=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
       o.up=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
       o.hi=P({stroke:leg?"#8A5C90":CH.skinHi,"stroke-width":.9,opacity:far?0:(leg?.5:.8)});
       o.cloth=F({fill:leg?lg:"none",stroke:"none"});
-      if(!leg) o.hand=E({rx:2.1,ry:2.4,fill:sk,stroke:CH.skinLine,"stroke-width":.8});
+      if(!leg) o.hand=F({fill:sk,stroke:CH.skinLine,"stroke-width":.7});
       return o;
     };
     this.c={farArm:limb(true,false),farLeg:limb(true,true)};
-    this.c.neck=P({stroke:CH.skin,"stroke-width":4.4});
+    this.c.neck=P({stroke:CH.skin,"stroke-width":3.9});
     this.c.torso=F({fill:CH.shirt,stroke:CH.shirtLine,"stroke-width":.9});
+    this.c.chest=F({fill:CH.skin,stroke:CH.skinLine,"stroke-width":.6});
     this.c.shorts=F({fill:CH.shorts,stroke:CH.shortsLine,"stroke-width":.9});
     this.c.nearLeg=limb(false,true); this.c.nearArm=limb(false,false);
-    this.c.bun=C({r:3.2,fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
+    this.c.bun=C({r:2.8,fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
     this.c.hair=E({fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
     this.c.face=E({fill:CH.skin,stroke:CH.skinLine,"stroke-width":.8});
     this.c.ear=E({rx:1.3,ry:1.9,fill:CH.skinFar,stroke:CH.skinLine,"stroke-width":.6});
@@ -1088,74 +1089,151 @@ class Figure{
       at(T.cheek1,add(add(H,fd,2.6),ax,-2.2),1.5); at(T.cheek2,H,0);
     }
   }
+  /* Realistic style. The pose data is shared with the other styles, so anatomy is fixed up here only:
+     shoulders and hip joints sit apart from the spine in front views (limbs re-solved so hands and feet
+     still land where the pose puts them), the torso follows a real chest, waist and hip profile,
+     and hands and feet are full-size shapes that rest on the floor instead of sinking into it. */
   drawChar(q,c){
     const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set=(el,d)=>el.setAttribute("d",d), C=this.c;
-    const front=FRONT.has(this.ex.id);
+    const front=FRONT.has(this.ex.id), GROUND=96.6;
     const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
     const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
-    const qb=(t)=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
-    // tapered segment with a muscle bulge: half-widths at start, bulge (at tm) and end, rounded ends
-    const seg=(A,B,wa,wm,wb,tm,side)=>{
-      const d=unit(sub(B,A)), n=perp(d), M=lerp(A,B,tm), s2=side||1;
-      return `M${f(add(A,n,wa))}Q${f(add(M,n,wm*s2>0?wm*1.15:wm))} ${f(add(B,n,wb))}Q${f(add(B,d,wb*1.3))} ${f(add(B,n,-wb))}Q${f(add(M,n,-wm*1.15))} ${f(add(A,n,-wa))}Q${f(add(A,d,-wa*1.3))} ${f(add(A,n,wa))}Z`;
+    const len=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+    const rot=(v,a)=>{const cs=Math.cos(a),sn=Math.sin(a);return [v[0]*cs-v[1]*sn,v[0]*sn+v[1]*cs]};
+    // smooth path through points (Catmull-Rom as cubic Beziers); closed or open
+    const spline=(pts,closed)=>{
+      const n=pts.length, P=i=>closed?pts[(i+n)%n]:pts[Math.max(0,Math.min(n-1,i))];
+      let d=`M${f(pts[0])}`;
+      for(let i=0;i<(closed?n:n-1);i++){ const p0=P(i-1),p1=P(i),p2=P(i+1),p3=P(i+2);
+        d+=`C${f(add(p1,sub(p2,p0),1/6))} ${f(add(p2,sub(p3,p1),-1/6))} ${f(p2)}`; }
+      return closed?d+"Z":d;
     };
-    // flat-ended cloth tube (sleeve / shorts leg)
-    const tube=(A,B,wa,wb)=>{const n=perp(unit(sub(B,A)));return `M${f(add(A,n,wa))}L${f(add(B,n,wb))}L${f(add(B,n,-wb))}L${f(add(A,n,-wa))}Z`;};
+    const local=(o,u,v,pts)=>pts.map(([x,y])=>add(add(o,u,x),v,y));
+    // two-bone solve: root A reaching for T with bone lengths l1,l2, bending toward `near` (where the pose had the joint)
+    const ik=(A,T,l1,l2,near)=>{
+      const u=unit(sub(T,A)), R=l1+l2; let d=len(A,T);
+      if(d>=R*.999) return [add(A,u,l1),add(A,u,R)];
+      d=Math.max(d,Math.abs(l1-l2)+.01);
+      const a=(l1*l1-l2*l2+d*d)/(2*d), h=Math.sqrt(Math.max(0,l1*l1-a*a));
+      const E1=add(add(A,u,a),perp(u),h), E2=add(add(A,u,a),perp(u),-h);
+      return [len(E1,near)<=len(E2,near)?E1:E2,add(A,u,d)];
+    };
+    // spine: quadratic from hips (t=0) to shoulders (t=1), extended straight past both ends
+    const qb=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    const tan=t=>{t=Math.max(0,Math.min(1,t));
+      const d=[2*(1-t)*(c[0]-q.p[0])+2*t*(q.n[0]-c[0]),2*(1-t)*(c[1]-q.p[1])+2*t*(q.n[1]-c[1])];
+      return Math.hypot(d[0],d[1])<.01?unit(sub(q.n,q.p)):unit(d)};
+    const Lt=len(q.n,q.p);
+    const B=t=>t>1?add(q.n,tan(1),(t-1)*Lt):t<0?add(q.p,tan(0),t*Lt):qb(t);
+    const N=t=>perp(tan(t)); // side views: toward the chest; front views: toward the viewer's right
+    // body outline from a table of [t, width on + side, width on - side]
+    const body=(tab,lo,hi)=>{
+      const at=t=>{for(let i=0;i<tab.length-1;i++){const A=tab[i],Bb=tab[i+1];if(t<=A[0]&&t>=Bb[0]){const k=(A[0]-t)/(A[0]-Bb[0]||1);return [t,A[1]+(Bb[1]-A[1])*k,A[2]+(Bb[2]-A[2])*k];}}return tab[t>tab[0][0]?0:tab.length-1]};
+      const rows=[at(hi)].concat(tab.filter(r=>r[0]<hi&&r[0]>lo),[at(lo)]);
+      const pos=rows.map(r=>add(B(r[0]),N(r[0]),r[1])), neg=rows.map(r=>add(B(r[0]),N(r[0]),-r[2])).reverse();
+      return spline(pos,false)+"L"+spline(neg,false).slice(1)+"Z";
+    };
+    const TORSO=front
+      ? [[1.06,2.3,2.3],[1.0,4.6,4.6],[.95,7.4,7.4],[.84,6.8,6.8],[.7,6.1,6.1],[.52,5.0,5.0],[.34,5.6,5.6],[.15,7.4,7.4],[0,7.8,7.8],[-.12,6.6,6.6]]
+      : [[1.06,1.6,2.0],[.97,3.0,3.3],[.86,4.6,3.6],[.74,4.3,3.4],[.6,3.5,3.1],[.45,3.3,2.8],[.3,3.6,3.5],[.14,3.5,4.6],[0,3.2,4.5],[-.1,2.6,3.3]];
+    // which side the near (l) limbs are on in a front view, so mirrored poses still work
+    const n0=N(.5), sideOf=(a1,a2,b1,b2)=>{const k=dot(sub(add(a1,a2),add(b1,b2)),n0);return k>.5?1:-1};
+    const J={}; // re-solved joints: shoulder/elbow/hand, hip/knee/foot
+    const arm=(e,h,side)=>{
+      const l1=len(q.n,q[e]), l2=len(q[e],q[h]);
+      if(!front){ J[e]=q[e]; J[h]=q[h]; return q.n; }
+      const S=add(B(.94),N(.94),6.2*side), off=sub(S,q.n);
+      const straight=dot(unit(sub(q[e],q.n)),unit(sub(q[h],q[e])))>.96;
+      // a straight arm moves out with its shoulder; a bent one mostly keeps its hand where the pose puts it
+      if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
+      else { J[e]=add(q[e],off,.8); J[h]=add(q[h],off,.3); }
+      return S;
+    };
+    const leg=(k,ft,side)=>{
+      if(!front){ J[k]=q[k]; J[ft]=q[ft]; return q.p; }
+      // the pelvis tilts less than the torso (triangle, side bends), so blend its axis toward level
+      let hx=N(0); hx=unit(add(hx,[hx[0]<0?-1:1,0])); const Hp=add(q.p,hx,4.4*side);
+      // feet stay nearly planted; a straight leg stays straight, a bent knee moves out with its hip
+      const off=sub(Hp,q.p), Ft=add(q[ft],off,.2), l1=len(q.p,q[k]), l2=len(q[k],q[ft]);
+      const straight=dot(unit(sub(q[k],q.p)),unit(sub(q[ft],q[k])))>.96;
+      J[k]=straight?lerp(Hp,Ft,l1/(l1+l2)):add(q[k],off,.6); J[ft]=Ft; return Hp;
+    };
+    const sA=sideOf(q.le,q.lh,q.re,q.rh), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
+    const shL=arm("le","lh",sA), shR=arm("re","rh",-sA), hpL=leg("lk","lf",sL), hpR=leg("rk","rf",-sL);
+    // rotate a shape's direction toward `goal` until no point dips below the floor
+    const grounded=(make,dir,goal)=>{
+      const a0=Math.atan2(dir[1],dir[0]); let da=Math.atan2(goal[1],goal[0])-a0;
+      while(da>Math.PI) da-=2*Math.PI; while(da<-Math.PI) da+=2*Math.PI;
+      let pts;
+      for(let i=0;i<=8;i++){ const a=a0+da*i/8; pts=make([Math.cos(a),Math.sin(a)]); if(Math.max(...pts.map(p=>p[1]))<=GROUND) break; }
+      return pts;
+    };
+    const HAND=[[0,1.0],[2.4,1.55],[4.6,1.4],[6.2,.4],[6.0,-.8],[4.4,-1.5],[2.2,-1.6],[0,-1.1]];
+    const FOOT=[[-1.5,-1.2],[-2.4,.9],[-1.6,2.5],[3,2.4],[6.6,2.2],[8.4,1.7],[8.2,.6],[4.5,-.3],[1.4,-1.5]];
+    const FOOT_FRONT=[[-1.2,-.8],[1.2,-.8],[1.9,1.3],[1.6,2.5],[-1.6,2.5],[-1.9,1.3]];
+    const handsMeet=len(J.lh,J.rh)<5;
+    // tapered segment with a muscle bulge: half-widths at start, bulge (at tm) and end, rounded ends
+    const seg=(A,Bp,wa,wm,wb,tm)=>{
+      const d=unit(sub(Bp,A)), n=perp(d), M=lerp(A,Bp,tm);
+      return `M${f(add(A,n,wa))}Q${f(add(M,n,wm*1.15))} ${f(add(Bp,n,wb))}Q${f(add(Bp,d,wb*1.3))} ${f(add(Bp,n,-wb))}Q${f(add(M,n,-wm*1.15))} ${f(add(A,n,-wa))}Q${f(add(A,d,-wa*1.3))} ${f(add(A,n,wa))}Z`;
+    };
+    const tube=(A,Bp,wa,wb)=>{const n=perp(unit(sub(Bp,A)));return `M${f(add(A,n,wa))}L${f(add(Bp,n,wb))}L${f(add(Bp,n,-wb))}L${f(add(A,n,-wa))}Z`;};
     const limb=(o,a,b,e)=>{
       if(o.leg){
-        set(o.up,seg(a,b,4.3,4.4,2.7,.35)); set(o.low,seg(b,e,2.6,2.9,1.6,.3));
-        set(o.cloth,tube(lerp(a,b,-.14),lerp(a,b,.3),5,4.6));
+        // thigh full at the hip, narrowing to the knee; calf swells just below the knee, slim ankle
+        set(o.up,seg(a,b,4.2,4.3,2.6,.3)); set(o.low,seg(b,e,2.5,2.9,1.3,.32));
+        set(o.cloth,tube(lerp(a,b,-.12),lerp(a,b,.3),4.8,4.4));
         const dn=perp(unit(sub(e,b))); set(o.hi,`M${f(add(lerp(b,e,.12),dn,1.6))}L${f(add(lerp(b,e,.45),dn,1.9))}`);
+        const d=unit(sub(e,b));
+        if(front){ set(o.foot,spline(local(e,[1,0],[0,1],FOOT_FRONT),true)); return; }
+        let toe=[d[1],-d[0]]; if(toe[0]<0) toe=[-toe[0],-toe[1]];
+        // feet stand flat when the shin is upright, and point along the shin when it lies low (plank, prone)
+        const pts=grounded(t=>{let v=sub(d,t,dot(d,t)); v=Math.hypot(v[0],v[1])<.2?perp(t):unit(v); if(dot(v,d)<0) v=[-v[0],-v[1]]; return local(e,t,v,FOOT);},toe,Math.abs(d[1])>.7?[1,0]:d);
+        set(o.foot,spline(pts,true));
       } else {
-        set(o.up,seg(a,b,2.4,2.6,1.9,.4)); set(o.low,seg(b,e,1.9,2.1,1.3,.3));
+        // round deltoid cap, upper arm tapering to the elbow, forearm fuller near the elbow, slim wrist
+        set(o.up,seg(a,b,2.8,2.5,1.8,.3)); set(o.low,seg(b,e,1.9,2.0,1.1,.25));
         const dn=perp(unit(sub(b,a))); set(o.hi,`M${f(add(lerp(a,b,.3),dn,1.4))}L${f(add(lerp(a,b,.75),dn,1.3))}`);
+        let u=unit(sub(e,b));
+        if(handsMeet) u=tan(1); // palms together, fingers up
+        const pts=grounded(t=>local(add(e,t,-1.6),t,perp(t),HAND),u,[u[0]<0?-1:1,0]);
+        set(o.hand,spline(pts,true));
       }
-      if(o.leg){
-        const d=unit(sub(e,b)); let toe=front?[0,0]:[d[1],-d[0]];
-        if(!front && toe[0]<0) toe=[-toe[0],-toe[1]];
-        const h=front?add(e,[-.8,.8]):add(e,toe,-1), t=front?add(e,[.8,.8]):add(e,toe,4.2);
-        const sd=`M${f(h)}L${f(t)}`; set(o.footOut,sd); set(o.foot,sd);
-      } else { o.hand.setAttribute("cx",e[0].toFixed(1)); o.hand.setAttribute("cy",e[1].toFixed(1)); }
     };
-    limb(C.farArm,q.n,q.re,q.rh); limb(C.farLeg,q.p,q.rk,q.rf);
-    // torso: tapered shape along the spine, broader at the chest than the waist
-    const ws=front?7.4:5.2, wm=front?5.4:4.4, wh=front?7.6:5.8;
-    const tn=unit(sub(q.n,c)), tp=unit(sub(c,q.p)), tc=unit(sub(q.n,q.p));
-    const Nn=perp(tn), Np=perp(tp), Nc=perp(tc);
-    const chestN=lerp(q.n,c,.18);
-    set(C.torso,`M${f(add(chestN,Nn,ws))}Q${f(add(c,Nc,wm))} ${f(add(q.p,Np,wh))}L${f(add(q.p,Np,-wh))}Q${f(add(c,Nc,-wm))} ${f(add(chestN,Nn,-ws))}Q${f(add(q.n,tn,1.5))} ${f(add(chestN,Nn,ws))}Z`);
-    const w0=qb(.36), n0=perp(unit(sub(qb(.4),qb(.32))));
-    set(C.shorts,`M${f(add(w0,n0,wm+.4))}L${f(add(q.p,Np,wh+.8))}Q${f(add(q.p,tp,-3.5))} ${f(add(q.p,Np,-(wh+.8)))}L${f(add(w0,n0,-(wm+.4)))}Z`);
-    set(C.neck,`M${f(q.n)}L${f(lerp(q.n,q.h,.6))}`);
-    limb(C.nearLeg,q.p,q.lk,q.lf); limb(C.nearArm,q.n,q.le,q.lh);
-    // head: an oval along the neck-to-head axis
+    limb(C.farArm,shR,J.re,J.rh); limb(C.farLeg,hpR,J.rk,J.rf);
+    set(C.neck,`M${f(add(q.n,tan(1),-1))}L${f(lerp(q.n,q.h,.6))}`);
+    set(C.torso,body(TORSO,-.12,1.06));
+    set(C.shorts,body(TORSO.map(r=>[r[0],r[1]+.4,r[2]+.4]),-.12,.36));
+    // scoop neckline of the tank top (front view only)
+    if(front){ const t0=B(1.06), nl=N(1); set(C.chest,`M${f(add(t0,nl,-2.6))}Q${f(add(B(.86),nl,-3.4))} ${f(B(.86))}Q${f(add(B(.86),nl,3.4))} ${f(add(t0,nl,2.6))}Z`); }
+    else set(C.chest,"M0 0");
+    limb(C.nearLeg,hpL,J.lk,J.lf); limb(C.nearArm,shL,J.le,J.lh);
+    // head: an oval along the neck-to-head axis, about 1/7.5 of standing height
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], ang=Math.atan2(ax[1],ax[0])*180/Math.PI+90;
-    const H=q.h, rot=`rotate(${ang.toFixed(1)} ${H[0].toFixed(1)} ${H[1].toFixed(1)})`;
+    const H=add(q.h,ax,-.4), rt=`rotate(${ang.toFixed(1)} ${H[0].toFixed(1)} ${H[1].toFixed(1)})`;
     const ell=(el,cx,cy,rx,ry,tr)=>{el.setAttribute("cx",cx.toFixed(1));el.setAttribute("cy",cy.toFixed(1));el.setAttribute("rx",rx);el.setAttribute("ry",ry);el.setAttribute("transform",tr)};
-    const bn=front?add(H,ax,6.6):add(add(H,ax,5),fd,-3.6);
+    const bn=front?add(H,ax,5.9):add(add(H,ax,4.4),fd,-3.4);
     C.bun.setAttribute("cx",bn[0].toFixed(1)); C.bun.setAttribute("cy",bn[1].toFixed(1));
     if(front){
-      ell(C.hair,H[0],H[1]-.9,6.1,6.9,rot);
+      ell(C.hair,H[0],H[1]-.8,5.3,6.1,rt);
       const fc=add(H,ax,-.7);
-      ell(C.face,fc[0],fc[1],5.3,6.3,rot);
+      ell(C.face,fc[0],fc[1],4.6,5.7,rt);
       C.ear.setAttribute("rx",0);
-      const e1=add(add(fc,fd,-2.1),ax,.6), e2=add(add(fc,fd,2.1),ax,.6);
+      const e1=add(add(fc,fd,-1.9),ax,.5), e2=add(add(fc,fd,1.9),ax,.5);
       C.eye1.setAttribute("cx",e1[0].toFixed(1)); C.eye1.setAttribute("cy",e1[1].toFixed(1));
-      C.eye2.setAttribute("cx",e2[0].toFixed(1)); C.eye2.setAttribute("cy",e2[1].toFixed(1)); C.eye2.setAttribute("r",.75);
-      // feminine detail: soft lashes instead of straight brows below
-
-      set(C.brow1,`M${f(add(add(e1,ax,1.7),fd,-1))}Q${f(add(e1,ax,2.3))} ${f(add(add(e1,ax,1.8),fd,1))}`); set(C.brow2,`M${f(add(add(e2,ax,1.8),fd,-1))}Q${f(add(e2,ax,2.3))} ${f(add(add(e2,ax,1.7),fd,1))}`);
-      set(C.nose,`M${f(add(fc,ax,-.2))}l.4 1.5l-.9 .1`);
-      const m=add(fc,ax,-3.2); set(C.mouth,`M${f(add(m,fd,-1.2))}Q${f(add(m,ax,-.7))} ${f(add(m,fd,1.2))}`);
+      C.eye2.setAttribute("cx",e2[0].toFixed(1)); C.eye2.setAttribute("cy",e2[1].toFixed(1)); C.eye2.setAttribute("r",.65); C.eye1.setAttribute("r",.65);
+      set(C.brow1,`M${f(add(add(e1,ax,1.5),fd,-.9))}Q${f(add(e1,ax,2.1))} ${f(add(add(e1,ax,1.6),fd,.9))}`); set(C.brow2,`M${f(add(add(e2,ax,1.6),fd,-.9))}Q${f(add(e2,ax,2.1))} ${f(add(add(e2,ax,1.5),fd,.9))}`);
+      set(C.nose,`M${f(add(fc,ax,-.2))}l.35 1.3l-.8 .1`);
+      const m=add(fc,ax,-2.9); set(C.mouth,`M${f(add(m,fd,-1.1))}Q${f(add(m,ax,-.6))} ${f(add(m,fd,1.1))}`);
     } else {
-      const hb=add(H,fd,-.8); ell(C.hair,hb[0],hb[1],5.8,6.8,rot);
-      const fc=add(add(H,fd,.9),ax,-.5); ell(C.face,fc[0],fc[1],5.1,6.2,rot);
-      const er=add(add(H,fd,-1),ax,-.4); C.ear.setAttribute("rx",1.3); ell(C.ear,er[0],er[1],1.3,1.9,rot);
-      const e=add(add(H,fd,4),ax,.6);
-      C.eye1.setAttribute("cx",e[0].toFixed(1)); C.eye1.setAttribute("cy",e[1].toFixed(1)); C.eye2.setAttribute("r",0);
-      set(C.brow1,`M${f(add(add(e,ax,1.5),fd,-1))}L${f(add(add(e,ax,1.6),fd,1))}`); set(C.brow2,"M0 0");
-      const nb=add(add(H,fd,5.9),ax,.1); set(C.nose,`M${f(nb)}L${f(add(add(nb,fd,1.2),ax,-1.4))}L${f(add(nb,ax,-1.9))}`);
-      const m=add(add(H,fd,4.6),ax,-3.1); set(C.mouth,`M${f(m)}Q${f(add(add(m,fd,.6),ax,-.3))} ${f(add(m,fd,1.2))}`);
+      const hb=add(H,fd,-.7); ell(C.hair,hb[0],hb[1],5.2,6.0,rt);
+      const fc=add(add(H,fd,.8),ax,-.5); ell(C.face,fc[0],fc[1],4.5,5.5,rt);
+      const er=add(add(H,fd,-.9),ax,-.4); C.ear.setAttribute("rx",1.2); ell(C.ear,er[0],er[1],1.15,1.7,rt);
+      const e=add(add(H,fd,3.5),ax,.5);
+      C.eye1.setAttribute("cx",e[0].toFixed(1)); C.eye1.setAttribute("cy",e[1].toFixed(1)); C.eye1.setAttribute("r",.65); C.eye2.setAttribute("r",0);
+      set(C.brow1,`M${f(add(add(e,ax,1.4),fd,-.9))}L${f(add(add(e,ax,1.5),fd,.9))}`); set(C.brow2,"M0 0");
+      const nb=add(add(H,fd,5.2),ax,.1); set(C.nose,`M${f(nb)}L${f(add(add(nb,fd,1.0),ax,-1.2))}L${f(add(nb,ax,-1.7))}`);
+      const m=add(add(H,fd,4.1),ax,-2.8); set(C.mouth,`M${f(m)}Q${f(add(add(m,fd,.5),ax,-.3))} ${f(add(m,fd,1.0))}`);
     }
   }
   pose(t){
@@ -2338,7 +2416,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.3.1";
+const APP_VERSION = "1.3.2";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
