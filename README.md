@@ -31,3 +31,17 @@ Bump the version in two places, then push to `main`:
 2. `version.json`
 
 Open apps then show "Version X is ready" with an **Update** button.
+
+## Checking the figures
+
+`node tools/check-figures.js` measures every pose animation (120 moments per loop, realistic style) and lists findings. It needs Playwright with Chromium.
+
+- **Floor:** no part of the body drawn below the floor, and the figure never floats above it.
+- **Bones:** no bone longer than in the standing pose. Shorter is fine, because a limb can point toward the viewer.
+- **Knees:** in side views, knees never bend backwards.
+- **Sliding:** hands, knees and feet resting on the floor stay in place.
+- **Balance:** when only the feet carry the weight, the centre of mass stays over them.
+
+Add `--sheet sheet.png` to also save a picture of every key pose, and look at it: the checks don't replace your eyes. Pass pose ids (`node tools/check-figures.js tree,dancer`) to check a few. A deliberate exception goes in `ALLOW` at the top of the script, with the reason.
+
+New front-facing poses go in `FRONT` in `index.html`, so the realistic style places shoulders and hips correctly.
