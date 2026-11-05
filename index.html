@@ -844,7 +844,9 @@ const figures = new Set();
 
 function mk(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["doodle","char","toon","stick"].includes(v)?v:"doodle"; }catch(e){ return "doodle"; } })();
-/* Exercises drawn facing the viewer; all others are side views facing right. */
+/* Exercises drawn facing the viewer; all others are side views facing right.
+   Add every new front-facing pose here: the realistic style uses this to place shoulders and hips apart,
+   draw both arms and legs beside the body, and hang free arms straight. Side-view poses need nothing extra. */
 const FRONT = new Set(["doorway","neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
