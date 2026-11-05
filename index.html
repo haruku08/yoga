@@ -1141,6 +1141,7 @@ class Figure{
       ? [[1.06,2.3,2.3],[1.0,4.6,4.6],[.95,7.4,7.4],[.84,6.8,6.8],[.7,6.1,6.1],[.52,5.0,5.0],[.34,5.6,5.6],[.15,7.4,7.4],[0,7.8,7.8],[-.12,6.6,6.6]]
       : [[1.06,1.6,2.0],[.97,3.0,3.3],[.86,4.6,3.6],[.74,4.3,3.4],[.6,3.5,3.1],[.45,3.3,2.8],[.3,3.6,3.5],[.14,3.5,4.6],[0,3.2,4.5],[-.1,2.6,3.3]];
     // which side the near (l) limbs are on in a front view, so mirrored poses still work
+    // (arms go by the elbows: a hand can reach across the body, as in a cross-body stretch)
     const n0=N(.5), sideOf=(a1,a2,b1,b2)=>{const k=dot(sub(add(a1,a2),add(b1,b2)),n0);return k>.5?1:-1};
     const J={}; // re-solved joints: shoulder/elbow/hand, hip/knee/foot
     const arm=(e,h,side)=>{
@@ -1165,7 +1166,7 @@ class Figure{
       const straight=dot(unit(sub(q[k],q.p)),unit(sub(q[ft],q[k])))>.96;
       J[k]=straight?lerp(Hp,Ft,l1/(l1+l2)):add(q[k],off,.6); J[ft]=Ft; return Hp;
     };
-    const sA=sideOf(q.le,q.lh,q.re,q.rh), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
+    const sA=sideOf(q.le,q.le,q.re,q.re), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
     const shL=arm("le","lh",sA), shR=arm("re","rh",-sA), hpL=leg("lk","lf",sL), hpR=leg("rk","rf",-sL);
     this.joints=Object.assign({shL,shR,hpL,hpR},J); // the skeleton as drawn, for tools/check-figures.js
     // rotate a shape's direction toward `goal` until no point dips below the floor
@@ -2438,7 +2439,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.3.3";
+const APP_VERSION = "1.3.4";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){

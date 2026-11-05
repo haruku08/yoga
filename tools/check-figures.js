@@ -102,11 +102,13 @@ const SAMPLES = 120;
         if (!front) for (const [h, k, a, side] of [[q.p, q.lk, q.lf, "near"], [q.p, q.rk, q.rf, "far"]]) {
           const bend = kneeBend(h, k, a); if (bend < -12) note("knee:" + side, `${side} knee bends backwards by ${Math.round(-bend)}°`, t);
         }
-        // 4. sliding: a hand, knee or foot resting on the floor that moves sideways
+        // 4. sliding: a hand, knee or foot resting on the floor that moves sideways.
+        //    A move that rises or drops at least half as much as it travels is a lift or a landing, not a slide.
         for (const k of ["lh", "rh", "lk", "rk", "lf", "rf"]) {
           const on = q[k][1] > GROUND - 5.5;
-          if (prev && on && prev[k][1] > GROUND - 5.5) { slide[k] = (slide[k] || 0) + Math.abs(q[k][0] - prev[k][0]); if (slide[k] > 2.5) note("slide:" + k, `${({ lh: "near hand", rh: "far hand", lk: "near knee", rk: "far knee", lf: "near foot", rf: "far foot" })[k]} slides ${slide[k].toFixed(1)} along the floor`, t); }
-          else if (!on) slide[k] = 0;
+          const level = prev && Math.abs(q[k][1] - prev[k][1]) < .5 * Math.abs(q[k][0] - prev[k][0]);
+          if (prev && on && prev[k][1] > GROUND - 5.5 && level) { slide[k] = (slide[k] || 0) + Math.abs(q[k][0] - prev[k][0]); if (slide[k] > 2.5) note("slide:" + k, `${({ lh: "near hand", rh: "far hand", lk: "near knee", rk: "far knee", lf: "near foot", rf: "far foot" })[k]} slides ${slide[k].toFixed(1)} along the floor`, t); }
+          else if (!on || !level) slide[k] = 0;
         }
         // 5. balance when only the feet carry the weight
         const onFloor = k => q[k][1] > GROUND - 6;
