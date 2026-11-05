@@ -15,7 +15,8 @@ const ONLY = args[0] ? args[0].split(",") : null;
 
 /* Deliberate exceptions, per exercise and check, each with a reason. */
 const ALLOW = {
-  // "child:balance": "Kneeling, the shins carry the weight.",
+  "sunsal:slide": "The flow is shortened: going from the fold into the lunge, hands and feet move forward in one beat. Planting them would push the plank off the edge of the picture.",
+  "pigeon:slide": "The hands walk forward to fold down and walk back to sit up; each step lifts the hand.",
 };
 
 const GROUND = 96.5;        // floor line in the drawing
