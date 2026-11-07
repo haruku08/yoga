@@ -396,6 +396,7 @@ main .wrap{padding-block:8px 32px}
 .rt-list .icon-btn{width:36px;height:36px}
 .rt-list .icon-btn .ms{font-size:20px}
 .rt-list .icon-btn:disabled{opacity:.3}
+.rt-clear{display:flex;justify-content:flex-end;margin-top:4px}
 .plist li.drop{box-shadow:0 -3px 0 var(--primary)}
 .plist li.drop-end{box-shadow:0 3px 0 var(--primary)}
 .plist li.dragging{opacity:.35}
@@ -628,6 +629,7 @@ main .wrap{padding-block:8px 32px}
     <div class="rt-label"><b>2</b>Moves in one set</div>
     <p class="rt-help">Tap a move below to add it, or hold it and drag it into place. Drag the handles to reorder.</p>
     <ol class="rt-list" id="rt-list"></ol>
+    <div class="rt-clear"><button class="text-btn sl" id="rt-clear"><span class="ms">delete</span>Clear all poses</button></div>
     <div class="search pal-search"><span class="ms">search</span><input id="pal-q" type="search" placeholder="Find a move" autocomplete="off" aria-label="Find a move"></div>
     <div class="pal-chips" id="pal-chips"></div>
     <div class="pal" id="pal"></div>
@@ -993,9 +995,10 @@ class Figure{
       } else o.hand.setAttribute("d",ring(e,1.4,s));
     };
     // Facing the viewer, arms hang from two shoulders and legs from two hips, not from one point as in a side view.
-    const side=front?(()=>{ const pp=perp(unit(sub(q.n,q.p))); return pp[0]<0?[-pp[0],-pp[1]]:pp; })():[0,0];
-    const shL=add(q.n,side,-3.9), shR=add(q.n,side,3.9), hpL=add(q.p,side,-3), hpR=add(q.p,side,3);
-    limb(D.farArm,front?shR:q.n,q.re,q.rh,-1); limb(D.farLeg,front?hpR:q.p,q.rk,q.rf,1);
+    // Same skeleton as the realistic style: facing the viewer, arms hang from two shoulders and legs from two hips,
+    // re-solved so hands and feet land where the pose puts them.
+    const J=this.solveJoints(q,c), {shL,shR,hpL,hpR}=J; this.joints=J;
+    limb(D.farArm,shR,J.re,J.rh,-1); limb(D.farLeg,hpR,J.rk,J.rf,1);
     const top=lerp(q.n,c,.1);
     // hourglass: a narrow bare waist between a crop top and wide high-waisted leggings
     D.body.ink.setAttribute("stroke-width",front?10.4:6.9); D.body.fill.setAttribute("stroke-width",front?8.9:5.4);
@@ -1006,7 +1009,7 @@ class Figure{
     const ql=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
     setP(D.chest,`M${f(ql(.55))}Q${f(ql(.8))} ${f(top)}`);
     setP(D.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.5))}L${f(ql(.3))}`);
-    limb(D.nearLeg,front?hpL:q.p,q.lk,q.lf,1); limb(D.nearArm,front?shL:q.n,q.le,q.lh,1);
+    limb(D.nearLeg,hpL,J.lk,J.lf,1); limb(D.nearArm,shL,J.le,J.lh,1);
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,6.8), R=5.5;
     setP(D.neck,`M${f(q.n)}L${f(add(q.n,ax,2.4))}`);
     const dot=(p,r)=>`M${f(add(p,[-r,0]))}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
@@ -1097,6 +1100,57 @@ class Figure{
      shoulders and hip joints sit apart from the spine in front views (limbs re-solved so hands and feet
      still land where the pose puts them), the torso follows a real chest, waist and hip profile,
      and hands and feet are full-size shapes that rest on the floor instead of sinking into it. */
+  /* Realistic anatomy, shared by the realistic and doodle styles. Facing the viewer, the shoulders and hip joints
+     sit apart from the spine, and the limbs are re-solved from there so hands and feet still land where the pose puts them;
+     arms hanging free by the sides fall straight. Side views keep the pose as it is. */
+  solveJoints(q,c){
+    const front=FRONT.has(this.ex.id);
+    const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+    const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
+    const len=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+    const ik=(A,T,l1,l2,near)=>{
+      const u=unit(sub(T,A)), R=l1+l2; let d=len(A,T);
+      if(d>=R*.999) return [add(A,u,l1),add(A,u,R)];
+      d=Math.max(d,Math.abs(l1-l2)+.01);
+      const a=(l1*l1-l2*l2+d*d)/(2*d), h=Math.sqrt(Math.max(0,l1*l1-a*a));
+      const E1=add(add(A,u,a),perp(u),h), E2=add(add(A,u,a),perp(u),-h);
+      return [len(E1,near)<=len(E2,near)?E1:E2,add(A,u,d)];
+    };
+    const qb=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    const tan=t=>{t=Math.max(0,Math.min(1,t));
+      const d=[2*(1-t)*(c[0]-q.p[0])+2*t*(q.n[0]-c[0]),2*(1-t)*(c[1]-q.p[1])+2*t*(q.n[1]-c[1])];
+      return Math.hypot(d[0],d[1])<.01?unit(sub(q.n,q.p)):unit(d)};
+    const Lt=len(q.n,q.p);
+    const B=t=>t>1?add(q.n,tan(1),(t-1)*Lt):t<0?add(q.p,tan(0),t*Lt):qb(t);
+    const N=t=>perp(tan(t)); // side views: toward the chest; front views: toward the viewer's right
+    const n0=N(.5), sideOf=(a1,a2,b1,b2)=>{const k=dot(sub(add(a1,a2),add(b1,b2)),n0);return k>.5?1:-1};
+    const J={}; // re-solved joints: shoulder/elbow/hand, hip/knee/foot
+    const arm=(e,h,side)=>{
+      const l1=len(q.n,q[e]), l2=len(q[e],q[h]);
+      if(!front){ J[e]=q[e]; J[h]=q[h]; return q.n; }
+      const S=add(B(.94),N(.94),6.2*side), off=sub(S,q.n);
+      const straight=dot(unit(sub(q[e],q.n)),unit(sub(q[h],q[e])))>.96;
+      // a straight arm moves out with its shoulder; a bent one mostly keeps its hand where the pose puts it
+      // arms hanging free by the sides (not reaching for the feet or floor) fall straight from the shoulder
+      const down=tan(.5), hanging=q[h][1]<84&&dot(unit(sub(q[e],q.n)),down)<-.8&&dot(unit(sub(q[h],q[e])),down)<-.8;
+      if(hanging){ const H=add(S,unit(add(sub(add(q[h],off,.6),S),down,-.1*(l1+l2))),l1+l2-1); J[h]=H; J[e]=lerp(S,H,l1/(l1+l2)); }
+      else if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
+      else { J[e]=add(q[e],off,.8); J[h]=add(q[h],off,.3); }
+      return S;
+    };
+    const leg=(k,ft,side)=>{
+      if(!front){ J[k]=q[k]; J[ft]=q[ft]; return q.p; }
+      // the pelvis tilts less than the torso (triangle, side bends), so blend its axis toward level
+      let hx=N(0); hx=unit(add(hx,[hx[0]<0?-1:1,0])); const Hp=add(q.p,hx,4.4*side);
+      // feet stay nearly planted; a straight leg stays straight, a bent knee moves out with its hip
+      const off=sub(Hp,q.p), Ft=add(q[ft],off,.2), l1=len(q.p,q[k]), l2=len(q[k],q[ft]);
+      const straight=dot(unit(sub(q[k],q.p)),unit(sub(q[ft],q[k])))>.96;
+      J[k]=straight?lerp(Hp,Ft,l1/(l1+l2)):add(q[k],off,.6); J[ft]=Ft; return Hp;
+    };
+    const sA=sideOf(q.le,q.le,q.re,q.re), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
+    const shL=arm("le","lh",sA), shR=arm("re","rh",-sA), hpL=leg("lk","lf",sL), hpR=leg("rk","rf",-sL);
+    return Object.assign({shL,shR,hpL,hpR},J);
+  }
   drawChar(q,c){
     const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set=(el,d)=>el.setAttribute("d",d), C=this.c;
     const front=FRONT.has(this.ex.id), GROUND=96.6;
@@ -1142,33 +1196,8 @@ class Figure{
       : [[1.06,1.6,2.0],[.97,3.0,3.3],[.86,4.6,3.6],[.74,4.3,3.4],[.6,3.5,3.1],[.45,3.3,2.8],[.3,3.6,3.5],[.14,3.5,4.6],[0,3.2,4.5],[-.1,2.6,3.3]];
     // which side the near (l) limbs are on in a front view, so mirrored poses still work
     // (arms go by the elbows: a hand can reach across the body, as in a cross-body stretch)
-    const n0=N(.5), sideOf=(a1,a2,b1,b2)=>{const k=dot(sub(add(a1,a2),add(b1,b2)),n0);return k>.5?1:-1};
-    const J={}; // re-solved joints: shoulder/elbow/hand, hip/knee/foot
-    const arm=(e,h,side)=>{
-      const l1=len(q.n,q[e]), l2=len(q[e],q[h]);
-      if(!front){ J[e]=q[e]; J[h]=q[h]; return q.n; }
-      const S=add(B(.94),N(.94),6.2*side), off=sub(S,q.n);
-      const straight=dot(unit(sub(q[e],q.n)),unit(sub(q[h],q[e])))>.96;
-      // a straight arm moves out with its shoulder; a bent one mostly keeps its hand where the pose puts it
-      // arms hanging free by the sides (not reaching for the feet or floor) fall straight from the shoulder
-      const down=tan(.5), hanging=q[h][1]<84&&dot(unit(sub(q[e],q.n)),down)<-.8&&dot(unit(sub(q[h],q[e])),down)<-.8;
-      if(hanging){ const H=add(S,unit(add(sub(add(q[h],off,.6),S),down,-.1*(l1+l2))),l1+l2-1); J[h]=H; J[e]=lerp(S,H,l1/(l1+l2)); }
-      else if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
-      else { J[e]=add(q[e],off,.8); J[h]=add(q[h],off,.3); }
-      return S;
-    };
-    const leg=(k,ft,side)=>{
-      if(!front){ J[k]=q[k]; J[ft]=q[ft]; return q.p; }
-      // the pelvis tilts less than the torso (triangle, side bends), so blend its axis toward level
-      let hx=N(0); hx=unit(add(hx,[hx[0]<0?-1:1,0])); const Hp=add(q.p,hx,4.4*side);
-      // feet stay nearly planted; a straight leg stays straight, a bent knee moves out with its hip
-      const off=sub(Hp,q.p), Ft=add(q[ft],off,.2), l1=len(q.p,q[k]), l2=len(q[k],q[ft]);
-      const straight=dot(unit(sub(q[k],q.p)),unit(sub(q[ft],q[k])))>.96;
-      J[k]=straight?lerp(Hp,Ft,l1/(l1+l2)):add(q[k],off,.6); J[ft]=Ft; return Hp;
-    };
-    const sA=sideOf(q.le,q.le,q.re,q.re), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
-    const shL=arm("le","lh",sA), shR=arm("re","rh",-sA), hpL=leg("lk","lf",sL), hpR=leg("rk","rf",-sL);
-    this.joints=Object.assign({shL,shR,hpL,hpR},J); // the skeleton as drawn, for tools/check-figures.js
+    const Jt=this.solveJoints(q,c), J=Jt, {shL,shR,hpL,hpR}=Jt;
+    this.joints=Jt; // the skeleton as drawn, for tools/check-figures.js
     // rotate a shape's direction toward `goal` until no point dips below the floor
     const grounded=(make,dir,goal)=>{
       const a0=Math.atan2(dir[1],dir[0]); let da=Math.atan2(goal[1],goal[0])-a0;
@@ -1693,13 +1722,26 @@ let sndTimer=0;
 function onAudioState(){
   if(!actx) return;
   const ok=actx.state==="running";
-  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); return; }
+  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); if(T.running) keepAlive(true); return; }
   if(document.visibilityState!=="visible") return;
   try{ actx.resume().catch(()=>{}); }catch(e){}
   if(!sndTimer) sndTimer=setTimeout(()=>{ sndTimer=0; if(actx&&actx.state!=="running"&&document.visibilityState==="visible") sndOff(true); },1200);
 }
 function sndOff(on){ const b=document.getElementById("snd-off"); if(b) b.hidden=!(on&&(T.running||T.paused)&&(soundOn||voiceOn)); }
 setInterval(()=>{ if(actx&&T.running&&actx.state!=="running") onAudioState(); },2000);
+/* iPhone lets go of the speaker after a long quiet stretch (like a one-minute set break), and the beeps and voice
+   then stay silent for the rest of the workout. While a workout runs, play an inaudible loop so the sound stays on. */
+let keep=null;
+function keepAlive(on){
+  try{
+    if(!on){ if(keep){ keep.stop(); keep.disconnect(); } keep=null; return; }
+    const a=audio(); if(!a||(keep&&keep.ctx===a)) return;
+    if(keep){ try{ keep.stop(); }catch(e){} }
+    const b=a.createBuffer(1,a.sampleRate,a.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*1e-4;
+    const s=a.createBufferSource(); s.buffer=b; s.loop=true; s.connect(a.destination); s.start(); s.ctx=a; keep=s;
+  }catch(e){}
+}
 function beep(freq,len,when=0,vol=.25,type="sine"){
   if(!soundOn||T.quiet) return; const a=audio(); if(!a) return;
   const t=a.currentTime+when, o=a.createOscillator(), g=a.createGain();
@@ -1896,8 +1938,8 @@ function tick(){
 setInterval(tick,100);
 (function raf(){ tick(); requestAnimationFrame(raf); })();
 
-async function requestWake(){ try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
-function releaseWake(){ try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
+async function requestWake(){ keepAlive(true); try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
+function releaseWake(){ keepAlive(false); try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"&&T.running) requestWake(); });
 
 /* Music: open the chosen music app (optionally on a playlist) only when the person asks for it.
@@ -2111,9 +2153,13 @@ function renderRt(){
       if(a==="dup") m.splice(i+1,0,id); else if(a==="del") m.splice(i,1); renderRt(); });
     li.querySelector(".grip").addEventListener("pointerdown",e=>{ e.preventDefault(); dragStart(e,{from:i,id},li); });
     ol.appendChild(li); });
+  $("rt-clear").parentElement.hidden=rtD.moves.length<2;
   if(!rtD.moves.length) ol.innerHTML=`<li class="rt-empty">Drag poses here, or tap them below</li>`;
   rtSum();
 }
+/* Clear all: empty the list in one tap to start over, with Undo in case it was a slip. */
+$("rt-clear").onclick=()=>{ const old=rtD.moves.slice(); if(!old.length) return; rtD.moves.length=0; renderRt();
+  undoSnack(`Cleared ${old.length} poses`,()=>{ rtD.moves.splice(0,rtD.moves.length,...old); renderRt(); }); };
 /* Move palette: tap a tile to add it, or drag it into the list. */
 let palCat="all"; const palFigs=[];
 function renderPal(){
@@ -2439,7 +2485,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.3.4";
+const APP_VERSION = "1.4.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
