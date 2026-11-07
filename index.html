@@ -396,6 +396,7 @@ main .wrap{padding-block:8px 32px}
 .rt-list .icon-btn{width:36px;height:36px}
 .rt-list .icon-btn .ms{font-size:20px}
 .rt-list .icon-btn:disabled{opacity:.3}
+.rt-clear{display:flex;justify-content:flex-end;margin-top:4px}
 .plist li.drop{box-shadow:0 -3px 0 var(--primary)}
 .plist li.drop-end{box-shadow:0 3px 0 var(--primary)}
 .plist li.dragging{opacity:.35}
@@ -628,6 +629,7 @@ main .wrap{padding-block:8px 32px}
     <div class="rt-label"><b>2</b>Moves in one set</div>
     <p class="rt-help">Tap a move below to add it, or hold it and drag it into place. Drag the handles to reorder.</p>
     <ol class="rt-list" id="rt-list"></ol>
+    <div class="rt-clear"><button class="text-btn sl" id="rt-clear"><span class="ms">delete</span>Clear all poses</button></div>
     <div class="search pal-search"><span class="ms">search</span><input id="pal-q" type="search" placeholder="Find a move" autocomplete="off" aria-label="Find a move"></div>
     <div class="pal-chips" id="pal-chips"></div>
     <div class="pal" id="pal"></div>
@@ -2124,9 +2126,13 @@ function renderRt(){
       if(a==="dup") m.splice(i+1,0,id); else if(a==="del") m.splice(i,1); renderRt(); });
     li.querySelector(".grip").addEventListener("pointerdown",e=>{ e.preventDefault(); dragStart(e,{from:i,id},li); });
     ol.appendChild(li); });
+  $("rt-clear").parentElement.hidden=rtD.moves.length<2;
   if(!rtD.moves.length) ol.innerHTML=`<li class="rt-empty">Drag poses here, or tap them below</li>`;
   rtSum();
 }
+/* Clear all: empty the list in one tap to start over, with Undo in case it was a slip. */
+$("rt-clear").onclick=()=>{ const old=rtD.moves.slice(); if(!old.length) return; rtD.moves.length=0; renderRt();
+  undoSnack(`Cleared ${old.length} poses`,()=>{ rtD.moves.splice(0,rtD.moves.length,...old); renderRt(); }); };
 /* Move palette: tap a tile to add it, or drag it into the list. */
 let palCat="all"; const palFigs=[];
 function renderPal(){
@@ -2452,7 +2458,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.3.5";
+const APP_VERSION = "1.4.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
