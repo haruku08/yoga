@@ -1705,13 +1705,26 @@ let sndTimer=0;
 function onAudioState(){
   if(!actx) return;
   const ok=actx.state==="running";
-  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); return; }
+  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); if(T.running) keepAlive(true); return; }
   if(document.visibilityState!=="visible") return;
   try{ actx.resume().catch(()=>{}); }catch(e){}
   if(!sndTimer) sndTimer=setTimeout(()=>{ sndTimer=0; if(actx&&actx.state!=="running"&&document.visibilityState==="visible") sndOff(true); },1200);
 }
 function sndOff(on){ const b=document.getElementById("snd-off"); if(b) b.hidden=!(on&&(T.running||T.paused)&&(soundOn||voiceOn)); }
 setInterval(()=>{ if(actx&&T.running&&actx.state!=="running") onAudioState(); },2000);
+/* iPhone lets go of the speaker after a long quiet stretch (like a one-minute set break), and the beeps and voice
+   then stay silent for the rest of the workout. While a workout runs, play an inaudible loop so the sound stays on. */
+let keep=null;
+function keepAlive(on){
+  try{
+    if(!on){ if(keep){ keep.stop(); keep.disconnect(); } keep=null; return; }
+    const a=audio(); if(!a||(keep&&keep.ctx===a)) return;
+    if(keep){ try{ keep.stop(); }catch(e){} }
+    const b=a.createBuffer(1,a.sampleRate,a.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*1e-4;
+    const s=a.createBufferSource(); s.buffer=b; s.loop=true; s.connect(a.destination); s.start(); s.ctx=a; keep=s;
+  }catch(e){}
+}
 function beep(freq,len,when=0,vol=.25,type="sine"){
   if(!soundOn||T.quiet) return; const a=audio(); if(!a) return;
   const t=a.currentTime+when, o=a.createOscillator(), g=a.createGain();
@@ -1908,8 +1921,8 @@ function tick(){
 setInterval(tick,100);
 (function raf(){ tick(); requestAnimationFrame(raf); })();
 
-async function requestWake(){ try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
-function releaseWake(){ try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
+async function requestWake(){ keepAlive(true); try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
+function releaseWake(){ keepAlive(false); try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"&&T.running) requestWake(); });
 
 /* Music: open the chosen music app (optionally on a playlist) only when the person asks for it.
