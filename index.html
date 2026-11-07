@@ -26,7 +26,7 @@
   --surface:#FFF8F5; --on-surface:#2A1D1F; --on-surface-variant:#5E4B4E; --outline:#8C7A7C; --outline-variant:#E2CFCF;
   --sc-lowest:#FFFFFF; --sc-low:#FCF1EE; --sc:#F8EAE6; --sc-high:#F3E3DF; --sc-highest:#EDDCD8;
   --inverse-surface:#3A2D2F; --inverse-on-surface:#FBEDEA; --scrim:rgb(0 0 0 / .32);
-  --stand:#B4572E; --stand-c:#FBE0D3; --balance:#8E4A7A; --balance-c:#F4DFEE; --floor:#4F7A5C; --floor-c:#DDEBDF; --calm:#5C6BA0; --calm-c:#E4E6F6; --str:#9A5B13; --str-c:#F7E4C8;
+  --stand:#B4572E; --stand-c:#FBE0D3; --balance:#8E4A7A; --balance-c:#F4DFEE; --floor:#4F7A5C; --floor-c:#DDEBDF; --calm:#5C6BA0; --calm-c:#E4E6F6;
   --work:#A8456A; --rest:#5C6BA0; --prep:#7A6A6C; --setrest:#4A2240; --alert:#C2603D;
   --fig:#2A1D1F; --fig-far:#A8969A;
   --title:"Eczar","Plus Jakarta Sans",system-ui,sans-serif; --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -40,7 +40,7 @@
   --surface:#1A1416; --on-surface:#F0E4E4; --on-surface-variant:#C4B2B3; --outline:#8E7D7F; --outline-variant:#3B3033;
   --sc-lowest:#151012; --sc-low:#1F181A; --sc:#241C1F; --sc-high:#2C2326; --sc-highest:#362C2F;
   --inverse-surface:#F0E4E4; --inverse-on-surface:#2A1F21;
-  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B; --str:#EDC08A; --str-c:#3B2E1E;
+  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B;
   --work:#F4AFC2; --rest:#B9C0EE; --prep:#C4B2B3; --setrest:#B9C0EE; --alert:#F5A08A;
   --fig:#F0E4E4; --fig-far:#7A6A6C;
   --qbg:linear-gradient(160deg,#4A2434,#2E1B24); --qgo:#F4AFC2; --qgo-on:#4F1028; color-scheme:dark }}
@@ -51,7 +51,7 @@
   --surface:#1A1416; --on-surface:#F0E4E4; --on-surface-variant:#C4B2B3; --outline:#8E7D7F; --outline-variant:#3B3033;
   --sc-lowest:#151012; --sc-low:#1F181A; --sc:#241C1F; --sc-high:#2C2326; --sc-highest:#362C2F;
   --inverse-surface:#F0E4E4; --inverse-on-surface:#2A1F21;
-  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B; --str:#EDC08A; --str-c:#3B2E1E;
+  --stand:#F2A98A; --stand-c:#3D2A22; --balance:#E3A9D3; --balance-c:#3A2836; --floor:#A8CFB2; --floor-c:#24302A; --calm:#B9C0EE; --calm-c:#282B3B;
   --work:#F4AFC2; --rest:#B9C0EE; --prep:#C4B2B3; --setrest:#B9C0EE; --alert:#F5A08A;
   --fig:#F0E4E4; --fig-far:#7A6A6C;
   --qbg:linear-gradient(160deg,#4A2434,#2E1B24); --qgo:#F4AFC2; --qgo-on:#4F1028; color-scheme:dark }
@@ -700,8 +700,7 @@ const CATS = [
   {id:"stand",icon:"accessibility_new",name:"Standing",blurb:"Grounding poses and warm flows",preset:"yoga"},
   {id:"balance",icon:"self_improvement",name:"Balance & core",blurb:"Steady focus and inner strength",preset:"tabata"},
   {id:"floor",icon:"spa",name:"Floor & stretch",blurb:"Open hips, spine and hamstrings",preset:"p4515"},
-  {id:"calm",icon:"bedtime",name:"Restore",blurb:"Slow down, breathe and let go",preset:"double"},
-  {id:"str",icon:"fitness_center",name:"Strength",blurb:"Bodyweight arms and back",preset:"p4515"}
+  {id:"calm",icon:"bedtime",name:"Restore",blurb:"Slow down, breathe and let go",preset:"double"}
 ];
 const UP = P(S,{h:[50,16],le:[52,14],lh:[54,3],re:[51,14],rh:[52,3]});
 const DD = {h:[61,85],n:[56,77],p:[36,58],le:[65,85],lh:[74,93],re:[64,85],rh:[73,93],lk:[26,76],lf:[16,93],rk:[25,76],rf:[15,93]};
@@ -833,17 +832,6 @@ const EX = [
 {id:"neck",cat:"calm",name:"Neck Release",dur:6,level:"Easy",focus:"Neck, upper traps",
   frames:[P(F,{h:[43,19]}),P(F,{h:[43,19]}),P(F,{h:[57,19]}),P(F,{h:[57,19]})],
   steps:["Stand or sit tall with shoulders relaxed.","Tilt your ear toward one shoulder and hold.","Slowly switch to the other side."],cue:"Let your shoulders drop away from your ears."},
- // Strength
- {id:"tabledips",cat:"str",name:"Table Dips",dur:2.4,level:"Medium",focus:"Triceps, shoulders, chest",
-  props:[["rect",{x:12,y:70,width:30,height:4,rx:1,"stroke-width":2}],["line",{x1:16,y1:74,x2:16,y2:96,"stroke-width":2}],["line",{x1:38,y1:74,x2:38,y2:96,"stroke-width":2}]],
-  frames:[{h:[48,37],n:[45,46],p:[50,73],le:[43,58],lh:[40,69],re:[42,58],rh:[39,69],lk:[67,82.5],lf:[84,94],rk:[66,82.5],rf:[83,94]},
-          {h:[45,49],n:[42,58],p:[45,85],le:[31,58],lh:[40,69],re:[30,58],rh:[39,69],lk:[64.5,88.8],lf:[84,94],rk:[63.5,88.8],rf:[83,94]}],
-  steps:["Sit on the edge of a sturdy table or chair, hands next to your hips, fingers forward.","Slide your hips off and walk your feet out until your legs are straight, heels on the floor.","Bend your elbows to lower your hips, then press back up through your palms."],cue:"Keep your back close to the edge. Bend your knees to make it easier."},
- {id:"pullup",cat:"str",name:"Pull-ups",dur:2.6,level:"Hard",focus:"Back, biceps, grip",
-  props:[["line",{x1:20,y1:12,x2:80,y2:12,"stroke-width":3}],["line",{x1:20,y1:2,x2:20,y2:12,"stroke-width":2}],["line",{x1:80,y1:2,x2:80,y2:12,"stroke-width":2}]],
-  frames:[{h:[50,27],n:[50,36],p:[50,64],le:[43,24],lh:[37,12],re:[57,24],rh:[63,12],lk:[48,79],lf:[47,93],rk:[52,79],rf:[53,93]},
-          {h:[50,6],n:[50,17],p:[50,45],le:[36,21],lh:[37,12],re:[64,21],rh:[63,12],lk:[48,64],lf:[47,81],rk:[52,64],rf:[53,81]}],
-  steps:["Hang from a bar with hands a bit wider than your shoulders.","Pull your chest toward the bar until your chin is over it.","Lower all the way down with control."],cue:"No bar? Do slow negatives or use a resistance band."},
 ];
 const byId = Object.fromEntries(EX.map(e=>[e.id,e]));
 const catOf = id => CATS.find(c=>c.id===id);
@@ -861,7 +849,7 @@ let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle"
 /* Exercises drawn facing the viewer; all others are side views facing right.
    Add every new front-facing pose here: the realistic style uses this to place shoulders and hips apart,
    draw both arms and legs beside the body, and hang free arms straight. Side-view poses need nothing extra. */
-const FRONT = new Set(["doorway","neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy","pullup"]);
+const FRONT = new Set(["doorway","neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
 /* Doodle style colors: warm ink, tan skin, and soft washes (rose top, lavender leggings) printed slightly off the lines. */
@@ -2464,7 +2452,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.3.4";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){

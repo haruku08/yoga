@@ -16,8 +16,6 @@ const ONLY = args[0] ? args[0].split(",") : null;
 /* Deliberate exceptions, per exercise and check, each with a reason. */
 const ALLOW = {
   "sunsal:slide": "The flow is shortened: going from the fold into the lunge, hands and feet move forward in one beat. Planting them would push the plank off the edge of the picture.",
-  "pullup:float": "Hangs from the bar.",
-  "tabledips:balance": "The hands on the table carry most of the weight; the heels only rest on the floor.",
   "pigeon:slide": "The hands walk forward to fold down and walk back to sit up; each step lifts the hand.",
 };
 
