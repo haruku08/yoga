@@ -2049,7 +2049,9 @@ function logWorkout(done){
   const planned=sch.filter(p=>p.type==="work").reduce((a,p)=>a+p.dur,0);
   if(t.w<Math.min(60,planned/2)) return;
   const ids=[...new Set(sch.filter(p=>p.type==="work"&&p.ex).map(p=>p.ex))];
-  const wo=WORKOUTS.find(w=>w.moves.length===playlist.length&&w.moves.every((m,i)=>m===playlist[i]));
+  // Name the entry after the routine: your own routine first (the one you started, or one with the same poses), then a ready-made one.
+  const same=w=>w.moves.length===playlist.length&&w.moves.every((m,i)=>m===playlist[i]);
+  const wo=(activeMy&&myWos.find(w=>w.id===activeMy))||myWos.find(same)||WORKOUTS.find(same);
   const rounds=t.rounds;
   workLog.unshift({at:Date.now(), name:freeMode?"Timer only":(wo?wo.name:"Custom practice"), moves:freeMode?[]:ids.map(id=>byId[id]?byId[id].name:id),
     work:t.w, total:t.all, rounds, done});
@@ -2485,7 +2487,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.4.1";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
