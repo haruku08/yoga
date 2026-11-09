@@ -402,6 +402,7 @@ main .wrap{padding-block:8px 32px}
 .rt-list .icon-btn{width:36px;height:36px}
 .rt-list .icon-btn .ms{font-size:20px}
 .rt-list .icon-btn:disabled{opacity:.3}
+.rt-clear{display:flex;justify-content:flex-end;margin-top:4px}
 .plist li.drop{box-shadow:0 -3px 0 var(--primary)}
 .plist li.drop-end{box-shadow:0 3px 0 var(--primary)}
 .plist li.dragging{opacity:.35}
@@ -641,6 +642,7 @@ main .wrap{padding-block:8px 32px}
     <div class="rt-label"><b>2</b>Moves in one set</div>
     <p class="rt-help">Tap a move below to add it, or hold it and drag it into place. Drag the handles to reorder.</p>
     <ol class="rt-list" id="rt-list"></ol>
+    <div class="rt-clear"><button class="text-btn sl" id="rt-clear"><span class="ms">delete</span>Clear all poses</button></div>
     <div class="search pal-search"><span class="ms">search</span><input id="pal-q" type="search" placeholder="Find a move" autocomplete="off" aria-label="Find a move"></div>
     <div class="pal-chips" id="pal-chips"></div>
     <div class="pal" id="pal"></div>
@@ -703,9 +705,11 @@ const SKATE = shift({h:[44,22],n:[46,31],p:[50,58],le:[40,37],lh:[32,31],re:[46,
 const ALL4 = {h:[78,66],n:[70,70],p:[40,70],c:[55,70],le:[70,82],lh:[70,93],re:[69,82],rh:[69,93],lk:[40,92],lf:[22,93],rk:[39,92],rf:[21,93]};
 const SIDEL = P(F,{n:[46,27],h:[41,19],c:[49,40],le:[39,17],lh:[30,10],re:[47,13],rh:[38,5]});
 const ARMX = P(F,{re:[42,35],rh:[30,33],le:[40,42],lh:[43,35]});
-const W1 = {h:[53,22],n:[50,31],p:[50,60],le:[36,31],lh:[22,31],re:[64,31],rh:[78,31],lk:[38,77],lf:[26,94],rk:[65,72],rf:[68,94]};
+/* Warrior II, facing the viewer: wide stance, front knee bent right over the ankle (thigh close to level),
+   back leg straight, torso upright over the hips, arms level at shoulder height, gaze over the front hand. */
+const W1 = {h:[49,25],n:[50,35],p:[50,62],le:[36,35],lh:[22,35],re:[64,35],rh:[78,35],lk:[29,74],lf:[27,94],rk:[65,78],rf:[77,94]};
 const TREE1 = P(F,{lk:[49,74],lf:[49,94],rk:[65,63],rf:[52,70],le:[41,40],lh:[49,37],re:[59,40],rh:[51,37]});
-const SIT = {h:[50,51],n:[50,60],p:[50,88],le:[42,73],lh:[47,88],re:[58,73],rh:[53,88],lk:[32,82],lf:[47,92],rk:[68,82],rf:[53,92]};
+const SIT = {h:[50,51],n:[50,60],p:[50,88],le:[44,74],lh:[47,88],re:[56,74],rh:[53,88],lk:[32,82],lf:[47,92],rk:[68,82],rf:[53,92]};
 
 const CATS = [
   {id:"stand",icon:"accessibility_new",name:"Standing",blurb:"Grounding poses and warm flows",preset:"yoga"},
@@ -716,21 +720,21 @@ const CATS = [
 const UP = P(S,{h:[50,16],le:[52,14],lh:[54,3],re:[51,14],rh:[52,3]});
 const DD = {h:[61,85],n:[56,77],p:[36,58],le:[65,85],lh:[74,93],re:[64,85],rh:[73,93],lk:[26,76],lf:[16,93],rk:[25,76],rf:[15,93]};
 const FOLD = {h:[61,86],n:[60,77],p:[44,54],c:[56,62],le:[57,85],lh:[54,93],re:[56,85],rh:[53,93],lk:[47,74],lf:[50,94],rk:[46,74],rf:[49,94]};
-const LUNGEH = {h:[72,68],n:[64,72],p:[44,72],c:[54,70],le:[66,82],lh:[68,93],re:[65,82],rh:[67,93],lk:[62,78],lf:[61,94],rk:[30,84],rf:[16,92]};
+const LUNGEH = {h:[72,68],n:[64,72],p:[44,72],c:[54,70],le:[67,82],lh:[70,93],re:[66,82],rh:[69,93],lk:[62,78],lf:[61,94],rk:[30,84],rf:[16,92]};
 const COBRA = {h:[71,66],n:[64,72],p:[44,90],c:[56,86],le:[66,82],lh:[70,92],re:[65,82],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]};
 const W1Y = {h:[52,22],n:[51,32],p:[50,60],le:[52,19],lh:[53,6],re:[51,19],rh:[52,6],lk:[66,74],lf:[67,94],rk:[38,76],rf:[26,93]};
 const TRI = {h:[21,32],n:[29,38],p:[50,56],le:[27,52],lh:[26,65],re:[30,24],rh:[31,11],lk:[38,75],lf:[30,94],rk:[62,75],rf:[71,94]};
 const GOD = {h:[50,24],n:[50,34],p:[50,62],le:[37,34],lh:[37,22],re:[63,34],rh:[63,22],lk:[32,72],lf:[34,94],rk:[68,72],rf:[66,94]};
 const DANCER = {h:[61,21],n:[57,30],p:[48,54],le:[69,24],lh:[80,17],re:[46,40],rh:[38,48],lk:[49,74],lf:[49,94],rk:[34,68],rf:[38,48]};
-const W3 = {h:[81,50],n:[71,52],p:[44,55],c:[57,54],le:[84,52],lh:[96,51],re:[83,53],rh:[95,52],lk:[45,75],lf:[45,94],rk:[24,55],rf:[6,56]};
-const BOAT = {h:[29,57],n:[33,66],p:[45,90],c:[38,79],le:[46,68],lh:[59,69],re:[45,69],rh:[58,70],lk:[62,72],lf:[78,56],rk:[61,73],rf:[77,57]};
+const W3 = {h:[81,50],n:[71,52],p:[44,55],c:[57,54],le:[84,52],lh:[96,51],re:[83,53],rh:[95,52],lk:[46,75],lf:[47,94],rk:[24,55],rf:[6,56]};
+const BOAT = {h:[29,57],n:[33,66],p:[45,90],c:[38,79],le:[46,68],lh:[59,69],re:[45,69],rh:[58,70],lk:[60,73],lf:[76,58],rk:[59,74],rf:[75,59]};
 const PIGEON = {h:[51,50],n:[49,60],p:[46,86],le:[53,74],lh:[56,88],re:[52,74],rh:[55,88],lk:[64,91],lf:[50,93],rk:[27,90],rf:[8,92]};
 const SFOLD = {h:[66,80],n:[58,76],p:[36,90],c:[44,80],le:[66,84],lh:[76,88],re:[65,85],rh:[75,89],lk:[56,91],lf:[76,92],rk:[55,91],rf:[75,92]};
 const CHILD = {h:[71,88],n:[62,84],p:[38,82],c:[50,75],le:[74,90],lh:[88,92],re:[73,90],rh:[87,92],lk:[56,92],lf:[38,93],rk:[55,92],rf:[37,93]};
 const BABY = {h:[18,88],n:[27,89],p:[52,89],le:[34,78],lh:[41,66],re:[35,79],rh:[42,67],lk:[40,74],lf:[44,56],rk:[41,75],rf:[45,57]};
 const WALL = {h:[30,88],n:[40,89],p:[66,90],le:[49,91],lh:[58,92],re:[50,91],rh:[59,92],lk:[67,70],lf:[67,50],rk:[68,70],rf:[68,50]};
 const SAVA = {h:[14,88],n:[23,89],p:[50,90],le:[32,92],lh:[41,93],re:[33,92],rh:[42,93],lk:[70,91],lf:[88,92],rk:[70,92],rf:[88,93]};
-const EASY = {h:[50,51],n:[50,60],p:[50,86],le:[38,72],lh:[34,84],re:[62,72],rh:[66,84],lk:[32,86],lf:[56,92],rk:[68,86],rf:[44,92]};
+const EASY = {h:[50,51],n:[50,60],p:[50,86],le:[39,72],lh:[34,84],re:[61,72],rh:[66,84],lk:[32,87],lf:[51,93],rk:[68,87],rf:[49,93]};
 const breathe = (q,d)=>P(q,{h:[q.h[0],q.h[1]-(d||1)],n:[q.n[0],q.n[1]-(d||1)]});
 
 const EX = [
@@ -739,16 +743,16 @@ const EX = [
   frames:[S,S,UP,UP],
   steps:["Stand tall with feet hip-width and arms by your sides.","Breathe in and sweep your arms up overhead.","Breathe out and lower your arms. Repeat with your breath."],cue:"Root down through your feet as you reach up."},
  {id:"sunsal",cat:"stand",name:"Sun Salutation",dur:20,level:"Medium",focus:"Full body, spine, breath",
-  frames:[S,UP,FOLD,LUNGEH,YPLANK,COBRA,DD,DD,LUNGEH,FOLD,UP,S],
+  frames:[S,UP,FOLD,LUNGEH,P(YPLANK,{le:[71,80],lh:[70,93],re:[70,80],rh:[69,93]}),COBRA,shift(DD,-4),shift(DD,-4),LUNGEH,FOLD,UP,S],
   steps:["Reach up, then fold forward.","Step back to a low lunge, then plank. Lower and lift into cobra.","Push back to down dog, step forward, fold, and rise back up."],cue:"Let one breath lead each movement."},
 {id:"chair",cat:"stand",name:"Chair Pose",dur:5,level:"Medium",focus:"Thighs, glutes, shoulders",
-  frames:[P(S,{le:[52,13],lh:[54,1],re:[51,13],rh:[52,1]}),{h:[57,34],n:[53,42],p:[37,66],le:[60,29],lh:[66,16],re:[59,30],rh:[65,17],lk:[55,74],lf:[51,94],rk:[54,75],rf:[50,94]},{h:[57,35],n:[53,43],p:[37,67],le:[60,30],lh:[66,17],re:[59,31],rh:[65,18],lk:[55,75],lf:[51,94],rk:[54,76],rf:[50,94]}],
+  frames:[P(S,{le:[52,13],lh:[54,1],re:[51,13],rh:[52,1]}),{h:[57,34],n:[53,42],p:[37,66],le:[60,29],lh:[66,16],re:[59,30],rh:[65,17],lk:[55,74],lf:[51,94],rk:[53,75],rf:[48,94]},{h:[57,35],n:[53,43],p:[37,67],le:[60,30],lh:[66,17],re:[59,31],rh:[65,18],lk:[55,75],lf:[51,94],rk:[53,76],rf:[48,94]}],
   steps:["Stand with feet together and arms overhead.","Bend your knees and sit back as if into a chair.","Hold and breathe, then rise up."],cue:"Weight in your heels. You should see your toes."},
  {id:"warrior1",cat:"stand",name:"Warrior I",dur:6,level:"Medium",focus:"Legs, hips, shoulders",
   frames:[W1Y,P(W1Y,{p:[50,62],n:[51,34],h:[52,24],le:[52,21],lh:[53,8],re:[51,21],rh:[52,8],lk:[66,75],rk:[38,77]})],
   steps:["Step one foot back and turn it out slightly.","Bend your front knee over the ankle and square your hips forward.","Reach both arms up and lift your chest."],cue:"Press the outer edge of your back foot into the floor."},
 {id:"warrior2",cat:"stand",name:"Warrior II",dur:5,level:"Easy",focus:"Legs, hips, shoulders",
-  frames:[W1,P(W1,{p:[50,62],n:[50,33],h:[53,24],le:[36,33],lh:[22,33],re:[64,33],rh:[78,33],rk:[65,74],lk:[38,78]})],
+  frames:[W1,P(W1,{h:[49,27],n:[50,37],p:[50,65],le:[36,37],lh:[22,37],re:[64,37],rh:[78,37],lk:[29,76],rk:[65,80]})],
   steps:["Step your feet wide apart.","Turn your front foot out and bend that knee over the ankle.","Reach your arms out long and look past your front hand."],cue:"Sink your hips while your arms stay strong."},
  {id:"triangle",cat:"stand",name:"Triangle",dur:6,level:"Medium",focus:"Hamstrings, side body, hips",
   frames:[TRI,P(TRI,{re:[30,23],rh:[31,10]})],
@@ -760,15 +764,15 @@ const EX = [
   frames:[S,FOLD,P(FOLD,{h:[61,87],n:[60,78],le:[57,86],re:[56,86]})],
   steps:["Stand tall, feet hip-width.","Hinge at the hips and fold forward.","Let your head and arms hang. Bend your knees if you need to."],cue:"Breathe out as you sink a little deeper."},
 {id:"lowlunge",cat:"stand",name:"Low Lunge",dur:6,level:"Easy",focus:"Hip flexors, quads",
-  frames:[{h:[48,36],n:[47,45],p:[45,71],le:[53,57],lh:[61,66],re:[52,58],rh:[60,67],lk:[64,72],lf:[65,94],rk:[33,92],rf:[17,94]},
-          {h:[52,33],n:[51,42],p:[50,73],le:[53,30],lh:[54,19],re:[52,30],rh:[53,19],lk:[66,72],lf:[65,94],rk:[34,92],rf:[18,94]}],
+  frames:[{h:[48,36],n:[47,45],p:[45,71],le:[53,57],lh:[61,66],re:[52,58],rh:[60,67],lk:[64,72],lf:[65,94],rk:[36,91],rf:[18,94]},
+          {h:[52,33],n:[51,42],p:[50,73],le:[53,30],lh:[54,19],re:[52,30],rh:[53,19],lk:[66,72],lf:[65,94],rk:[36,91],rf:[18,94]}],
   steps:["Step into a lunge and lower your back knee with the other foot flat in front of you.","Tuck your pelvis and gently push your hips forward.","Reach your arms up for a crescent shape. Switch sides each round."],cue:"Keep your front knee over your ankle, not past your toes."},
 {id:"doorway",cat:"stand",name:"Doorway Chest Opener",dur:6,level:"Easy",focus:"Chest, front shoulders",
   props:[["path",{d:"M30 96V5H70V96","stroke-width":3}]],
   frames:[P(F,{le:[33,27],lh:[32,13],re:[67,27],rh:[68,13]}),P(F,{h:[50,15],n:[50,25],le:[33,26],lh:[32,12],re:[67,26],rh:[68,12],rk:[54,73],rf:[55,94]})],
   steps:["Stand in a doorway and lift your arms out to the sides, elbows bent at shoulder height.","Rest your forearms on the door frame.","Step one foot forward and lean gently until you feel a stretch across your chest."],cue:"Keep your ribs soft and your neck relaxed."},
 {id:"crescent",cat:"stand",name:"Standing Crescent Moon",dur:7,level:"Easy",focus:"Obliques, lats",
-  frames:[SIDEL,SIDEL,mirror(SIDEL),mirror(SIDEL)],
+  frames:[SIDEL,SIDEL,P(mirror(SIDEL),{lk:F.lk,lf:F.lf,rk:F.rk,rf:F.rf}),P(mirror(SIDEL),{lk:F.lk,lf:F.lf,rk:F.rk,rf:F.rf})],
   steps:["Stand with feet hip-width apart.","Reach both arms overhead.","Lean to one side, hold, then lean to the other."],cue:"Reach long rather than collapsing sideways."},
  // Balance & core
 {id:"tree",cat:"balance",name:"Tree Pose",dur:7,level:"Medium",focus:"Balance, ankles, core",
@@ -791,7 +795,7 @@ const EX = [
   frames:[DD,P(DD,{p:[36,56],lk:[27,75],rk:[26,75]})],
   steps:["Start on hands and knees.","Tuck your toes and lift your hips up and back.","Press your heels toward the floor and let your head relax."],cue:"Bend your knees a little if your back rounds."},
 {id:"catcow",cat:"floor",name:"Cat-Cow",dur:5,level:"Easy",focus:"Spine, back, neck",
-  frames:[P(ALL4,{c:[55,55],h:[74,80],n:[69,72]}),P(ALL4,{c:[55,82],h:[80,60],n:[70,68]})],
+  frames:[P(ALL4,{c:[55,55],h:[74,80],n:[69,72]}),P(ALL4,{c:[55,82],h:[78,60],n:[70,68]})],
   steps:["Come to hands and knees.","Breathe in: drop your belly and lift your head (cow).","Breathe out: round your back and tuck your chin (cat)."],cue:"Move slowly, one breath per movement."},
 {id:"cobra",cat:"floor",name:"Cobra",dur:6,level:"Easy",focus:"Lower back, chest",
   frames:[{h:[78,88],n:[68,90],p:[44,90],c:[56,91],le:[62,83],lh:[70,92],re:[61,83],rh:[69,92],lk:[30,92],lf:[16,93],rk:[30,92],rf:[16,93]},
@@ -817,11 +821,11 @@ const EX = [
   steps:["Sit with the soles of your feet together.","Hold your feet and sit up tall.","Gently flutter your knees, or hold them low."],cue:"Lengthen your spine before you lean forward."},
 {id:"twist",cat:"floor",name:"Seated Twist",dur:6,level:"Easy",focus:"Spine, lower back, glutes",
   frames:[{h:[43,55],n:[42,64],p:[40,90],le:[50,74],lh:[57,77],re:[49,75],rh:[56,79],lk:[55,73],lf:[57,92],rk:[58,91],rf:[77,92]},
-          {h:[40,55],n:[41,64],p:[40,90],le:[52,71],lh:[60,67],re:[33,76],rh:[25,90],lk:[55,73],lf:[57,92],rk:[58,91],rf:[77,92]}],
+          {h:[40,55],n:[41,64],p:[40,90],le:[52,71],lh:[60,67],re:[33,76],rh:[26,89],lk:[55,73],lf:[57,92],rk:[58,91],rf:[77,92]}],
   steps:["Sit tall with one leg straight and the other knee bent, foot outside the straight leg.","Hug the bent knee with the opposite arm and place your other hand behind you.","Twist toward the bent knee as you breathe out. Switch sides each round."],cue:"Grow tall on every breath in, twist a little more on every breath out."},
 {id:"frog",cat:"floor",name:"Frog Pose",dur:6,level:"Medium",focus:"Inner thighs, hips, groin",
   frames:[{h:[75,80],n:[67,80],p:[45,74],c:[56,76],le:[65,92],lh:[78,93],re:[64,92],rh:[77,93],lk:[44,93],lf:[38,94],rk:[45,93],rf:[39,94]},
-          {h:[71,83],n:[63,82],p:[37,77],c:[50,79],le:[63,92],lh:[76,93],re:[62,92],rh:[75,93],lk:[44,93],lf:[38,94],rk:[45,93],rf:[39,94]}],
+          {h:[71,83],n:[63,82],p:[37,77],c:[50,79],le:[65,92],lh:[78,93],re:[64,92],rh:[77,93],lk:[44,93],lf:[38,94],rk:[45,93],rf:[39,94]}],
   steps:["Start on your forearms and knees.","Slide your knees wide apart, ankles in line with your knees.","Slowly rock your hips back and hold where you feel the stretch."],cue:"Go easy. Pad your knees with a towel."},
  // Restore
  {id:"child",cat:"calm",name:"Child's Pose",dur:8,level:"Easy",focus:"Back, hips, calm",
@@ -857,7 +861,9 @@ const figures = new Set();
 
 function mk(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 let figStyle = (()=>{ try{ const v=JSON.parse(localStorage.getItem("hy:figStyle")); return ["doodle","char","toon","stick"].includes(v)?v:"doodle"; }catch(e){ return "doodle"; } })();
-/* Exercises drawn facing the viewer; all others are side views facing right. */
+/* Exercises drawn facing the viewer; all others are side views facing right.
+   Add every new front-facing pose here: the realistic style uses this to place shoulders and hips apart,
+   draw both arms and legs beside the body, and hang free arms straight. Side-view poses need nothing extra. */
 const FRONT = new Set(["doorway","neck","crescent","butterfly","warrior2","tree","triangle","goddess","easy"]);
 const CH = {skin:"#C68E68", skinFar:"#B07A55", skinLine:"#7A4A30", skinHi:"#D8A47E", shirt:"#E0708A", shirtFar:"#C85A74", shirtLine:"#8E2F48", shorts:"#5A3260", shortsFar:"#45254A", shortsLine:"#26122A", hair:"#3B2418", hairLine:"#1E1009", feat:"#2A160C", lip:"#B4485E"};
 const TO = {skin:"#CC9470", skinFar:"#B57D5A", line:"#3A2418", shirt:"#EE8299", shirtFar:"#D2667F", shorts:"#6A3C70", shortsFar:"#523056", hair:"#3B2418", eye:"#2A1810", cheek:"#F08C94", mouth:"#B4485E"};
@@ -893,20 +899,21 @@ class Figure{
     const limb=(far,leg)=>{
       // legs wear full-length leggings, arms are bare (tank top), feet are bare for the mat
       const sk=far?CH.skinFar:CH.skin, lg=far?CH.shortsFar:CH.shorts, o={leg};
-      if(leg){ o.footOut=P({stroke:CH.skinLine,"stroke-width":3.6}); o.foot=P({stroke:sk,"stroke-width":2.5}); }
+      if(leg) o.foot=F({fill:sk,stroke:CH.skinLine,"stroke-width":.7});
       o.low=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
       o.up=F({fill:leg?lg:sk,stroke:leg?CH.shortsLine:CH.skinLine,"stroke-width":.7});
       o.hi=P({stroke:leg?"#8A5C90":CH.skinHi,"stroke-width":.9,opacity:far?0:(leg?.5:.8)});
       o.cloth=F({fill:leg?lg:"none",stroke:"none"});
-      if(!leg) o.hand=E({rx:2.1,ry:2.4,fill:sk,stroke:CH.skinLine,"stroke-width":.8});
+      if(!leg) o.hand=F({fill:sk,stroke:CH.skinLine,"stroke-width":.7});
       return o;
     };
     this.c={farArm:limb(true,false),farLeg:limb(true,true)};
-    this.c.neck=P({stroke:CH.skin,"stroke-width":4.4});
+    this.c.neck=P({stroke:CH.skin,"stroke-width":3.9});
     this.c.torso=F({fill:CH.shirt,stroke:CH.shirtLine,"stroke-width":.9});
+    this.c.chest=F({fill:CH.skin,stroke:CH.skinLine,"stroke-width":.6});
     this.c.shorts=F({fill:CH.shorts,stroke:CH.shortsLine,"stroke-width":.9});
     this.c.nearLeg=limb(false,true); this.c.nearArm=limb(false,false);
-    this.c.bun=C({r:3.2,fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
+    this.c.bun=C({r:2.8,fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
     this.c.hair=E({fill:CH.hair,stroke:CH.hairLine,"stroke-width":.8});
     this.c.face=E({fill:CH.skin,stroke:CH.skinLine,"stroke-width":.8});
     this.c.ear=E({rx:1.3,ry:1.9,fill:CH.skinFar,stroke:CH.skinLine,"stroke-width":.6});
@@ -1001,9 +1008,10 @@ class Figure{
       } else o.hand.setAttribute("d",ring(e,1.4,s));
     };
     // Facing the viewer, arms hang from two shoulders and legs from two hips, not from one point as in a side view.
-    const side=front?(()=>{ const pp=perp(unit(sub(q.n,q.p))); return pp[0]<0?[-pp[0],-pp[1]]:pp; })():[0,0];
-    const shL=add(q.n,side,-3.9), shR=add(q.n,side,3.9), hpL=add(q.p,side,-3), hpR=add(q.p,side,3);
-    limb(D.farArm,front?shR:q.n,q.re,q.rh,-1); limb(D.farLeg,front?hpR:q.p,q.rk,q.rf,1);
+    // Same skeleton as the realistic style: facing the viewer, arms hang from two shoulders and legs from two hips,
+    // re-solved so hands and feet land where the pose puts them.
+    const J=this.solveJoints(q,c), {shL,shR,hpL,hpR}=J; this.joints=J;
+    limb(D.farArm,shR,J.re,J.rh,-1); limb(D.farLeg,hpR,J.rk,J.rf,1);
     const top=lerp(q.n,c,.1);
     // hourglass: a narrow bare waist between a crop top and wide high-waisted leggings
     D.body.ink.setAttribute("stroke-width",front?10.4:6.9); D.body.fill.setAttribute("stroke-width",front?8.9:5.4);
@@ -1014,7 +1022,7 @@ class Figure{
     const ql=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
     setP(D.chest,`M${f(ql(.55))}Q${f(ql(.8))} ${f(top)}`);
     setP(D.shorts,`M${f(add(q.p,unit(sub(q.p,c)),.5))}L${f(ql(.3))}`);
-    limb(D.nearLeg,front?hpL:q.p,q.lk,q.lf,1); limb(D.nearArm,front?shL:q.n,q.le,q.lh,1);
+    limb(D.nearLeg,hpL,J.lk,J.lf,1); limb(D.nearArm,shL,J.le,J.lh,1);
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], H=add(q.n,ax,6.8), R=5.5;
     setP(D.neck,`M${f(q.n)}L${f(add(q.n,ax,2.4))}`);
     const dot=(p,r)=>`M${f(add(p,[-r,0]))}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
@@ -1101,74 +1109,196 @@ class Figure{
       at(T.cheek1,add(add(H,fd,2.6),ax,-2.2),1.5); at(T.cheek2,H,0);
     }
   }
-  drawChar(q,c){
-    const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set=(el,d)=>el.setAttribute("d",d), C=this.c;
+  /* Realistic style. The pose data is shared with the other styles, so anatomy is fixed up here only:
+     shoulders and hip joints sit apart from the spine in front views (limbs re-solved so hands and feet
+     still land where the pose puts them), the torso follows a real chest, waist and hip profile,
+     and hands and feet are full-size shapes that rest on the floor instead of sinking into it. */
+  /* Realistic anatomy, shared by the realistic and doodle styles. Facing the viewer, the shoulders and hip joints
+     sit apart from the spine, and the limbs are re-solved from there so hands and feet still land where the pose puts them;
+     arms hanging free by the sides fall straight. Side views keep the pose as it is. */
+  solveJoints(q,c){
     const front=FRONT.has(this.ex.id);
     const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
     const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
-    const qb=(t)=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
-    // tapered segment with a muscle bulge: half-widths at start, bulge (at tm) and end, rounded ends
-    const seg=(A,B,wa,wm,wb,tm,side)=>{
-      const d=unit(sub(B,A)), n=perp(d), M=lerp(A,B,tm), s2=side||1;
-      return `M${f(add(A,n,wa))}Q${f(add(M,n,wm*s2>0?wm*1.15:wm))} ${f(add(B,n,wb))}Q${f(add(B,d,wb*1.3))} ${f(add(B,n,-wb))}Q${f(add(M,n,-wm*1.15))} ${f(add(A,n,-wa))}Q${f(add(A,d,-wa*1.3))} ${f(add(A,n,wa))}Z`;
+    const len=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+    const ik=(A,T,l1,l2,near)=>{
+      const u=unit(sub(T,A)), R=l1+l2; let d=len(A,T);
+      if(d>=R*.999) return [add(A,u,l1),add(A,u,R)];
+      d=Math.max(d,Math.abs(l1-l2)+.01);
+      const a=(l1*l1-l2*l2+d*d)/(2*d), h=Math.sqrt(Math.max(0,l1*l1-a*a));
+      const E1=add(add(A,u,a),perp(u),h), E2=add(add(A,u,a),perp(u),-h);
+      return [len(E1,near)<=len(E2,near)?E1:E2,add(A,u,d)];
     };
-    // flat-ended cloth tube (sleeve / shorts leg)
-    const tube=(A,B,wa,wb)=>{const n=perp(unit(sub(B,A)));return `M${f(add(A,n,wa))}L${f(add(B,n,wb))}L${f(add(B,n,-wb))}L${f(add(A,n,-wa))}Z`;};
+    const qb=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    const tan=t=>{t=Math.max(0,Math.min(1,t));
+      const d=[2*(1-t)*(c[0]-q.p[0])+2*t*(q.n[0]-c[0]),2*(1-t)*(c[1]-q.p[1])+2*t*(q.n[1]-c[1])];
+      return Math.hypot(d[0],d[1])<.01?unit(sub(q.n,q.p)):unit(d)};
+    const Lt=len(q.n,q.p);
+    const B=t=>t>1?add(q.n,tan(1),(t-1)*Lt):t<0?add(q.p,tan(0),t*Lt):qb(t);
+    const N=t=>perp(tan(t)); // side views: toward the chest; front views: toward the viewer's right
+    const n0=N(.5), sideOf=(a1,a2,b1,b2)=>{const k=dot(sub(add(a1,a2),add(b1,b2)),n0);return k>.5?1:-1};
+    const J={}; // re-solved joints: shoulder/elbow/hand, hip/knee/foot
+    const arm=(e,h,side)=>{
+      const l1=len(q.n,q[e]), l2=len(q[e],q[h]);
+      if(!front){ J[e]=q[e]; J[h]=q[h]; return q.n; }
+      const S=add(B(.94),N(.94),6.2*side), off=sub(S,q.n);
+      const straight=dot(unit(sub(q[e],q.n)),unit(sub(q[h],q[e])))>.96;
+      // a straight arm moves out with its shoulder; a bent one mostly keeps its hand where the pose puts it
+      // arms hanging free by the sides (not reaching for the feet or floor) fall straight from the shoulder
+      const down=tan(.5), hanging=q[h][1]<84&&dot(unit(sub(q[e],q.n)),down)<-.8&&dot(unit(sub(q[h],q[e])),down)<-.8;
+      if(hanging){ const H=add(S,unit(add(sub(add(q[h],off,.6),S),down,-.1*(l1+l2))),l1+l2-1); J[h]=H; J[e]=lerp(S,H,l1/(l1+l2)); }
+      else if(straight){ const [E,H]=ik(S,add(q[h],off),l1,l2,add(q[e],off)); J[e]=E; J[h]=H; }
+      else { J[e]=add(q[e],off,.8); J[h]=add(q[h],off,.3); }
+      return S;
+    };
+    const leg=(k,ft,side)=>{
+      if(!front){ J[k]=q[k]; J[ft]=q[ft]; return q.p; }
+      // the pelvis tilts less than the torso (triangle, side bends), so blend its axis toward level
+      let hx=N(0); hx=unit(add(hx,[hx[0]<0?-1:1,0])); const Hp=add(q.p,hx,4.4*side);
+      // feet stay nearly planted; a straight leg stays straight, a bent knee moves out with its hip
+      const off=sub(Hp,q.p), Ft=add(q[ft],off,.2), l1=len(q.p,q[k]), l2=len(q[k],q[ft]);
+      const straight=dot(unit(sub(q[k],q.p)),unit(sub(q[ft],q[k])))>.96;
+      J[k]=straight?lerp(Hp,Ft,l1/(l1+l2)):add(q[k],off,.6); J[ft]=Ft; return Hp;
+    };
+    const sA=sideOf(q.le,q.le,q.re,q.re), sL=sideOf(q.lk,q.lf,q.rk,q.rf);
+    const shL=arm("le","lh",sA), shR=arm("re","rh",-sA), hpL=leg("lk","lf",sL), hpR=leg("rk","rf",-sL);
+    return Object.assign({shL,shR,hpL,hpR},J);
+  }
+  drawChar(q,c){
+    const f=v=>v[0].toFixed(1)+" "+v[1].toFixed(1), set=(el,d)=>el.setAttribute("d",d), C=this.c;
+    const front=FRONT.has(this.ex.id), GROUND=96.6;
+    const add=(a,b,k=1)=>[a[0]+b[0]*k,a[1]+b[1]*k], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+    const unit=v=>{const L=Math.hypot(v[0],v[1])||1;return [v[0]/L,v[1]/L]}, perp=v=>[-v[1],v[0]];
+    const len=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]), dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+    const rot=(v,a)=>{const cs=Math.cos(a),sn=Math.sin(a);return [v[0]*cs-v[1]*sn,v[0]*sn+v[1]*cs]};
+    // smooth path through points (Catmull-Rom as cubic Beziers); closed or open
+    const spline=(pts,closed)=>{
+      const n=pts.length, P=i=>closed?pts[(i+n)%n]:pts[Math.max(0,Math.min(n-1,i))];
+      let d=`M${f(pts[0])}`;
+      for(let i=0;i<(closed?n:n-1);i++){ const p0=P(i-1),p1=P(i),p2=P(i+1),p3=P(i+2);
+        d+=`C${f(add(p1,sub(p2,p0),1/6))} ${f(add(p2,sub(p3,p1),-1/6))} ${f(p2)}`; }
+      return closed?d+"Z":d;
+    };
+    const local=(o,u,v,pts)=>pts.map(([x,y])=>add(add(o,u,x),v,y));
+    // two-bone solve: root A reaching for T with bone lengths l1,l2, bending toward `near` (where the pose had the joint)
+    const ik=(A,T,l1,l2,near)=>{
+      const u=unit(sub(T,A)), R=l1+l2; let d=len(A,T);
+      if(d>=R*.999) return [add(A,u,l1),add(A,u,R)];
+      d=Math.max(d,Math.abs(l1-l2)+.01);
+      const a=(l1*l1-l2*l2+d*d)/(2*d), h=Math.sqrt(Math.max(0,l1*l1-a*a));
+      const E1=add(add(A,u,a),perp(u),h), E2=add(add(A,u,a),perp(u),-h);
+      return [len(E1,near)<=len(E2,near)?E1:E2,add(A,u,d)];
+    };
+    // spine: quadratic from hips (t=0) to shoulders (t=1), extended straight past both ends
+    const qb=t=>{const u=1-t;return [u*u*q.p[0]+2*u*t*c[0]+t*t*q.n[0], u*u*q.p[1]+2*u*t*c[1]+t*t*q.n[1]]};
+    const tan=t=>{t=Math.max(0,Math.min(1,t));
+      const d=[2*(1-t)*(c[0]-q.p[0])+2*t*(q.n[0]-c[0]),2*(1-t)*(c[1]-q.p[1])+2*t*(q.n[1]-c[1])];
+      return Math.hypot(d[0],d[1])<.01?unit(sub(q.n,q.p)):unit(d)};
+    const Lt=len(q.n,q.p);
+    const B=t=>t>1?add(q.n,tan(1),(t-1)*Lt):t<0?add(q.p,tan(0),t*Lt):qb(t);
+    const N=t=>perp(tan(t)); // side views: toward the chest; front views: toward the viewer's right
+    // body outline from a table of [t, width on + side, width on - side]
+    const body=(tab,lo,hi)=>{
+      const at=t=>{for(let i=0;i<tab.length-1;i++){const A=tab[i],Bb=tab[i+1];if(t<=A[0]&&t>=Bb[0]){const k=(A[0]-t)/(A[0]-Bb[0]||1);return [t,A[1]+(Bb[1]-A[1])*k,A[2]+(Bb[2]-A[2])*k];}}return tab[t>tab[0][0]?0:tab.length-1]};
+      const rows=[at(hi)].concat(tab.filter(r=>r[0]<hi&&r[0]>lo),[at(lo)]);
+      const pos=rows.map(r=>add(B(r[0]),N(r[0]),r[1])), neg=rows.map(r=>add(B(r[0]),N(r[0]),-r[2])).reverse();
+      return spline(pos,false)+"L"+spline(neg,false).slice(1)+"Z";
+    };
+    const TORSO=front
+      ? [[1.06,2.3,2.3],[1.0,4.6,4.6],[.95,7.4,7.4],[.84,6.8,6.8],[.7,6.1,6.1],[.52,5.0,5.0],[.34,5.6,5.6],[.15,7.4,7.4],[0,7.8,7.8],[-.12,6.6,6.6]]
+      : [[1.06,1.6,2.0],[.97,3.0,3.3],[.86,4.6,3.6],[.74,4.3,3.4],[.6,3.5,3.1],[.45,3.3,2.8],[.3,3.6,3.5],[.14,3.5,4.6],[0,3.2,4.5],[-.1,2.6,3.3]];
+    // which side the near (l) limbs are on in a front view, so mirrored poses still work
+    // (arms go by the elbows: a hand can reach across the body, as in a cross-body stretch)
+    const Jt=this.solveJoints(q,c), J=Jt, {shL,shR,hpL,hpR}=Jt;
+    this.joints=Jt; // the skeleton as drawn, for tools/check-figures.js
+    // rotate a shape's direction toward `goal` until no point dips below the floor
+    const grounded=(make,dir,goal)=>{
+      const a0=Math.atan2(dir[1],dir[0]); let da=Math.atan2(goal[1],goal[0])-a0;
+      while(da>Math.PI) da-=2*Math.PI; while(da<-Math.PI) da+=2*Math.PI;
+      let pts;
+      for(let i=0;i<=8;i++){ const a=a0+da*i/8; pts=make([Math.cos(a),Math.sin(a)]); if(Math.max(...pts.map(p=>p[1]))<=GROUND) break; }
+      const over=Math.max(...pts.map(p=>p[1]))-GROUND; // still through the floor: rest it on top
+      return over>0?pts.map(p=>[p[0],p[1]-over]):pts;
+    };
+    const HAND=[[0,1.0],[2.4,1.55],[4.6,1.4],[6.2,.4],[6.0,-.8],[4.4,-1.5],[2.2,-1.6],[0,-1.1]];
+    const FOOT=[[-1.5,-1.2],[-2.4,.9],[-1.6,2.5],[3,2.4],[6.6,2.2],[8.4,1.7],[8.2,.6],[4.5,-.3],[1.4,-1.5]];
+    const FOOT_FRONT=[[-1.2,-.8],[1.2,-.8],[1.9,1.3],[1.6,2.5],[-1.6,2.5],[-1.9,1.3]];
+    const handsMeet=len(J.lh,J.rh)<5;
+    // tapered segment with a muscle bulge: half-widths at start, bulge (at tm) and end, rounded ends
+    const seg=(A,Bp,wa,wm,wb,tm)=>{
+      const d=unit(sub(Bp,A)), n=perp(d), M=lerp(A,Bp,tm);
+      return `M${f(add(A,n,wa))}Q${f(add(M,n,wm*1.15))} ${f(add(Bp,n,wb))}Q${f(add(Bp,d,wb*1.3))} ${f(add(Bp,n,-wb))}Q${f(add(M,n,-wm*1.15))} ${f(add(A,n,-wa))}Q${f(add(A,d,-wa*1.3))} ${f(add(A,n,wa))}Z`;
+    };
+    const tube=(A,Bp,wa,wb)=>{const n=perp(unit(sub(Bp,A)));return `M${f(add(A,n,wa))}L${f(add(Bp,n,wb))}L${f(add(Bp,n,-wb))}L${f(add(A,n,-wa))}Z`;};
     const limb=(o,a,b,e)=>{
       if(o.leg){
-        set(o.up,seg(a,b,4.3,4.4,2.7,.35)); set(o.low,seg(b,e,2.6,2.9,1.6,.3));
-        set(o.cloth,tube(lerp(a,b,-.14),lerp(a,b,.3),5,4.6));
+        // thigh full at the hip, narrowing to the knee; calf swells just below the knee, slim ankle
+        set(o.up,seg(a,b,4.2,4.3,2.6,.3)); set(o.low,seg(b,e,2.5,2.9,1.3,.32));
+        // cloth patch hides the thigh's rounded top where it meets the shorts (taller when facing the viewer)
+        set(o.cloth,front?tube(lerp(a,b,-.3),lerp(a,b,.3),2.6,4.3):tube(lerp(a,b,-.12),lerp(a,b,.3),4.8,4.4));
         const dn=perp(unit(sub(e,b))); set(o.hi,`M${f(add(lerp(b,e,.12),dn,1.6))}L${f(add(lerp(b,e,.45),dn,1.9))}`);
+        const d=unit(sub(e,b));
+        if(front){ set(o.foot,spline(grounded(()=>local(e,[1,0],[0,1],FOOT_FRONT),[1,0],[1,0]),true)); return; }
+        let toe=[d[1],-d[0]]; if(toe[0]<0) toe=[-toe[0],-toe[1]];
+        // feet stand flat when the shin is upright, and point along the shin when it lies low (plank, prone)
+        const pts=grounded(t=>{let v=sub(d,t,dot(d,t)); v=Math.hypot(v[0],v[1])<.2?perp(t):unit(v); if(dot(v,d)<0) v=[-v[0],-v[1]]; return local(e,t,v,FOOT);},toe,Math.abs(d[1])>.7?[1,0]:d);
+        set(o.foot,spline(pts,true));
       } else {
-        set(o.up,seg(a,b,2.4,2.6,1.9,.4)); set(o.low,seg(b,e,1.9,2.1,1.3,.3));
+        // round deltoid cap, upper arm tapering to the elbow, forearm fuller near the elbow, slim wrist
+        set(o.up,seg(a,b,2.8,2.5,1.8,.3)); set(o.low,seg(b,e,1.9,2.0,1.1,.25));
         const dn=perp(unit(sub(b,a))); set(o.hi,`M${f(add(lerp(a,b,.3),dn,1.4))}L${f(add(lerp(a,b,.75),dn,1.3))}`);
+        let u=unit(sub(e,b));
+        if(handsMeet) u=tan(1); // palms together, fingers up
+        const pts=grounded(t=>local(add(e,t,-1.6),t,perp(t),HAND),u,[u[0]<0?-1:1,0]);
+        set(o.hand,spline(pts,true));
       }
-      if(o.leg){
-        const d=unit(sub(e,b)); let toe=front?[0,0]:[d[1],-d[0]];
-        if(!front && toe[0]<0) toe=[-toe[0],-toe[1]];
-        const h=front?add(e,[-.8,.8]):add(e,toe,-1), t=front?add(e,[.8,.8]):add(e,toe,4.2);
-        const sd=`M${f(h)}L${f(t)}`; set(o.footOut,sd); set(o.foot,sd);
-      } else { o.hand.setAttribute("cx",e[0].toFixed(1)); o.hand.setAttribute("cy",e[1].toFixed(1)); }
     };
-    limb(C.farArm,q.n,q.re,q.rh); limb(C.farLeg,q.p,q.rk,q.rf);
-    // torso: tapered shape along the spine, broader at the chest than the waist
-    const ws=front?7.4:5.2, wm=front?5.4:4.4, wh=front?7.6:5.8;
-    const tn=unit(sub(q.n,c)), tp=unit(sub(c,q.p)), tc=unit(sub(q.n,q.p));
-    const Nn=perp(tn), Np=perp(tp), Nc=perp(tc);
-    const chestN=lerp(q.n,c,.18);
-    set(C.torso,`M${f(add(chestN,Nn,ws))}Q${f(add(c,Nc,wm))} ${f(add(q.p,Np,wh))}L${f(add(q.p,Np,-wh))}Q${f(add(c,Nc,-wm))} ${f(add(chestN,Nn,-ws))}Q${f(add(q.n,tn,1.5))} ${f(add(chestN,Nn,ws))}Z`);
-    const w0=qb(.36), n0=perp(unit(sub(qb(.4),qb(.32))));
-    set(C.shorts,`M${f(add(w0,n0,wm+.4))}L${f(add(q.p,Np,wh+.8))}Q${f(add(q.p,tp,-3.5))} ${f(add(q.p,Np,-(wh+.8)))}L${f(add(w0,n0,-(wm+.4)))}Z`);
-    set(C.neck,`M${f(q.n)}L${f(lerp(q.n,q.h,.6))}`);
-    limb(C.nearLeg,q.p,q.lk,q.lf); limb(C.nearArm,q.n,q.le,q.lh);
-    // head: an oval along the neck-to-head axis
+    // facing the viewer, both legs come out from under the hips, so the second leg is drawn over the
+    // shorts in the same colors as the first; in side views it stays behind the body, shaded darker
+    if(this.chFront!==front){ this.chFront=front;
+      const L=C.farLeg, before=front?C.nearLeg.foot:C.neck, lg=front?CH.shorts:CH.shortsFar;
+      [L.foot,L.low,L.up,L.hi,L.cloth].forEach(el=>this.ch.insertBefore(el,before));
+      L.low.setAttribute("fill",lg); L.up.setAttribute("fill",lg); L.cloth.setAttribute("fill",lg);
+      L.foot.setAttribute("fill",front?CH.skin:CH.skinFar);
+      // same for the second arm: beside the body in the same skin tone when facing the viewer
+      const A=C.farArm, sk=front?CH.skin:CH.skinFar;
+      [A.low,A.up,A.hi,A.cloth,A.hand].forEach(el=>this.ch.insertBefore(el,front?C.nearArm.low:L.foot));
+      A.low.setAttribute("fill",sk); A.up.setAttribute("fill",sk); A.hand.setAttribute("fill",sk); A.hi.setAttribute("opacity",front?.8:0);
+    }
+    limb(C.farArm,shR,J.re,J.rh); limb(C.farLeg,hpR,J.rk,J.rf);
+    set(C.neck,`M${f(add(q.n,tan(1),-1))}L${f(lerp(q.n,q.h,.6))}`);
+    set(C.torso,body(TORSO,-.12,1.06));
+    set(C.shorts,body(TORSO.map(r=>[r[0],r[1]+.4,r[2]+.4]),-.12,.36));
+    // scoop neckline of the tank top (front view only)
+    if(front){ const t0=B(1.06), nl=N(1); set(C.chest,`M${f(add(t0,nl,-2.6))}Q${f(add(B(.86),nl,-3.4))} ${f(B(.86))}Q${f(add(B(.86),nl,3.4))} ${f(add(t0,nl,2.6))}Z`); }
+    else set(C.chest,"M0 0");
+    limb(C.nearLeg,hpL,J.lk,J.lf); limb(C.nearArm,shL,J.le,J.lh);
+    // head: an oval along the neck-to-head axis, about 1/7.5 of standing height
     const ax=unit(sub(q.h,q.n)), fd=[-ax[1],ax[0]], ang=Math.atan2(ax[1],ax[0])*180/Math.PI+90;
-    const H=q.h, rot=`rotate(${ang.toFixed(1)} ${H[0].toFixed(1)} ${H[1].toFixed(1)})`;
+    const H=add(q.h,ax,-.4), rt=`rotate(${ang.toFixed(1)} ${H[0].toFixed(1)} ${H[1].toFixed(1)})`;
     const ell=(el,cx,cy,rx,ry,tr)=>{el.setAttribute("cx",cx.toFixed(1));el.setAttribute("cy",cy.toFixed(1));el.setAttribute("rx",rx);el.setAttribute("ry",ry);el.setAttribute("transform",tr)};
-    const bn=front?add(H,ax,6.6):add(add(H,ax,5),fd,-3.6);
+    const bn=front?add(H,ax,5.9):add(add(H,ax,4.4),fd,-3.4);
     C.bun.setAttribute("cx",bn[0].toFixed(1)); C.bun.setAttribute("cy",bn[1].toFixed(1));
     if(front){
-      ell(C.hair,H[0],H[1]-.9,6.1,6.9,rot);
+      ell(C.hair,H[0],H[1]-.8,5.3,6.1,rt);
       const fc=add(H,ax,-.7);
-      ell(C.face,fc[0],fc[1],5.3,6.3,rot);
+      ell(C.face,fc[0],fc[1],4.6,5.7,rt);
       C.ear.setAttribute("rx",0);
-      const e1=add(add(fc,fd,-2.1),ax,.6), e2=add(add(fc,fd,2.1),ax,.6);
+      const e1=add(add(fc,fd,-1.9),ax,.5), e2=add(add(fc,fd,1.9),ax,.5);
       C.eye1.setAttribute("cx",e1[0].toFixed(1)); C.eye1.setAttribute("cy",e1[1].toFixed(1));
-      C.eye2.setAttribute("cx",e2[0].toFixed(1)); C.eye2.setAttribute("cy",e2[1].toFixed(1)); C.eye2.setAttribute("r",.75);
-      // feminine detail: soft lashes instead of straight brows below
-
-      set(C.brow1,`M${f(add(add(e1,ax,1.7),fd,-1))}Q${f(add(e1,ax,2.3))} ${f(add(add(e1,ax,1.8),fd,1))}`); set(C.brow2,`M${f(add(add(e2,ax,1.8),fd,-1))}Q${f(add(e2,ax,2.3))} ${f(add(add(e2,ax,1.7),fd,1))}`);
-      set(C.nose,`M${f(add(fc,ax,-.2))}l.4 1.5l-.9 .1`);
-      const m=add(fc,ax,-3.2); set(C.mouth,`M${f(add(m,fd,-1.2))}Q${f(add(m,ax,-.7))} ${f(add(m,fd,1.2))}`);
+      C.eye2.setAttribute("cx",e2[0].toFixed(1)); C.eye2.setAttribute("cy",e2[1].toFixed(1)); C.eye2.setAttribute("r",.65); C.eye1.setAttribute("r",.65);
+      set(C.brow1,`M${f(add(add(e1,ax,1.5),fd,-.9))}Q${f(add(e1,ax,2.1))} ${f(add(add(e1,ax,1.6),fd,.9))}`); set(C.brow2,`M${f(add(add(e2,ax,1.6),fd,-.9))}Q${f(add(e2,ax,2.1))} ${f(add(add(e2,ax,1.5),fd,.9))}`);
+      set(C.nose,`M${f(add(fc,ax,-.2))}l.35 1.3l-.8 .1`);
+      const m=add(fc,ax,-2.9); set(C.mouth,`M${f(add(m,fd,-1.1))}Q${f(add(m,ax,-.6))} ${f(add(m,fd,1.1))}`);
     } else {
-      const hb=add(H,fd,-.8); ell(C.hair,hb[0],hb[1],5.8,6.8,rot);
-      const fc=add(add(H,fd,.9),ax,-.5); ell(C.face,fc[0],fc[1],5.1,6.2,rot);
-      const er=add(add(H,fd,-1),ax,-.4); C.ear.setAttribute("rx",1.3); ell(C.ear,er[0],er[1],1.3,1.9,rot);
-      const e=add(add(H,fd,4),ax,.6);
-      C.eye1.setAttribute("cx",e[0].toFixed(1)); C.eye1.setAttribute("cy",e[1].toFixed(1)); C.eye2.setAttribute("r",0);
-      set(C.brow1,`M${f(add(add(e,ax,1.5),fd,-1))}L${f(add(add(e,ax,1.6),fd,1))}`); set(C.brow2,"M0 0");
-      const nb=add(add(H,fd,5.9),ax,.1); set(C.nose,`M${f(nb)}L${f(add(add(nb,fd,1.2),ax,-1.4))}L${f(add(nb,ax,-1.9))}`);
-      const m=add(add(H,fd,4.6),ax,-3.1); set(C.mouth,`M${f(m)}Q${f(add(add(m,fd,.6),ax,-.3))} ${f(add(m,fd,1.2))}`);
+      const hb=add(H,fd,-.7); ell(C.hair,hb[0],hb[1],5.2,6.0,rt);
+      const fc=add(add(H,fd,.8),ax,-.5); ell(C.face,fc[0],fc[1],4.5,5.5,rt);
+      const er=add(add(H,fd,-.9),ax,-.4); C.ear.setAttribute("rx",1.2); ell(C.ear,er[0],er[1],1.15,1.7,rt);
+      const e=add(add(H,fd,3.5),ax,.5);
+      C.eye1.setAttribute("cx",e[0].toFixed(1)); C.eye1.setAttribute("cy",e[1].toFixed(1)); C.eye1.setAttribute("r",.65); C.eye2.setAttribute("r",0);
+      set(C.brow1,`M${f(add(add(e,ax,1.4),fd,-.9))}L${f(add(add(e,ax,1.5),fd,.9))}`); set(C.brow2,"M0 0");
+      const nb=add(add(H,fd,5.2),ax,.1); set(C.nose,`M${f(nb)}L${f(add(add(nb,fd,1.0),ax,-1.2))}L${f(add(nb,ax,-1.7))}`);
+      const m=add(add(H,fd,4.1),ax,-2.8); set(C.mouth,`M${f(m)}Q${f(add(add(m,fd,.5),ax,-.3))} ${f(add(m,fd,1.0))}`);
     }
   }
   pose(t){
@@ -1632,13 +1762,26 @@ let sndTimer=0;
 function onAudioState(){
   if(!actx) return;
   const ok=actx.state==="running";
-  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); return; }
+  if(ok){ clearTimeout(sndTimer); sndTimer=0; sndOff(false); if(T.running) keepAlive(true); return; }
   if(document.visibilityState!=="visible") return;
   try{ actx.resume().catch(()=>{}); }catch(e){}
   if(!sndTimer) sndTimer=setTimeout(()=>{ sndTimer=0; if(actx&&actx.state!=="running"&&document.visibilityState==="visible") sndOff(true); },1200);
 }
 function sndOff(on){ const b=document.getElementById("snd-off"); if(b) b.hidden=!(on&&(T.running||T.paused)&&(soundOn||voiceOn)); }
 setInterval(()=>{ if(actx&&T.running&&actx.state!=="running") onAudioState(); },2000);
+/* iPhone lets go of the speaker after a long quiet stretch (like a one-minute set break), and the beeps and voice
+   then stay silent for the rest of the workout. While a workout runs, play an inaudible loop so the sound stays on. */
+let keep=null;
+function keepAlive(on){
+  try{
+    if(!on){ if(keep){ keep.stop(); keep.disconnect(); } keep=null; return; }
+    const a=audio(); if(!a||(keep&&keep.ctx===a)) return;
+    if(keep){ try{ keep.stop(); }catch(e){} }
+    const b=a.createBuffer(1,a.sampleRate,a.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*1e-4;
+    const s=a.createBufferSource(); s.buffer=b; s.loop=true; s.connect(a.destination); s.start(); s.ctx=a; keep=s;
+  }catch(e){}
+}
 function beep(freq,len,when=0,vol=.25,type="sine"){
   if(!soundOn||T.quiet) return; const a=audio(); if(!a) return;
   const t=a.currentTime+when, o=a.createOscillator(), g=a.createGain();
@@ -1835,8 +1978,8 @@ function tick(){
 setInterval(tick,100);
 (function raf(){ tick(); requestAnimationFrame(raf); })();
 
-async function requestWake(){ try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
-function releaseWake(){ try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
+async function requestWake(){ keepAlive(true); try{ if("wakeLock" in navigator) T.wake=await navigator.wakeLock.request("screen"); }catch(e){} }
+function releaseWake(){ keepAlive(false); try{ T.wake&&T.wake.release(); }catch(e){} T.wake=null; }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"&&T.running) requestWake(); });
 
 /* Music: open the chosen music app (optionally on a playlist) only when the person asks for it.
@@ -1946,7 +2089,9 @@ function logWorkout(done){
   const planned=sch.filter(p=>p.type==="work").reduce((a,p)=>a+p.dur,0);
   if(t.w<Math.min(60,planned/2)) return;
   const ids=[...new Set(sch.filter(p=>p.type==="work"&&p.ex).map(p=>p.ex))];
-  const wo=WORKOUTS.find(w=>w.moves.length===playlist.length&&w.moves.every((m,i)=>m===playlist[i]));
+  // Name the entry after the routine: your own routine first (the one you started, or one with the same poses), then a ready-made one.
+  const same=w=>w.moves.length===playlist.length&&w.moves.every((m,i)=>m===playlist[i]);
+  const wo=(activeMy&&myWos.find(w=>w.id===activeMy))||myWos.find(same)||WORKOUTS.find(same);
   const rounds=t.rounds;
   workLog.unshift({at:Date.now(), name:freeMode?"Timer only":(wo?wo.name:"Custom practice"), moves:freeMode?[]:ids.map(id=>byId[id]?byId[id].name:id),
     work:t.w, total:t.all, rounds, done});
@@ -2050,9 +2195,13 @@ function renderRt(){
       if(a==="dup") m.splice(i+1,0,id); else if(a==="del") m.splice(i,1); renderRt(); });
     li.querySelector(".grip").addEventListener("pointerdown",e=>{ e.preventDefault(); dragStart(e,{from:i,id},li); });
     ol.appendChild(li); });
+  $("rt-clear").parentElement.hidden=rtD.moves.length<2;
   if(!rtD.moves.length) ol.innerHTML=`<li class="rt-empty">Drag poses here, or tap them below</li>`;
   rtSum();
 }
+/* Clear all: empty the list in one tap to start over, with Undo in case it was a slip. */
+$("rt-clear").onclick=()=>{ const old=rtD.moves.slice(); if(!old.length) return; rtD.moves.length=0; renderRt();
+  undoSnack(`Cleared ${old.length} poses`,()=>{ rtD.moves.splice(0,rtD.moves.length,...old); renderRt(); }); };
 /* Move palette: tap a tile to add it, or drag it into the list. */
 let palCat="all"; const palFigs=[];
 function renderPal(){
@@ -2378,7 +2527,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.4.2";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
