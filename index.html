@@ -106,6 +106,13 @@ main .wrap{padding-block:8px 32px}
 .intro{padding:8px 0 16px}
 .intro h2{font-size:clamp(30px,6vw,40px);line-height:1.15;font-weight:700;letter-spacing:-.01em}
 .intro p{margin:8px 0 0;color:var(--on-surface-variant);max-width:56ch;font-size:16px;line-height:24px;letter-spacing:.5px}
+/* Day streak on Home: a quiet pill under the date, shown from 2 days in a row. */
+.streak{display:inline-flex;align-items:center;gap:6px;margin:12px 0 0;padding:4px 12px 4px 8px;border:1px solid var(--outline-variant);border-radius:999px;font-size:13px;line-height:20px;color:var(--on-surface-variant);animation:streak-in .5s ease-out}
+.streak[hidden]{display:none}
+.streak .ms{width:16px;height:16px;font-size:16px;color:var(--tertiary)}
+.streak b{font-weight:600;color:var(--on-surface)}
+@keyframes streak-in{from{opacity:0;transform:translateY(4px)}}
+@media (prefers-reduced-motion: reduce){.streak{animation:none}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
 .chip{height:32px;border:1px solid var(--outline-variant);background:transparent;border-radius:var(--r-sm);padding:0 16px;font-weight:500;font-size:14px;letter-spacing:.1px;display:inline-flex;align-items:center;gap:8px;color:var(--on-surface-variant)}
 .chip .ms{font-size:18px}
@@ -474,7 +481,7 @@ main .wrap{padding-block:8px 32px}
 
 <main>
   <section id="view-home" class="wrap">
-    <div class="intro"><h2 id="hello">Hi Kim</h2><p id="today"></p></div>
+    <div class="intro"><h2 id="hello">Hi Kim</h2><p id="today"></p><div class="streak" id="streak" hidden><span class="ms fill">local_fire_department</span><span><b id="streak-n"></b> · <span id="streak-t"></span></span></div></div>
     <div class="install" id="install" hidden>
       <span class="ms fill">install_mobile</span>
       <div><b>Save it to your home screen</b><p id="install-why"></p>
@@ -2477,7 +2484,21 @@ function renderQuickFields(){
   $("q-total").textContent=fmt(secs);
   document.querySelectorAll("#qchips button").forEach(b=>{ const p=PRESETS[b.dataset.k].cfg; b.setAttribute("aria-pressed",p.work===quick.work&&p.rest===quick.rest&&p.rounds===quick.rounds&&p.sets===quick.sets); });
 }
+/* Days in a row with a session, counting back from today (or from yesterday if today has none yet). */
+function dayStreak(){
+  const days=new Set(workLog.map(x=>dayKey(x.at))), d=new Date(), today=days.has(dayKey(d)); let n=0;
+  if(!today) d.setDate(d.getDate()-1);
+  while(days.has(dayKey(d))){ n++; d.setDate(d.getDate()-1); }
+  return {n,today};
+}
+function renderStreak(){
+  const {n,today}=dayStreak();
+  $("streak").hidden=n<2; if(n<2) return;
+  $("streak-n").textContent=`${n}-day streak`;
+  $("streak-t").textContent=today?"Keep that streak going":"Practice today to keep it going";
+}
 function renderHome(){
+  renderStreak();
   const h=new Date().getHours();
   $("hello").textContent=h<12?"Good morning":h<18?"Good afternoon":"Good evening";
   $("today").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
@@ -2536,10 +2557,7 @@ function renderLog(){
   $("log-prev").disabled=!(oldest<s); $("log-next").disabled=logOff>=0;
   $("st-week").textContent=list.length;
   $("st-min").textContent=Math.round(list.reduce((a,x)=>a+x.total,0)/60);
-  const days=new Set(workLog.map(x=>dayKey(x.at))); let streak=0; const d=new Date(now);
-  if(!days.has(dayKey(d))) d.setDate(d.getDate()-1);
-  while(days.has(dayKey(d))){ streak++; d.setDate(d.getDate()-1); }
-  $("st-streak").textContent=streak;
+  $("st-streak").textContent=dayStreak().n;
   const el=$("log-list"); el.innerHTML="";
   if(!workLog.length){ el.innerHTML=`<div class="log-empty"><span class="ms">history</span>No sessions yet.</div>`; return; }
   if(!list.length){ el.innerHTML=`<div class="log-empty"><span class="ms">history</span>No sessions in this period.</div>`; return; }
@@ -2593,7 +2611,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.5.0";
+const APP_VERSION = "1.6.0";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
