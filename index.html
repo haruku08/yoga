@@ -255,6 +255,7 @@ main .wrap{padding-block:8px 32px}
 .wo-head p{margin:0;color:var(--on-surface-variant);font-size:13px;line-height:18px}
 .wo-figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;background:var(--sc-lowest);border-radius:var(--r-sm);padding:4px}
 .wo-fig svg{width:100%;height:auto;aspect-ratio:1/1;display:block}
+.mw-figs{margin:4px 0 2px;background:var(--sc-low)}
 .wo-names{margin:0;font-size:13px;line-height:18px;color:var(--on-surface-variant)}
 .wo-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .wo-foot span{font-size:13px;font-weight:500;font-variant-numeric:tabular-nums}
@@ -1541,13 +1542,18 @@ let woFigs=[]; let hiddenWos=store.get("hiddenWos",[]); if(!Array.isArray(hidden
 let homeWos=store.get("homeWos",null);
 if(!Array.isArray(homeWos)){ homeWos=RETURNING?WORKOUTS.map(w=>w.id).filter(id=>!hiddenWos.includes(id)):[]; store.set("homeWos",homeWos); }
 const saveHome=()=>{ store.set("homeWos",homeWos); renderWorkouts(); renderFavs(); };
+/* A routine as pictures: every round in order, so a pose done on both sides or repeated shows each time. flowRuns groups back-to-back repeats for the names ("Tree Pose ×2"). */
+function flowRuns(ms){ const out=[]; ms.forEach(id=>{ if(!byId[id]) return; const l=out[out.length-1]; if(l&&l.id===id) l.n++; else out.push({id,n:1}); }); return out; }
+function flowFigs(el,ms,keep){
+  ms.forEach(id=>{ const ex=byId[id]; if(!ex) return; const d=document.createElement("div"); d.className="wo-fig"; d.title=ex.name;
+    const fg=new Figure(ex,{animate:false}); d.appendChild(fg.svg); keep.push(fg); el.appendChild(d); });
+}
 function woCard(w,home){
   const c=woCfg(w), uniq=[...new Set(w.moves)], mins=Math.round((c.prep+c.sets*c.rounds*(c.work+c.rest)-c.rest+(c.sets-1)*c.setRest)/60);
   const card=document.createElement("article"); card.className="wo"; setC(card,w.c);
   card.innerHTML=`<div class="wo-head"><span class="ms fill">${w.icon}</span><div><h4>${w.name}</h4><p>${w.blurb}</p></div></div><div class="wo-figs"></div><div class="wo-foot"><span>${uniq.length} ${uniq.length===1?"pose":"poses"} · ${c.sets>1?c.sets+" sets":c.rounds+" rounds"} · ${mins} min</span></div>`;
-  const figs=card.querySelector(".wo-figs");
-  uniq.forEach(id=>{ const d=document.createElement("div"); d.className="wo-fig"; d.title=byId[id].name; const fg=new Figure(byId[id],{animate:false}); d.appendChild(fg.svg); woFigs.push(fg); figs.appendChild(d); });
-  const names=document.createElement("p"); names.className="wo-names"; names.textContent=uniq.map(id=>byId[id].name).join(" · "); card.insertBefore(names,card.querySelector(".wo-foot"));
+  flowFigs(card.querySelector(".wo-figs"),w.moves,woFigs);
+  const names=document.createElement("p"); names.className="wo-names"; names.textContent=runNames(w.moves); card.insertBefore(names,card.querySelector(".wo-foot"));
   const foot=card.querySelector(".wo-foot"), btn=(cls,label,icon)=>{ const x=document.createElement("button"); x.className=cls; x.setAttribute("aria-label",label); x.title=label; x.innerHTML=`<span class="ms">${icon}</span>`; return x; };
   const on=homeWos.includes(w.id);
   if(home){
@@ -2148,21 +2154,23 @@ function runMy(w,go){
   playlist=w.moves.slice(); cfg=Object.assign({},w.cfg||cfg); saveCfg(); renderFields(); savePlaylist();
   freeMode=false; store.set("freeMode",false); syncMode(); showView("timer"); if(go) start();
 }
-function runNames(ms){ const out=[]; ms.forEach(id=>{ const l=out[out.length-1]; if(l&&l.id===id) l.n++; else out.push({id,n:1}); });
-  return out.map(r=>byId[r.id].name+(r.n>1?` ×${r.n}`:"")).join(" · "); }
+function runNames(ms){ return flowRuns(ms).map(r=>byId[r.id].name+(r.n>1?` ×${r.n}`:"")).join(" · "); }
 function myMeta(w){ const c=w.cfg||cfg; return `${w.moves.length} round${w.moves.length===1?"":"s"} · ${c.work}s / ${c.rest}s${c.sets>1?` · ${c.sets} sets`:""}`; }
+let myFigs=[];
 function renderMy(){
+  myFigs.forEach(f=>f.destroy()); myFigs=[];
   const el=$("mw-list"); el.innerHTML="";
   if(!myWos.length){ el.innerHTML=`<p class="hint" style="margin:0;grid-column:1/-1">No routines yet.</p>`; }
   myWos.forEach((w,i)=>{
     const c=document.createElement("article"); c.className="mw";
-    c.innerHTML=`<div class="mw-top"><h4></h4><button class="icon-btn sl star" aria-label="Favorite" title="Add to Home"><span class="ms">star</span></button></div><p class="meta"></p><p class="mv"></p>
+    c.innerHTML=`<div class="mw-top"><h4></h4><button class="icon-btn sl star" aria-label="Favorite" title="Add to Home"><span class="ms">star</span></button></div><p class="meta"></p><div class="wo-figs mw-figs"></div><p class="mv"></p>
       <div class="row"><button class="btn btn-filled with-icon sl go"><span class="ms fill">play_arrow</span>Start</button>
       <button class="icon-btn sl sh" aria-label="Share routine" title="Share"><span class="ms">share</span></button>
       <button class="icon-btn sl ed" aria-label="Edit routine" title="Edit"><span class="ms">edit</span></button>
       <button class="icon-btn sl del" aria-label="Delete" title="Delete"><span class="ms">delete</span></button></div>`;
     c.querySelector("h4").textContent=w.name; c.querySelector(".meta").textContent=myMeta(w);
     c.querySelector(".mv").textContent=runNames(w.moves);
+    const mf=c.querySelector(".mw-figs"); flowFigs(mf,w.moves,myFigs); mf.hidden=!mf.children.length;
     const st=c.querySelector(".star"); st.setAttribute("aria-pressed",!!w.fav);
     st.onclick=()=>{ if(!w.fav&&myWos.filter(x=>x.fav).length>=MAX_FAV){ snack(`Limit is ${MAX_FAV} pinned routines`); return; } w.fav=!w.fav; saveMy(); if(w.fav) snack(`Pinned ${w.name}`); };
     c.querySelector(".go").onclick=()=>runMy(w,true);
@@ -2611,7 +2619,7 @@ function syncStyle(){
 document.querySelectorAll(".segmented button[data-style]").forEach(b=>b.onclick=()=>{figStyle=b.dataset.style;store.set("figStyle",figStyle);syncStyle()});
 /* ---------- Updates ----------
    The app checks version.json next to index.html on GitHub. Bump both APP_VERSION and version.json on each release. */
-const APP_VERSION = "1.6.0";
+const APP_VERSION = "1.6.1";
 let snackTimer=null, newVersion=null;
 function undoSnack(msg,run){ snack(msg,{label:"Undo",run:()=>{ run(); $("snack").hidden=true; }}); clearTimeout(snackTimer); snackTimer=setTimeout(()=>{$("snack").hidden=true},6000); }
 function snack(msg, action){
